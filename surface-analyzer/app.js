@@ -32,7 +32,8 @@ async function decodeMetricUrl(url){
 }
 async function decodeMetric(key){
   if(cache.has(key))return cache.get(key);
-  const urls=[`data/${key}.b64?v=006`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${key}.b64?v=006`];
+  const asset=key==='max_drawdown_r'?'max_drawdown_r_v006':key;
+  const urls=[`data/${asset}.b64?v=007`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${asset}.b64?v=007`];
   const errors=[];
   for(const url of urls){
     try{const arr=await decodeMetricUrl(url);cache.set(key,arr);return arr;}
