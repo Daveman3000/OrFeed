@@ -11,12 +11,17 @@ const stopBoundaries=[6,12,18,24,36,42,48,54,88,106,124,142,178,196,214,232];
 function mix(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t));}
 function rgb(q){const t=q/15;return t<.5?mix([171,43,54],[58,67,79],t*2):mix([58,67,79],[32,151,86],(t-.5)*2);}
 function fmt(v,d){return Number(v).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});}
+function normalizeBase64(text){
+  let txt=text.trim().replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+/=]/g,'');
+  txt=txt.replace(/=+$/,'');
+  if(!txt)throw new Error('empty payload');
+  const rem=txt.length%4;if(rem)txt+='='.repeat(4-rem);
+  return txt;
+}
 async function decodeMetricUrl(url){
   const r=await fetch(url,{cache:'no-store'});
   if(!r.ok)throw new Error(`HTTP ${r.status}`);
-  let txt=(await r.text()).replace(/\s+/g,'');
-  if(!txt)throw new Error('empty payload');
-  const rem=txt.length%4;if(rem)txt+='='.repeat(4-rem);
+  const txt=normalizeBase64(await r.text());
   const bin=atob(txt),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
   if(typeof DecompressionStream==='undefined')throw new Error('This browser does not support DecompressionStream.');
   const ds=new DecompressionStream('deflate');
@@ -28,7 +33,7 @@ async function decodeMetricUrl(url){
 }
 async function decodeMetric(key){
   if(cache.has(key))return cache.get(key);
-  const urls=[`data/${key}.b64?v=004`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${key}.b64?v=004`];
+  const urls=[`data/${key}.b64?v=005`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${key}.b64?v=005`];
   const errors=[];
   for(const url of urls){
     try{const arr=await decodeMetricUrl(url);cache.set(key,arr);return arr;}
