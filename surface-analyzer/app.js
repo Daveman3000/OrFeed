@@ -12,8 +12,7 @@ function mix(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t));}
 function rgb(q){const t=q/15;return t<.5?mix([171,43,54],[58,67,79],t*2):mix([58,67,79],[32,151,86],(t-.5)*2);}
 function fmt(v,d){return Number(v).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});}
 function normalizeBase64(text){
-  let txt=text.trim().replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+/=]/g,'');
-  txt=txt.replace(/=+$/,'');
+  let txt=text.trim().replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+/]/g,'');
   if(!txt)throw new Error('empty payload');
   const rem=txt.length%4;if(rem)txt+='='.repeat(4-rem);
   return txt;
@@ -33,7 +32,7 @@ async function decodeMetricUrl(url){
 }
 async function decodeMetric(key){
   if(cache.has(key))return cache.get(key);
-  const urls=[`data/${key}.b64?v=005`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${key}.b64?v=005`];
+  const urls=[`data/${key}.b64?v=006`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/data/${key}.b64?v=006`];
   const errors=[];
   for(const url of urls){
     try{const arr=await decodeMetricUrl(url);cache.set(key,arr);return arr;}
