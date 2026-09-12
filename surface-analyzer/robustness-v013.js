@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
 
-  const VERSION='symmetric-l1-six-map-v013';
+  const VERSION='symmetric-l1-six-map-v015';
   const TAU=0.10;
   const EPS=1e-12;
   const DRIVER_METRICS=['r_per_trade','expectancy_per_contract','profit_factor','romad','max_drawdown_r','total_r'];
@@ -177,75 +177,75 @@
 
   if(typeof module!=='undefined'&&module.exports)module.exports=API;
 
-  if(typeof window==='undefined'||typeof ROWS==='undefined'||typeof COLS==='undefined'||typeof meta==='undefined')return;
+  if(typeof window==='undefined'||typeof ROWS==='undefined'||typeof COLS==='undefined')return;
 
   function installBrowser(){
     if(!meta||!meta.__order__){setTimeout(installBrowser,25);return;}
     const ACCEPTANCE=runSyntheticSuite();
     const REAL_MAPS=[];
-    for(const [r0,r1] of [[0,112],[112,224]])for(const [c0,c1] of [[0,60],[60,70],[70,250]])REAL_MAPS.push(rectMap(r0,r1,c0,c1,COLS));
-    const robustKey=k=>`sr:${k}`;
-    const driverFromKey=k=>k.startsWith('sr:')?k.slice(3):null;
+  for(const [r0,r1] of [[0,112],[112,224]])for(const [c0,c1] of [[0,60],[60,70],[70,250]])REAL_MAPS.push(rectMap(r0,r1,c0,c1,COLS));
+  const robustKey=k=>`sr:${k}`;
+  const driverFromKey=k=>k.startsWith('sr:')?k.slice(3):null;
     for(const k of DRIVER_METRICS){const rk=robustKey(k);robustnessKeys.add(rk);meta[rk]={label:`Structural Robustness · ${meta[k]?.label||k}`,lo:0,hi:1,invert:false,decimals:3,group:'robustness'};}
     lastRobustnessKey=robustKey(lastPerformanceKey||'r_per_trade');
 
-    function ensureStore(surface){
-      if(!surface.robustnessByMetric||surface.robustnessVersion!==VERSION){surface.robustnessByMetric={};surface.robustnessVersion=VERSION;}
-      return surface.robustnessByMetric;
-    }
-    function ensureMetric(surface,metric){
-      if(!ACCEPTANCE.passed)throw new Error('Synthetic robustness acceptance suite failed');
-      const store=ensureStore(surface),old=store[metric];
-      if(old&&old.version===VERSION&&old.structural_robustness?.length===ROWS*COLS){if(!(old.structural_robustness instanceof Float32Array))old.structural_robustness=new Float32Array(old.structural_robustness);return old;}
-      const vals=surface.metrics[metric];if(!vals)throw new Error(`Uploaded CSV does not contain ${metric}`);
-      const full=normalizeAndCompose(vals,REAL_MAPS);
-      const result={version:VERSION,metric,tau:TAU,mapScales:full.mapScales,structural_robustness:full.structural_robustness};
-      store[metric]=result;idbSetActive(surface).catch(()=>{});return result;
-    }
+  function ensureStore(surface){
+    if(!surface.robustnessByMetric||surface.robustnessVersion!==VERSION){surface.robustnessByMetric={};surface.robustnessVersion=VERSION;}
+    return surface.robustnessByMetric;
+  }
+  function ensureMetric(surface,metric){
+    if(!ACCEPTANCE.passed)throw new Error('Synthetic robustness acceptance suite failed');
+    const store=ensureStore(surface),old=store[metric];
+    if(old&&old.version===VERSION&&old.structural_robustness?.length===ROWS*COLS){if(!(old.structural_robustness instanceof Float32Array))old.structural_robustness=new Float32Array(old.structural_robustness);return old;}
+    const vals=surface.metrics[metric];if(!vals)throw new Error(`Uploaded CSV does not contain ${metric}`);
+    const full=normalizeAndCompose(vals,REAL_MAPS);
+    const result={version:VERSION,metric,tau:TAU,mapScales:full.mapScales,structural_robustness:full.structural_robustness};
+    store[metric]=result;idbSetActive(surface).catch(()=>{});return result;
+  }
 
-    const baseNormalizeStoredSurface=normalizeStoredSurface;
-    normalizeStoredSurface=function(s){
-      s=baseNormalizeStoredSurface(s);if(!s)return s;
-      if(s.robustnessVersion!==VERSION){delete s.robustnessByMetric;s.robustnessVersion=VERSION;}
-      if(s.robustnessByMetric)for(const r of Object.values(s.robustnessByMetric))if(r?.structural_robustness&&!(r.structural_robustness instanceof Float32Array))r.structural_robustness=new Float32Array(r.structural_robustness);
-      return s;
-    };
-    const baseBuildUploadedSurface=buildUploadedSurface;
-    buildUploadedSurface=function(text,file){const s=baseBuildUploadedSurface(text,file);s.robustnessVersion=VERSION;s.robustnessByMetric={};return s;};
+  const baseNormalizeStoredSurface=normalizeStoredSurface;
+  normalizeStoredSurface=function(s){
+    s=baseNormalizeStoredSurface(s);if(!s)return s;
+    if(s.robustnessVersion!==VERSION){delete s.robustnessByMetric;s.robustnessVersion=VERSION;}
+    if(s.robustnessByMetric)for(const r of Object.values(s.robustnessByMetric))if(r?.structural_robustness&&!(r.structural_robustness instanceof Float32Array))r.structural_robustness=new Float32Array(r.structural_robustness);
+    return s;
+  };
+  const baseBuildUploadedSurface=buildUploadedSurface;
+  buildUploadedSurface=function(text,file){const s=baseBuildUploadedSurface(text,file);s.robustnessVersion=VERSION;s.robustnessByMetric={};return s;};
 
-    const basePopulateMetricOptions=populateMetricOptions;
-    populateMetricOptions=function(mode){
-      if(mode!=='robustness'||!activeSurface)return basePopulateMetricOptions(mode);
-      metricSel.innerHTML='';for(const k of DRIVER_METRICS){const rk=robustKey(k),opt=document.createElement('option');opt.value=rk;opt.textContent=meta[rk].label;metricSel.appendChild(opt);}
-    };
-    const baseDisplayQ=displayQ;
-    displayQ=function(i){if(activeSurface&&currentMode==='robustness'&&driverFromKey(currentKey))return Math.round(clamp01(values[i])*15);return baseDisplayQ(i);};
-    const baseRobustApprox=robustApprox;
-    robustApprox=function(q){return activeSurface&&driverFromKey(currentKey)?Number(q):baseRobustApprox(q);};
+  const basePopulateMetricOptions=populateMetricOptions;
+  populateMetricOptions=function(mode){
+    if(mode!=='robustness'||!activeSurface)return basePopulateMetricOptions(mode);
+    metricSel.innerHTML='';for(const k of DRIVER_METRICS){const rk=robustKey(k),opt=document.createElement('option');opt.value=rk;opt.textContent=meta[rk].label;metricSel.appendChild(opt);}
+  };
+  const baseDisplayQ=displayQ;
+  displayQ=function(i){if(activeSurface&&currentMode==='robustness'&&driverFromKey(currentKey))return Math.round(clamp01(values[i])*15);return baseDisplayQ(i);};
+  const baseRobustApprox=robustApprox;
+  robustApprox=function(q){return activeSurface&&driverFromKey(currentKey)?Number(q):baseRobustApprox(q);};
 
-    const baseSetMetric=setMetric;
-    setMetric=async function(key){
-      const driver=activeSurface?driverFromKey(key):null;if(!driver)return baseSetMetric(key);
-      currentKey=key;lastRobustnessKey=key;lastPerformanceKey=driver;loading.style.display='flex';loading.textContent=`Calculating ${meta[key].label}…`;
-      try{
-        const r=ensureMetric(activeSurface,driver);values=r.structural_robustness;currentStats=null;loading.style.display='none';
-        statusEl.textContent=`${meta[key].label} · symmetric L1 · 6 hard maps · global normalization · synthetic gate passed`;
-        draw();
-      }catch(e){loading.style.display='flex';loading.textContent='Could not calculate robustness: '+e.message;statusEl.textContent=`${meta[key].label} failed`;}
-    };
-    updateRobustnessAvailability=function(){
-      const b=metricMode.querySelector('button[data-mode="robustness"]');if(!b)return;
-      if(activeSurface){b.disabled=!ACCEPTANCE.passed;b.title=ACCEPTANCE.passed?'Symmetric L1 robustness; six hard maps; soft dividers traversable; global normalization.':'Synthetic acceptance suite failed — real robustness disabled.';}
-      else{b.disabled=false;b.title='';}
-    };
-    const robustRead=`Structural Robustness follows the <b>selected performance metric</b>. Inside each of the six hard-bounded maps it measures symmetric L1 local deviation (R1/R2/R3), Q90 tail deviation, local graph total variation, X/Y directional variation, second-difference roughness, and B2/B3 tolerance breadth. Soft dividers are fully traversable. Raw structural primitives are then percentile-normalized <b>globally across all 56,000 valid cells</b> before the category geometric means are combined.`;
-    setMode=async function(mode){
-      if(mode===currentMode)return;
-      if(currentMode==='performance'){lastPerformanceKey=currentKey;lastPerformanceView=viewSel.value;}else lastRobustnessKey=currentKey;
-      currentMode=mode;for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode===mode);setViewForMode(mode);populateMetricOptions(mode);readCopy.innerHTML=mode==='robustness'?robustRead:performanceRead;
-      let next;if(mode==='robustness')next=activeSurface?robustKey(lastPerformanceKey||'r_per_trade'):'structural_robustness';else next=lastPerformanceKey;
-      metricSel.value=next;await setMetric(next);
-    };
+  const baseSetMetric=setMetric;
+  setMetric=async function(key){
+    const driver=activeSurface?driverFromKey(key):null;if(!driver)return baseSetMetric(key);
+    currentKey=key;lastRobustnessKey=key;lastPerformanceKey=driver;loading.style.display='flex';loading.textContent=`Calculating ${meta[key].label}…`;
+    try{
+      const r=ensureMetric(activeSurface,driver);values=r.structural_robustness;currentStats=null;loading.style.display='none';
+      statusEl.textContent=`${meta[key].label} · symmetric L1 · 6 hard maps · global normalization · synthetic gate passed`;
+      draw();
+    }catch(e){loading.style.display='flex';loading.textContent='Could not calculate robustness: '+e.message;statusEl.textContent=`${meta[key].label} failed`;}
+  };
+  updateRobustnessAvailability=function(){
+    const b=metricMode.querySelector('button[data-mode="robustness"]');if(!b)return;
+    if(activeSurface){b.disabled=!ACCEPTANCE.passed;b.title=ACCEPTANCE.passed?'Symmetric L1 robustness; six hard maps; soft dividers traversable; global normalization.':'Synthetic acceptance suite failed — real robustness disabled.';}
+    else{b.disabled=false;b.title='';}
+  };
+  const robustRead=`Structural Robustness follows the <b>selected performance metric</b>. Inside each of the six hard-bounded maps it measures symmetric L1 local deviation (R1/R2/R3), Q90 tail deviation, local graph total variation, X/Y directional variation, second-difference roughness, and B2/B3 tolerance breadth. Soft dividers are fully traversable. Raw structural primitives are then percentile-normalized <b>globally across all 56,000 valid cells</b> before the category geometric means are combined.`;
+  setMode=async function(mode){
+    if(mode===currentMode)return;
+    if(currentMode==='performance'){lastPerformanceKey=currentKey;lastPerformanceView=viewSel.value;}else lastRobustnessKey=currentKey;
+    currentMode=mode;for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode===mode);setViewForMode(mode);populateMetricOptions(mode);readCopy.innerHTML=mode==='robustness'?robustRead:performanceRead;
+    let next;if(mode==='robustness')next=activeSurface?robustKey(lastPerformanceKey||'r_per_trade'):'structural_robustness';else next=lastPerformanceKey;
+    metricSel.value=next;await setMetric(next);
+  };
     updateRobustnessAvailability();
     window.SurfaceRobustnessV013.acceptance=ACCEPTANCE;
     window.SurfaceRobustnessV013.realMaps=REAL_MAPS;
