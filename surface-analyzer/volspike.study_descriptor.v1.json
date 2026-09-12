@@ -1,0 +1,120 @@
+{
+  "descriptor_schema_version": 1,
+  "descriptor_version": "1.0.1",
+  "study_id": "volspike",
+  "parameters": [
+    {
+      "id": "london_range_mode",
+      "display_name": "London Range Mode",
+      "value_type": "enum",
+      "topology_role": "regime"
+    },
+    {
+      "id": "trade_management_mode",
+      "display_name": "Trade Management Mode",
+      "value_type": "enum",
+      "topology_role": "regime"
+    },
+    {
+      "id": "maximum_trades_per_day",
+      "display_name": "Max Trades / Day",
+      "value_type": "integer",
+      "topology_role": "ordered",
+      "ordered_values": [1, 2]
+    },
+    {
+      "id": "london_close_beyond_asia",
+      "display_name": "London Close Beyond Asia",
+      "value_type": "boolean",
+      "topology_role": "facet"
+    },
+    {
+      "id": "pm_close_mode",
+      "display_name": "PM Close Mode",
+      "value_type": "enum",
+      "topology_role": "facet"
+    },
+    {
+      "id": "entry_location",
+      "display_name": "Entry Location",
+      "value_type": "enum",
+      "topology_role": "facet"
+    },
+    {
+      "id": "fixed_target_exit_rule",
+      "display_name": "Fixed Target Exit Rule",
+      "value_type": "enum",
+      "topology_role": "facet",
+      "active_when": {
+        "op": "in",
+        "parameter": "trade_management_mode",
+        "values": [0, 2]
+      }
+    },
+    {
+      "id": "london_range_min_points",
+      "display_name": "London Range Min Points",
+      "value_type": "number",
+      "topology_role": "ordered",
+      "ordered_values": [150, 175, 200, 225, 250, 275, 300],
+      "active_when": {
+        "op": "eq",
+        "parameter": "london_range_mode",
+        "value": 0
+      }
+    },
+    {
+      "id": "london_range_min_atr_percent",
+      "display_name": "London Range Min ATR %",
+      "value_type": "number",
+      "topology_role": "ordered",
+      "ordered_values": [20, 25, 30, 35, 40, 45, 50],
+      "active_when": {
+        "op": "eq",
+        "parameter": "london_range_mode",
+        "value": 1
+      }
+    },
+    {
+      "id": "stop_london_range_percent",
+      "display_name": "Stop London Range %",
+      "value_type": "number",
+      "topology_role": "ordered",
+      "ordered_values": [10, 20, 30, 40, 50]
+    },
+    {
+      "id": "fixed_target_allocation_percent",
+      "display_name": "Fixed Target Allocation %",
+      "value_type": "number",
+      "topology_role": "ordered",
+      "ordered_values": [25, 37.5, 50],
+      "active_when": {
+        "op": "eq",
+        "parameter": "trade_management_mode",
+        "value": 2
+      }
+    },
+    {
+      "id": "fixed_target_london_range_multiple",
+      "display_name": "Fixed Target London Range Multiple",
+      "value_type": "number",
+      "topology_role": "ordered",
+      "ordered_values": [1, 1.25, 1.5, 1.75, 2],
+      "active_when": {
+        "op": "and",
+        "clauses": [
+          {
+            "op": "in",
+            "parameter": "trade_management_mode",
+            "values": [0, 2]
+          },
+          {
+            "op": "eq",
+            "parameter": "fixed_target_exit_rule",
+            "value": 1
+          }
+        ]
+      }
+    }
+  ]
+}
