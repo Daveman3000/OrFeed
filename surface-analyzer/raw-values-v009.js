@@ -63,5 +63,24 @@
     const suffix=(last.textContent.match(/·\s*P\d+/)||[])[0];
     last.innerHTML=`Value: <b>${v}${suffix?` · ${suffix.replace(/^·\s*/, '')}`:''}</b>`;
   });
+
+  function normalizeDerivedMetricLabels(){
+    if(typeof meta==='undefined'||!meta||!window.SurfaceRobustnessV016||!window.SurfaceFacetReplicationV017){setTimeout(normalizeDerivedMetricLabels,25);return;}
+    const drivers=['r_per_trade','expectancy_per_contract','profit_factor','romad','max_drawdown_r','total_r'];
+    for(const k of drivers){
+      const label=meta[k]?.label||k;
+      if(meta[`sr:${k}`])meta[`sr:${k}`].label=label;
+      if(meta[`fr:${k}`])meta[`fr:${k}`].label=label;
+    }
+    for(const opt of metric.options){
+      const key=opt.value;
+      if(key.startsWith('sr:')||key.startsWith('fr:')){
+        const driver=key.slice(3);
+        opt.textContent=meta[driver]?.label||driver;
+      }
+    }
+  }
+
   loadExact().catch(e=>console.error('Exact raw value payload failed:',e));
+  normalizeDerivedMetricLabels();
 })();
