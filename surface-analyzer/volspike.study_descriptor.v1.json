@@ -1,6 +1,6 @@
 {
   "descriptor_schema_version": 1,
-  "descriptor_version": "1.0.1",
+  "descriptor_version": "1.0.2",
   "study_id": "volspike",
   "parameters": [
     {
@@ -26,25 +26,29 @@
       "id": "london_close_beyond_asia",
       "display_name": "London Close Beyond Asia",
       "value_type": "boolean",
-      "topology_role": "facet"
+      "topology_role": "facet",
+      "values": [0, 1]
     },
     {
       "id": "pm_close_mode",
       "display_name": "PM Close Mode",
       "value_type": "enum",
-      "topology_role": "facet"
+      "topology_role": "facet",
+      "values": [0, 1, 2, 3]
     },
     {
       "id": "entry_location",
       "display_name": "Entry Location",
       "value_type": "enum",
-      "topology_role": "facet"
+      "topology_role": "facet",
+      "values": [0, 1]
     },
     {
       "id": "fixed_target_exit_rule",
       "display_name": "Fixed Target Exit Rule",
       "value_type": "enum",
       "topology_role": "facet",
+      "values": [0, 1],
       "active_when": {
         "op": "in",
         "parameter": "trade_management_mode",
