@@ -1,5 +1,6 @@
 (()=>{
   const ROWS_EXACT=224,COLS_EXACT=250,N_EXACT=ROWS_EXACT*COLS_EXACT;
+  const PARTS=['00','01','02','03','04','05a','05b','06','07'];
   let exact=null;
 
   function norm64(text){
@@ -8,8 +9,8 @@
     const rem=s.length%4;if(rem)s+='='.repeat(4-rem);
     return s;
   }
-  async function fetchPart(i){
-    const name=`data/r_total_raw_v009_${String(i).padStart(2,'0')}.part`;
+  async function fetchPart(part){
+    const name=`data/r_total_raw_v009_${part}.part`;
     const urls=[`${name}?v=009`,`https://raw.githubusercontent.com/Daveman3000/OrFeed/gh-pages/surface-analyzer/${name}?v=009`];
     const errors=[];
     for(const url of urls){
@@ -20,7 +21,7 @@
   }
   async function loadExact(){
     let b64='';
-    for(let i=0;i<8;i++)b64+=await fetchPart(i);
+    for(const part of PARTS)b64+=await fetchPart(part);
     const bin=atob(norm64(b64)),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
     if(typeof DecompressionStream==='undefined')throw new Error('This browser does not support DecompressionStream.');
     const ds=new DecompressionStream('deflate');
