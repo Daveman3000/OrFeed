@@ -1,6 +1,6 @@
 (()=>{
   const ROWS_EXACT=224,COLS_EXACT=250,N_EXACT=ROWS_EXACT*COLS_EXACT;
-  const PARTS=['00','01','02','03','04','05a','05b','06','07'];
+  const PARTS=['00','01','02','03','04','05a','05b','06a','06b','07'];
   let exact=null;
 
   function norm64(text){
