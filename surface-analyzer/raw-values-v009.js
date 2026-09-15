@@ -87,28 +87,35 @@
 })();
 
 (()=>{
+  const loadFilter=()=>{
+    const g=document.createElement('script');
+    g.src='surface-filter-v028.js?v=028';
+    g.async=false;
+    document.head.appendChild(g);
+  };
   const loadAutoFormat=()=>{
     const f=document.createElement('script');
-    f.src='auto-format-v026.js?v=027';
+    f.src='auto-format-v026.js?v=028';
     f.async=false;
+    f.onload=loadFilter;
     document.head.appendChild(f);
   };
   const loadLayerControls=()=>{
     const c=document.createElement('script');
-    c.src='axis-layer-controls-v023.js?v=027';
+    c.src='axis-layer-controls-v023.js?v=028';
     c.async=false;
     c.onload=loadAutoFormat;
     document.head.appendChild(c);
   };
   const loadAxisChrome=()=>{
     const a=document.createElement('script');
-    a.src='axis-chrome-v022.js?v=027';
+    a.src='axis-chrome-v022.js?v=028';
     a.async=false;
     a.onload=loadLayerControls;
     document.head.appendChild(a);
   };
   const s=document.createElement('script');
-  s.src='surface-package-v021.js?v=027';
+  s.src='surface-package-v021.js?v=028';
   s.async=false;
   s.onload=loadAxisChrome;
   document.head.appendChild(s);
