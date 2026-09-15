@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
 
-  const VERSION='multi-variable-scan-v034';
+  const VERSION='multi-variable-scan-v035';
   const SCHEMA_VERSION=1;
   const STORE='surface-analyzer-scan-layer:v1:';
   const EPS=1e-12;
@@ -212,6 +212,7 @@
   const Engine={VERSION,SCHEMA_VERSION,midrankPercentile,connectedRegions,analyzeRegionalRobustness,evaluateScan};
   root.SurfaceScanEngineV033=Engine;
   root.SurfaceScanEngineV034=Engine;
+  root.SurfaceScanEngineV035=Engine;
   if(typeof module!=='undefined'&&module.exports)module.exports=Engine;
   if(typeof window==='undefined')return;
 
@@ -338,27 +339,48 @@
   function renderOverlay(){
     const o=ensureOverlay();if(!o)return;
     if(!result||resultSurface!==activeSurface||result.totalCells!==activeSurface?.rows*activeSurface?.cols){clearOverlay();return;}
-    const rows=activeSurface.rows,cols=activeSurface.cols;
-    if(o.width!==cols)o.width=cols;if(o.height!==rows)o.height=rows;
-    const c=o.getContext('2d'),im=c.createImageData(cols,rows),mask=result.mask;
+    const rows=activeSurface.rows,cols=activeSurface.cols,heat=document.getElementById('heat');
+    if(!heat)return;
+    if(o.width!==heat.width)o.width=heat.width;
+    if(o.height!==heat.height)o.height=heat.height;
+    const c=o.getContext('2d'),mask=result.mask;
     const regional=result.regionalRobustness||null;
     const outlineMask=regional?.mask||mask,rids=regional?.regionId||result.regionId;
     const showOnly=!!config.display?.show_matches_only,dim=!!config.display?.dim_nonpassing,outline=!!config.display?.outline_regions||!!regional;
-    for(let i=0;i<mask.length;i++){
-      const p=i*4;
-      if(!mask[i]&&(showOnly||dim)){
+    c.clearRect(0,0,o.width,o.height);
+
+    if(showOnly||dim){
+      const off=document.createElement('canvas');off.width=cols;off.height=rows;
+      const oc=off.getContext('2d'),im=oc.createImageData(cols,rows);
+      for(let i=0;i<mask.length;i++)if(!mask[i]){
+        const p=i*4;
         im.data[p]=4;im.data[p+1]=7;im.data[p+2]=10;im.data[p+3]=showOnly?238:158;
       }
-      if(outline&&outlineMask[i]){
-        const r=Math.floor(i/cols),col=i-r*cols,id=rids[i];
-        const edge=col===0||col===cols-1||r===0||r===rows-1||(col>0&&rids[i-1]!==id)||(col+1<cols&&rids[i+1]!==id)||(r>0&&rids[i-cols]!==id)||(r+1<rows&&rids[i+cols]!==id);
-        if(edge){
-          const a=regional?regionOutlineAlpha(regional,id):235;
-          im.data[p]=224;im.data[p+1]=234;im.data[p+2]=244;im.data[p+3]=a;
-        }
-      }
+      oc.putImageData(im,0,0);
+      c.save();c.imageSmoothingEnabled=false;c.drawImage(off,0,0,o.width,o.height);c.restore();
     }
-    c.clearRect(0,0,cols,rows);c.putImageData(im,0,0);
+
+    if(!outline)return;
+    const sx=o.width/cols,sy=o.height/rows,d=devicePixelRatio||1;
+    c.save();
+    c.setLineDash([]);
+    c.lineWidth=1*d;
+    c.lineCap='butt';
+    c.lineJoin='miter';
+    for(let i=0;i<outlineMask.length;i++){
+      if(!outlineMask[i])continue;
+      const r=Math.floor(i/cols),col=i-r*cols,id=rids[i];
+      const x0=col*sx,x1=(col+1)*sx,y0=r*sy,y1=(r+1)*sy;
+      const a=regional?regionOutlineAlpha(regional,id):235;
+      c.strokeStyle=`rgba(224,234,244,${a/255})`;
+      c.beginPath();
+      if(col===0||!outlineMask[i-1]||rids[i-1]!==id){c.moveTo(x0,y0);c.lineTo(x0,y1);}
+      if(col===cols-1||!outlineMask[i+1]||rids[i+1]!==id){c.moveTo(x1,y0);c.lineTo(x1,y1);}
+      if(r===0||!outlineMask[i-cols]||rids[i-cols]!==id){c.moveTo(x0,y0);c.lineTo(x1,y0);}
+      if(r===rows-1||!outlineMask[i+cols]||rids[i+cols]!==id){c.moveTo(x0,y1);c.lineTo(x1,y1);}
+      c.stroke();
+    }
+    c.restore();
   }
 
   function clearActive(){result=null;resultSurface=null;clearOverlay();updateControl();if(document.getElementById('scanLayerControl')?.classList.contains('open'))renderMenu(false);}
@@ -513,6 +535,10 @@
     const id=surfaceIdentity(surface);
     if(id!==currentIdentity){currentIdentity=id;loadConfig();clearCaches();clearActive();}
     if(result&&resultSurface!==surface){clearActive();clearCaches();}
+    if(result){
+      const o=document.getElementById('scanLayerOverlay'),heat=document.getElementById('heat');
+      if(o&&heat&&(o.width!==heat.width||o.height!==heat.height))renderOverlay();
+    }
     updateControl();
   }
 
@@ -524,7 +550,8 @@
     const api={version:VERSION,get config(){return clone(config||defaultConfig());},get result(){return result;},clearActive,runScan};
     root.SurfaceScanLayerV033=api;
     root.SurfaceScanLayerV034=api;
-    const v=document.querySelector('.version');if(v)v.textContent='v034';
+    root.SurfaceScanLayerV035=api;
+    const v=document.querySelector('.version');if(v)v.textContent='v035';
   }
 
   install();
