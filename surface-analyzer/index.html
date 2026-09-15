@@ -9,15 +9,15 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
 </style>
 </head>
 <body>
-<div class="version">v019</div>
+<div class="version">v020</div>
 <div class="app">
   <div class="head">
     <div>
       <div class="title">Surface Analyzer — Master HUD Landscape</div>
-      <div class="sub">Real 56,000-config VolSpike run · one cell = one tested configuration</div>
+      <div class="sub">Upload a semantic surface package · one cell = one tested configuration</div>
     </div>
     <div class="controls">
-      <div class="ctrl"><input id="csvFile" type="file" accept=".csv,text/csv" hidden><button id="uploadCsv" type="button">Upload CSV</button><span class="surface-name" id="surfaceName">Default surface</span><button class="danger" id="hardReset" type="button">Hard Reset</button></div>
+      <div class="ctrl"><input id="csvFile" type="file" accept=".csv,text/csv" hidden><button id="uploadCsv" type="button">Upload CSV</button><span class="surface-name" id="surfaceName">No surface loaded</span><button class="danger" id="hardReset" type="button">Hard Reset</button></div>
       <div class="mode-toggle" id="metricMode" aria-label="HUD layer family"><button class="on" data-mode="performance">Performance</button><button data-mode="robustness">Robustness</button><button data-mode="facet" disabled>Facet Replication</button></div>
       <div class="ctrl"><label for="metric">HUD Metric</label><select id="metric"></select></div>
       <div class="ctrl"><label for="view">View</label><select id="view"><option value="raw">Raw</option><option value="pct">Percentile</option></select></div>
@@ -31,7 +31,7 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
         <div class="mode-col"><div>POINTS</div><div>ATR</div></div>
         <div class="yticks"><span>150 pt</span><span>175 pt</span><span>200 pt</span><span>225 pt</span><span>250 pt</span><span>275 pt</span><span>300 pt</span><span>20%</span><span>25%</span><span>30%</span><span>35%</span><span>40%</span><span>45%</span><span>50%</span></div>
       </div>
-      <div class="canvaswrap"><canvas id="heat"></canvas><div class="loading" id="loading">Loading real 56k landscape…</div></div>
+      <div class="canvaswrap"><canvas id="heat"></canvas><div class="loading" id="loading">Upload a surface to begin</div></div>
     </div>
     <div class="xaxis">
       <div class="xcoord stop-row" aria-label="Initial stop size percent of London range">
@@ -55,7 +55,7 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
   <div class="panels">
     <div class="panel"><div class="pt">Axis anatomy</div><div class="anatomy"><div><b>Y · Context selection</b></div><div class="path">Range mode → threshold → London close beyond Asia → PM close mode → entry location</div><div><b>X · Trade management</b></div><div class="path">Management mode → max trades/day → initial stop size → target / allocation parameters</div></div><div class="status" id="status"></div></div>
     <div class="panel"><div class="pt">Hovered configuration</div><div id="hover" class="hovergrid"><span>Outer: <b>—</b></span><span>Inner: <b>—</b></span><span>Metric: <b>—</b></span><span>Range: <b>—</b></span><span>London close > Asia: <b>—</b></span><span>PM close: <b>—</b></span><span>Entry location: <b>—</b></span><span>Management: <b>—</b></span><span>Stop: <b>—</b></span><span>Allocation: <b>—</b></span><span>Target: <b>—</b></span><span>Value: <b>—</b></span></div></div>
-    <div class="panel"><div class="pt">How to read the landscape</div><div class="muted" id="readCopy">Y selects <b>market context</b>. X selects <b>trade management</b>: fixed target, pure 30-minute OTF trail, or a hybrid that sends part of the position to a fixed target while the remainder follows the independent OTF trail. Read large color regions first: horizontal bands point to robust context filters; vertical bands point to robust management choices; compact islands mean the interaction matters.</div><div class="key" style="margin-top:9px"><span><i class="line hard"></i>hard regime</span><span><i class="line facet"></i>nested block</span></div></div>
+    <div class="panel"><div class="pt">How to read the landscape</div><div class="muted" id="readCopy">Upload a <b>.surface.zip</b> package to begin.</div><div class="key" style="margin-top:9px"><span><i class="line hard"></i>hard regime</span><span><i class="line facet"></i>nested block</span></div></div>
   </div>
 </div>
 <script src="app.js?v=010"></script>
@@ -63,6 +63,6 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
 <script src="robustness-math-v016.js?v=016"></script>
 <script src="robustness-v016.js?v=016"></script>
 <script src="facet-replication-v017.js?v=017"></script>
-<script src="raw-values-v009.js?v=019"></script>
+<script src="raw-values-v009.js?v=020"></script>
 </body>
 </html>
