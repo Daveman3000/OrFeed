@@ -23,7 +23,7 @@
       return;
     }
     if(core&&(scan35||scan34||scan33)){
-      if(tries++<40){setTimeout(sync,25);return;}
+      if(tries++<80){setTimeout(sync,25);return;}
       const v=scan35?'v035':scan34?'v034':'v033';
       el.textContent=v;
       el.title=`${v} synchronized · core v030`;
