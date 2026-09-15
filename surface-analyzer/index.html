@@ -9,7 +9,7 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
 </style>
 </head>
 <body>
-<div class="version">v020</div>
+<div class="version">v021</div>
 <div class="app">
   <div class="head">
     <div>
@@ -27,34 +27,17 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
   <div class="frame">
     <div class="maprow">
       <div class="yside">
-        <div class="axis-title">OUTER FILTERS</div>
-        <div class="mode-col"><div>POINTS</div><div>ATR</div></div>
-        <div class="yticks"><span>150 pt</span><span>175 pt</span><span>200 pt</span><span>225 pt</span><span>250 pt</span><span>275 pt</span><span>300 pt</span><span>20%</span><span>25%</span><span>30%</span><span>35%</span><span>40%</span><span>45%</span><span>50%</span></div>
+        <div class="axis-title">Y PARAMETERS</div>
+        <div class="mode-col"></div>
+        <div class="yticks"></div>
       </div>
       <div class="canvaswrap"><canvas id="heat"></canvas><div class="loading" id="loading">Upload a surface to begin</div></div>
     </div>
-    <div class="xaxis">
-      <div class="xcoord stop-row" aria-label="Initial stop size percent of London range">
-        <span style="left:1.2%">10</span><span style="left:3.6%">20</span><span style="left:6%">30</span><span style="left:8.4%">40</span><span style="left:10.8%">50</span>
-        <span style="left:13.2%">10</span><span style="left:15.6%">20</span><span style="left:18%">30</span><span style="left:20.4%">40</span><span style="left:22.8%">50</span>
-        <span style="left:31.6%">10</span><span style="left:38.8%">20</span><span style="left:46%">30</span><span style="left:53.2%">40</span><span style="left:60.4%">50</span>
-        <span style="left:67.6%">10</span><span style="left:74.8%">20</span><span style="left:82%">30</span><span style="left:89.2%">40</span><span style="left:96.4%">50</span>
-      </div>
-      <div class="stop-label">INITIAL STOP SIZE · % OF LONDON RANGE</div>
-      <div class="xcoord trade-row">
-        <div style="left:0;width:12%">1 trade/day</div><div style="left:12%;width:12%">2 trades/day</div>
-        <div style="left:24%;width:2%">1/day</div><div style="left:26%;width:2%">2/day</div>
-        <div style="left:28%;width:36%">1 trade/day</div><div style="left:64%;width:36%">2 trades/day</div>
-      </div>
-      <div class="xcoord mode-row">
-        <div style="left:0;width:24%">FIXED TARGET</div><div class="trail-mode" style="left:24%;width:4%"><span>30m OTF TRAIL</span></div><div style="left:28%;width:72%">HYBRID · FIXED TARGET + 30m OTF TRAIL</div>
-      </div>
-      <div class="x-title">INNER / TRADE MANAGEMENT</div>
-    </div>
+    <div class="xaxis"><div class="x-title">X PARAMETERS</div></div>
   </div>
   <div class="panels">
-    <div class="panel"><div class="pt">Axis anatomy</div><div class="anatomy"><div><b>Y · Context selection</b></div><div class="path">Range mode → threshold → London close beyond Asia → PM close mode → entry location</div><div><b>X · Trade management</b></div><div class="path">Management mode → max trades/day → initial stop size → target / allocation parameters</div></div><div class="status" id="status"></div></div>
-    <div class="panel"><div class="pt">Hovered configuration</div><div id="hover" class="hovergrid"><span>Outer: <b>—</b></span><span>Inner: <b>—</b></span><span>Metric: <b>—</b></span><span>Range: <b>—</b></span><span>London close > Asia: <b>—</b></span><span>PM close: <b>—</b></span><span>Entry location: <b>—</b></span><span>Management: <b>—</b></span><span>Stop: <b>—</b></span><span>Allocation: <b>—</b></span><span>Target: <b>—</b></span><span>Value: <b>—</b></span></div></div>
+    <div class="panel"><div class="pt">Axis anatomy</div><div class="anatomy"><div><b>Y</b></div><div class="path">—</div><div><b>X</b></div><div class="path">—</div></div><div class="status" id="status"></div></div>
+    <div class="panel"><div class="pt">Hovered configuration</div><div id="hover" class="hovergrid"><span>Metric: <b>—</b></span><span>Value: <b>—</b></span></div></div>
     <div class="panel"><div class="pt">How to read the landscape</div><div class="muted" id="readCopy">Upload a <b>.surface.zip</b> package to begin.</div><div class="key" style="margin-top:9px"><span><i class="line hard"></i>hard regime</span><span><i class="line facet"></i>nested block</span></div></div>
   </div>
 </div>
@@ -63,6 +46,6 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
 <script src="robustness-math-v016.js?v=016"></script>
 <script src="robustness-v016.js?v=016"></script>
 <script src="facet-replication-v017.js?v=017"></script>
-<script src="raw-values-v009.js?v=020"></script>
+<script src="raw-values-v009.js?v=021"></script>
 </body>
 </html>
