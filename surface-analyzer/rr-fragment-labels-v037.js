@@ -49,6 +49,15 @@
     return out.sort((a,b)=>b.cells.length-a.cells.length);
   }
 
+  function upperLeftCell(cells,cols){
+    let best=cells[0];
+    for(const i of cells){
+      const br=Math.floor(best/cols),bc=best-br*cols,r=Math.floor(i/cols),c=i-r*cols;
+      if(r<br||(r===br&&c<bc))best=i;
+    }
+    return best;
+  }
+
   function drawExtraLabels(){
     const api=scanner(),result=api?.result,rr=result?.regionalRobustness;
     if(!rr||typeof activeSurface==='undefined'||!activeSurface)return;
@@ -64,7 +73,7 @@
         if(frag.cells.length<2)continue;
         const bw=(frag.maxC-frag.minC+1)*sx,bh=(frag.maxR-frag.minR+1)*sy;
         if(bw<w+2*d||bh<h+2*d)continue;
-        const r=Math.floor(frag.cell/cols),col=frag.cell-r*cols,x=(col+.5)*sx,y=(r+.5)*sy;
+        const anchor=upperLeftCell(frag.cells,cols),r=Math.floor(anchor/cols),col=anchor-r*cols,x=col*sx+w/2+2*d,y=r*sy+h/2+2*d;
         c.fillStyle='rgb(8,13,18)';c.fillRect(x-w/2,y-h/2,w,h);
         c.strokeStyle='rgba(92,210,255,.85)';c.lineWidth=1*d;c.strokeRect(x-w/2,y-h/2,w,h);
         c.fillStyle='rgba(235,247,252,.98)';c.fillText(text,x,y+.25*d);
