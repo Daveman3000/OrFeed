@@ -84,3 +84,10 @@
   loadExact().catch(e=>console.error('Exact raw value payload failed:',e));
   normalizeDerivedMetricLabels();
 })();
+
+(()=>{
+  const s=document.createElement('script');
+  s.src='surface-package-v019.js?v=019';
+  s.async=false;
+  document.head.appendChild(s);
+})();
