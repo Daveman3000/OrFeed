@@ -1,6 +1,6 @@
 (function(root){
   'use strict';
-  const VERSION='surface-package-v019';
+  const VERSION='surface-package-v020';
   const CSV_NAME='surface.semantic.csv';
   const DESCRIPTOR_NAME='surface_descriptor.json';
   const utf8=new TextDecoder('utf-8');
@@ -149,11 +149,40 @@
     catch(err){loading.style.display='flex';loading.textContent='Invalid surface package: '+err.message;statusEl.textContent='Surface package rejected';console.error(err);}
     finally{uploadBtn.disabled=false;hardResetBtn.disabled=false;input.value='';}
   }
+
+  function installBlankState(){
+    if(typeof hardReset!=='function'||typeof setMetric!=='function'||typeof setSurfaceLabel!=='function'||typeof updateRobustnessAvailability!=='function'){setTimeout(installBlankState,25);return;}
+    const baseSetSurfaceLabel=setSurfaceLabel,baseUpdateAvailability=updateRobustnessAvailability,baseSetMetric=setMetric;
+    const blankHover='<span>Outer: <b>—</b></span><span>Inner: <b>—</b></span><span>Metric: <b>—</b></span><span>Range: <b>—</b></span><span>London close > Asia: <b>—</b></span><span>PM close: <b>—</b></span><span>Entry location: <b>—</b></span><span>Management: <b>—</b></span><span>Stop: <b>—</b></span><span>Allocation: <b>—</b></span><span>Target: <b>—</b></span><span>Value: <b>—</b></span>';
+    function blankUi(){
+      values=null;currentStats=null;cache.clear();statsCache.clear();currentMode='performance';currentKey=lastPerformanceKey||'r_per_trade';
+      for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode==='performance');
+      setViewForMode('performance');populateMetricOptions('performance');metricSel.value=currentKey;
+      if(surfaceNameEl){surfaceNameEl.textContent='No surface loaded';surfaceNameEl.title='Upload a surface package to begin';}
+      if(readCopy)readCopy.innerHTML='Upload a <b>.surface.zip</b> package to begin. Hard Reset clears the locally saved surface and returns the analyzer to this blank state.';
+      if(statusEl)statusEl.textContent='No surface loaded';
+      if(hover)hover.innerHTML=blankHover;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      loading.style.display='flex';loading.textContent='Upload a surface to begin';
+      updateRobustnessAvailability();
+    }
+    setSurfaceLabel=function(){if(activeSurface)return baseSetSurfaceLabel();if(surfaceNameEl){surfaceNameEl.textContent='No surface loaded';surfaceNameEl.title='Upload a surface package to begin';}};
+    updateRobustnessAvailability=function(){
+      if(activeSurface)return baseUpdateAvailability();
+      for(const mode of ['robustness','facet']){const b=metricMode.querySelector(`button[data-mode="${mode}"]`);if(b){b.disabled=true;b.title='Load a surface package first.';}}
+    };
+    setMetric=async function(key){if(activeSurface)return baseSetMetric(key);currentKey=key;blankUi();};
+    hardReset=async function(){loading.style.display='flex';loading.textContent='Clearing local surface…';await idbClearActive();activeSurface=null;blankUi();};
+    const waitInitial=()=>{if(typeof meta==='undefined'||!meta){setTimeout(waitInitial,25);return;}if(!activeSurface)blankUi();};
+    waitInitial();
+  }
+
   function install(){
     if(typeof csvFile==='undefined'||!csvFile||typeof activateSurface!=='function'){setTimeout(install,25);return;}
     csvFile.accept='.surface.zip,.zip,.csv,text/csv,application/zip';uploadBtn.textContent='Upload Surface';csvFile.addEventListener('change',onCaptureChange,true);
-    const v=document.querySelector('.version');if(v)v.textContent='v019';
+    const v=document.querySelector('.version');if(v)v.textContent='v020';
     root.SurfacePackageV019={version:VERSION,loadPackage,buildSemanticSurface};
+    installBlankState();
   }
   install();
 })(typeof window!=='undefined'?window:globalThis);
