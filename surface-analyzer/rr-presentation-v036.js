@@ -165,6 +165,7 @@
     if(installed)return;
     if(!scanner()||typeof activeSurface==='undefined'){setTimeout(install,50);return;}
     installed=true;injectStyle();root.SurfaceRrPresentationV036={version:VERSION};
+    const v=document.querySelector('.version');if(v){v.textContent='v036';v.title='v036 RR presentation · scanner v035 · core v030';}
     setInterval(sync,200);sync();
   }
   install();
