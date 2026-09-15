@@ -87,8 +87,15 @@
 })();
 
 (()=>{
+  const loadAxisChrome=()=>{
+    const a=document.createElement('script');
+    a.src='axis-chrome-v022.js?v=022';
+    a.async=false;
+    document.head.appendChild(a);
+  };
   const s=document.createElement('script');
-  s.src='surface-package-v021.js?v=021';
+  s.src='surface-package-v021.js?v=022';
   s.async=false;
+  s.onload=loadAxisChrome;
   document.head.appendChild(s);
 })();
