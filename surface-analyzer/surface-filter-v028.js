@@ -1,6 +1,6 @@
 (function(root){
   'use strict';
-  const VERSION='surface-filter-v028',STORE='surface-analyzer-surface-filter:v1:';
+  const VERSION='surface-filter-v029',STORE='surface-analyzer-surface-filter:v1:';
   let installed=false,fullSurface=null,selection={},draft={},lastIdentity='',suspend=false;
 
   const defsById=d=>Object.fromEntries((d.parameters||[]).map(p=>[p.id,p]));
@@ -59,7 +59,7 @@
     pop.querySelector('[data-act="reset"]').addEventListener('click',async()=>{initSelection(fullSurface);for(const p of d.parameters||[])if(selection[p.id])selection[p.id]=new Set((p.values||[]).map((_,i)=>i));draft=cloneSelection(selection);saveSelection();wrap.classList.remove('open');await refreshPerformance();});
   }
   function updateControl(){const wrap=ensureControl();if(!wrap)return;const btn=wrap.querySelector('.sa-filter-btn');const on=activeFilters();btn.classList.toggle('active',on);btn.textContent=on?'Filter Surface •':'Filter Surface ▾';btn.disabled=!fullSurface||((typeof currentMode!=='undefined')&&currentMode!=='performance');btn.title=on?'A semantic value filter is active.':'Filter parameter values without changing the source package.';wrap.style.display=fullSurface?'':'none';}
-  async function refreshPerformance(){if(!fullSurface||suspend)return;suspend=true;try{await activateSurface(fullSurface,{persist:false});}finally{suspend=false;updateControl();}}
+  async function refreshPerformance(){if(!fullSurface||suspend)return;await activateSurface(fullSurface,{persist:false});updateControl();}
   function install(){
     if(installed)return;if(!root.SurfaceAutoFormatV026||typeof activateSurface!=='function'||typeof hardReset!=='function'||typeof setMode!=='function'){setTimeout(install,25);return;}installed=true;injectStyle();ensureControl();
     const baseActivate=activateSurface,baseHardReset=hardReset,baseSetMode=setMode;
@@ -77,7 +77,7 @@
       return baseSetMode(mode);
     };
     hardReset=async function(){fullSurface=null;selection={};draft={};lastIdentity='';const out=await baseHardReset();updateControl();return out;};
-    if(activeSurface?.semanticDescriptor){fullSurface=activeSurface;initSelection(fullSurface);if(activeFilters()&&currentMode==='performance')setTimeout(()=>refreshPerformance(),0);}updateControl();const v=document.querySelector('.version');if(v)v.textContent='v028';root.SurfaceFilterV028={version:VERSION,filterSurface,activeFilters};
+    if(activeSurface?.semanticDescriptor){fullSurface=activeSurface;initSelection(fullSurface);if(activeFilters()&&currentMode==='performance')setTimeout(()=>refreshPerformance(),0);}updateControl();const v=document.querySelector('.version');if(v)v.textContent='v029';root.SurfaceFilterV028={version:VERSION,filterSurface,activeFilters};root.SurfaceFilterV029=root.SurfaceFilterV028;
   }
   install();
 })(typeof window!=='undefined'?window:globalThis);
