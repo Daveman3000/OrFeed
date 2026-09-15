@@ -33,3 +33,11 @@
 
   sync();
 })(typeof window!=='undefined'?window:globalThis);
+
+(function(){
+  if(typeof document==='undefined'||document.getElementById('runtimeBadgeV001Script'))return;
+  const s=document.createElement('script');
+  s.id='runtimeBadgeV001Script';
+  s.src='runtime-badge-v001.js?v=001';
+  document.head.appendChild(s);
+})();
