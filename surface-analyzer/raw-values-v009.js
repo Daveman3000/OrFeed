@@ -56,6 +56,7 @@
   }
   const heat=document.getElementById('heat'),metric=document.getElementById('metric'),hoverBox=document.getElementById('hover');
   heat.addEventListener('mousemove',e=>{
+    if(typeof activeSurface!=='undefined'&&activeSurface?.semanticDescriptor?.study_id!=='volspike')return;
     const key=metric.value;if(key!=='r_per_trade'&&key!=='total_r')return;
     const r=heat.getBoundingClientRect(),col=Math.max(0,Math.min(COLS_EXACT-1,Math.floor((e.clientX-r.left)/r.width*COLS_EXACT))),row=Math.max(0,Math.min(ROWS_EXACT-1,Math.floor((e.clientY-r.top)/r.height*ROWS_EXACT)));
     const v=formatExact(key,row*COLS_EXACT+col);if(v==null)return;
@@ -87,7 +88,7 @@
 
 (()=>{
   const s=document.createElement('script');
-  s.src='surface-package-v019.js?v=020';
+  s.src='surface-package-v021.js?v=021';
   s.async=false;
   document.head.appendChild(s);
 })();
