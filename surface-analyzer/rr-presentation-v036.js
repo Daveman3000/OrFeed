@@ -2,7 +2,7 @@
   'use strict';
 
   const VERSION='rr-presentation-v036';
-  let installed=false,lastResult=null,lastMetric='',lastW=0,lastH=0;
+  let installed=false,lastResult=null,lastMetric='',lastW=0,lastH=0,lastMenuBox=null,lastMenuResult=null,lastMenuMetric='';
 
   function scanner(){return root.SurfaceScanLayerV035||root.SurfaceScanLayerV034||root.SurfaceScanLayerV033||null;}
   function finite(v){return Number.isFinite(v);}
@@ -11,10 +11,7 @@
     return raw.replace(/^(sr|fr):/,'');
   }
   function metricLabel(metric){
-    const sel=document.getElementById('metric');
-    const text=sel?.selectedOptions?.[0]?.textContent;
-    if(text)return text.replace(/^SR · |^FR · /,'');
-    return String(metric||'Performance').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    return (typeof meta!=='undefined'&&meta?.[metric]?.label)||String(metric||'Performance').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   }
   function regionMetric(rr,r,preferred){
     const metric=r?.metrics?.[preferred]?preferred:rr?.performance_metrics?.[0];
@@ -64,8 +61,8 @@
   }
 
   function renderOverlay(api,result,rr){
-    const surface=root.activeSurface;if(!surface||!rr)return;
-    const overlay=document.getElementById('scanLayerOverlay'),heat=document.getElementById('heat');
+    if(typeof activeSurface==='undefined'||!activeSurface||!rr)return;
+    const surface=activeSurface,overlay=document.getElementById('scanLayerOverlay'),heat=document.getElementById('heat');
     if(!overlay||!heat)return;
     if(overlay.width!==heat.width)overlay.width=heat.width;
     if(overlay.height!==heat.height)overlay.height=heat.height;
@@ -121,10 +118,12 @@
   }
 
   function enhanceMenu(result,rr){
-    const box=document.querySelector('.sa-scan-regional');if(!box||box.dataset.rrv036==='1')return;
-    const preferred=currentMetric(),top=topRegions(rr,preferred,5),metric=top.length?regionMetric(rr,top[0],preferred).metric:(rr.performance_metrics?.[0]||preferred);
+    const box=document.querySelector('.sa-scan-regional'),preferred=currentMetric();
+    if(!box)return;
+    if(box===lastMenuBox&&result===lastMenuResult&&preferred===lastMenuMetric)return;
+    lastMenuBox=box;lastMenuResult=result;lastMenuMetric=preferred;
+    const top=topRegions(rr,preferred,5),metric=top.length?regionMetric(rr,top[0],preferred).metric:(rr.performance_metrics?.[0]||preferred);
     const total=(rr.regions||[]).reduce((a,r)=>a+(r.cell_count||0),0);
-    box.dataset.rrv036='1';
     box.innerHTML='';
     const head=document.createElement('div');head.className='sa-rr-v036-head';
     const left=document.createElement('b');left.textContent='Regional Robustness';
@@ -136,13 +135,13 @@
     const header=document.createElement('div');header.className='sa-rr-v036-row head';
     for(const t of ['Region','Cells','Consistency','Exposure','Depth','Boundary deterioration']){const s=document.createElement('span');s.textContent=t;header.appendChild(s);}table.appendChild(header);
     for(const r of top){
-      const {m}=regionMetric(rr,r,preferred),row=document.createElement('div');row.className='sa-rr-v036-row data';
+      const {metric:rm,m}=regionMetric(rr,r,preferred),row=document.createElement('div');row.className='sa-rr-v036-row data';
       const depth=r.boundaryless?'∞':finite(r.mean_depth)?r.mean_depth.toFixed(1):'—';
       const sim=finite(m?.interior_similarity)?`${(m.interior_similarity*100).toFixed(0)}%`:'—';
       const exposure=finite(r.boundary_exposure)?`${(r.boundary_exposure*100).toFixed(0)}%`:'—';
       const norm=finite(m?.boundary_mean_normalized_drop)?`${m.boundary_mean_normalized_drop.toFixed(2)}×`:'—';
       const raw=finite(m?.boundary_mean_raw_drop)?m.boundary_mean_raw_drop:null;
-      const drop=raw==null?norm:`${norm} · ${raw.toFixed(3)} raw`;
+      const drop=raw==null?norm:`${norm} · ${raw.toFixed(3)} ${metricLabel(rm)}`;
       const vals=[`R${r.region_id}`,r.cell_count.toLocaleString(),sim,exposure,depth,drop];
       vals.forEach((v,i)=>{const s=document.createElement('span');if(i===0){const b=document.createElement('b');b.textContent=v;s.appendChild(b);}else s.textContent=v;row.appendChild(s);});
       table.appendChild(row);
@@ -159,12 +158,12 @@
       const changed=result!==lastResult||metric!==lastMetric||overlay.width!==lastW||overlay.height!==lastH;
       if(changed){renderOverlay(api,result,rr);lastResult=result;lastMetric=metric;lastW=overlay.width;lastH=overlay.height;}
       enhanceMenu(result,rr);
-    }else{lastResult=result||null;lastMetric=metric;lastW=overlay?.width||0;lastH=overlay?.height||0;}
+    }else{lastResult=result||null;lastMetric=metric;lastW=overlay?.width||0;lastH=overlay?.height||0;lastMenuBox=null;lastMenuResult=null;lastMenuMetric='';}
   }
 
   function install(){
     if(installed)return;
-    if(!scanner()||typeof root.activeSurface==='undefined'){setTimeout(install,50);return;}
+    if(!scanner()||typeof activeSurface==='undefined'){setTimeout(install,50);return;}
     installed=true;injectStyle();root.SurfaceRrPresentationV036={version:VERSION};
     setInterval(sync,200);sync();
   }
