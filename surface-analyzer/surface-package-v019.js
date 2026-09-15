@@ -64,7 +64,7 @@
     }
     return text;
   }
-  function sameScalar(a,b){return typeof b==='number'?Number(a)===b:String(a)===String(b);}
+  function sameScalar(a,b){if(a==null||a==='')return b==null||b==='';return typeof b==='number'?Number(a)===b:String(a)===String(b);}
   function activeWhen(rule,params){
     if(!rule||rule==='always')return true;
     if(rule.op==='eq')return sameScalar(params[rule.parameter],rule.value);
@@ -119,7 +119,7 @@
       dataRows++;const sem={},typed={};
       for(const p of params){const raw=cells[col[p.id]]??'';sem[p.id]=raw;typed[p.id]=parseScalar(raw,p.type);}
       for(const p of params){const on=activeWhen(p.active_when,typed),raw=sem[p.id];if(on&&raw==='')fail(`Row ${rowNo}: active parameter ${p.id} is blank`);if(!on&&raw!=='')fail(`Row ${rowNo}: inactive parameter ${p.id} must be blank`);if(raw!==''&&!valueMaps[p.id].has(raw))fail(`Row ${rowNo}: ${p.id}=${raw} is outside the declared domain`);}
-      for(const c of constants){const raw=cells[col[c.id]]??'';if(!sameScalar(raw,c.value))fail(`Row ${rowNo}: constant ${c.id}=${raw} does not match descriptor value ${c.value}`);}
+      for(const c of constants){const raw=cells[col[c.id]]??'';if(raw===''||!sameScalar(raw,c.value))fail(`Row ${rowNo}: constant ${c.id}=${raw} does not match descriptor value ${c.value}`);}
       const analysisKey=cells[col.analysis_key]??'';if(!analysisKey)fail(`Row ${rowNo}: blank analysis_key`);if(analysisKeys.has(analysisKey))fail(`Row ${rowNo}: duplicate analysis_key ${analysisKey}`);analysisKeys.add(analysisKey);
       const metricValues=new Float64Array(metricIds.length);for(let i=0;i<metricIds.length;i++){const v=Number(cells[col[metricIds[i]]]);if(!Number.isFinite(v))fail(`Row ${rowNo}: invalid ${metricIds[i]}`);metricValues[i]=v;}
       const xs=signature(sem,xIds),ys=signature(sem,yIds);if(!xUnique.has(xs))xUnique.set(xs,{sig:xs,row:sem,rank:axisRank(sem,xSpec,valueMaps)});if(!yUnique.has(ys))yUnique.set(ys,{sig:ys,row:sem,rank:axisRank(sem,ySpec,valueMaps)});
