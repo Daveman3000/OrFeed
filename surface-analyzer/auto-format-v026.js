@@ -1,6 +1,6 @@
 (function(root){
   'use strict';
-  const VERSION='auto-format-v026',PREF='surface-analyzer-auto-format:v1',TRIGGER_RATIO=80,MAX_MOVES=2;
+  const VERSION='auto-format-v027',PREF='surface-analyzer-auto-format:v1',TRIGGER_RATIO=80,MAX_MOVES=2;
   let installed=false,reapplying=false;
   const defsById=d=>Object.fromEntries((d.parameters||[]).map(p=>[p.id,p]));
   const sameOrder=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
@@ -37,7 +37,10 @@
     for(const moved of combos(movable,MAX_MOVES)){
       const remain=largeOrder.filter(id=>!moved.includes(id));
       const movedOrdered=largeOrder.filter(id=>moved.includes(id));
-      const nextSmall=[...movedOrdered,...smallOrder];
+      // Preserve the descriptor-defined hierarchy on the destination axis.
+      // Rebalanced dimensions become inner/nested dimensions instead of
+      // fragmenting the original Stop -> TP1 -> TP2 (or equivalent) groups.
+      const nextSmall=[...smallOrder,...movedOrdered];
       const x=large==='y'?nextSmall:remain,y=large==='y'?remain:nextSmall;
       if(!x.length||!y.length)continue;
       const shape=gridShape(surface,x,y);if(!shape.complete)continue;
@@ -98,7 +101,7 @@
     const baseActivate=activateSurface;
     activateSurface=async function(surface,opt){return baseActivate(format(surface,enabled()),opt);};
     if(activeSurface?.semanticDescriptor&&!reapplying){reapplying=true;Promise.resolve(activateSurface(activeSurface)).finally(()=>{reapplying=false;});}
-    const v=document.querySelector('.version');if(v)v.textContent='v026';
+    const v=document.querySelector('.version');if(v)v.textContent='v027';
     root.SurfaceAutoFormatV026={version:VERSION,format,chooseLayout};
   }
   install();
