@@ -13,10 +13,11 @@
   let tries=0;
   function sync(){
     const core=!!root.SurfaceSemanticAnalysisV030;
+    const scan35=!!root.SurfaceScanLayerV035;
     const scan34=!!root.SurfaceScanLayerV034;
     const scan33=!!root.SurfaceScanLayerV033;
-    if(core&&(scan34||scan33)){
-      const v=scan34?'v034':'v033';
+    if(core&&(scan35||scan34||scan33)){
+      const v=scan35?'v035':scan34?'v034':'v033';
       el.textContent=v;
       el.title=`${v} synchronized · core v030`;
       return;
