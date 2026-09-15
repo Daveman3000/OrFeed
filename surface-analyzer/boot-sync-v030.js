@@ -25,10 +25,7 @@
     }catch(err){
       done=false;
       console.error('Surface Analyzer boot sync failed:',err);
-      return;
     }
-    const v=document.querySelector('.version');
-    if(v)v.textContent='v030';
   }
 
   sync();
