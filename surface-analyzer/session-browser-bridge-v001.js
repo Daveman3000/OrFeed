@@ -62,11 +62,6 @@
 
   function sourceLoaded(){return !!session?.getState?.()?.source?.loaded;}
 
-  function closeFilterPopover(){
-    if(typeof document==='undefined')return;
-    document.getElementById('surfaceFilterControl')?.classList.remove('open');
-  }
-
   async function syncResearchDomainFromFilter(){
     if(!sourceLoaded())return;
     const api=root.SurfaceFilterV029;
@@ -84,7 +79,6 @@
       if(sourceLoad||persist||!sourceLoaded())await session.loadSurface(surface,{persist});
       const out=await baseActivate(surface,{...opt,persist:false});
       await syncResearchDomainFromFilter();
-      closeFilterPopover();
       return out;
     }
 
@@ -96,9 +90,7 @@
       await session.clearStoredSurface();
       session=createSession();
       publish();
-      const out=await baseHardReset();
-      closeFilterPopover();
-      return out;
+      return baseHardReset();
     };
 
     publish();
