@@ -10,11 +10,13 @@
     const app='<script src="app.js?v=010"><\/script>';
     const boot='<script src="boot-sync-v030.js?v=030"><\/script>';
     if(!html.includes(app))throw new Error('Could not locate app.js staging insertion point');
+    if(!html.includes('</body>'))throw new Error('Could not locate staging analysis insertion point');
     html=html.replace(app,app+
       '<script src="session-v001.js?v=001"><\/script>'+ 
       '<script src="surface-filter-core-v001.js?v=001"><\/script>'+ 
       '<script src="session-browser-bridge-v001.js?v=001"><\/script>');
     html=html.replace(boot,'');
+    html=html.replace('</body>','<script src="session-analysis-bridge-v001.js?v=001"><\/script></body>');
     document.open();
     document.write(html);
     document.close();
