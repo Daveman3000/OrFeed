@@ -75,7 +75,7 @@
     session=createSession();
 
     async function activateThroughSession(surface,opt={},sourceLoad=false){
-      const persist=opt?.persist!==false;
+      const persist=opt?.persist===true;
       if(sourceLoad||persist||!sourceLoaded())await session.loadSurface(surface,{persist});
       const out=await baseActivate(surface,{...opt,persist:false});
       await syncResearchDomainFromFilter();
