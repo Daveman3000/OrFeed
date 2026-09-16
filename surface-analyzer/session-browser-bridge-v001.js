@@ -61,12 +61,15 @@
   }
 
   function sourceLoaded(){return !!session?.getState?.()?.source?.loaded;}
+  function sameFilterSpec(a,b){return JSON.stringify(a||{})===JSON.stringify(b||{});}
 
   async function syncResearchDomainFromFilter(){
     if(!sourceLoaded())return;
-    const api=root.SurfaceFilterV029;
-    if(api?.activeFilters?.())await session.setFilter(api.getFilterSpec?.()||{});
-    else if(session.getState()?.researchDomain?.filtered)session.clearFilter();
+    const api=root.SurfaceFilterV029,state=session.getState()?.researchDomain;
+    if(api?.activeFilters?.()){
+      const spec=api.getFilterSpec?.()||{};
+      if(!state?.filtered||!sameFilterSpec(state.filterSpec,spec))await session.setFilter(spec);
+    }else if(state?.filtered)session.clearFilter();
   }
 
   async function install(){
