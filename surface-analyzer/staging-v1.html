@@ -10,8 +10,11 @@
     const app='<script src="app.js?v=010"><\/script>';
     const boot='<script src="boot-sync-v030.js?v=030"><\/script>';
     const scan='<script src="scan-layer-v033.js?v=035"><\/script>';
+    const rr='<script src="rr-presentation-v036.js?v=036"><\/script>';
+    const labels='<script src="rr-fragment-labels-v037.js?v=037"><\/script>';
     if(!html.includes(app))throw new Error('Could not locate app.js staging insertion point');
     if(!html.includes(scan))throw new Error('Could not locate Scan Layer staging replacement point');
+    if(!html.includes(rr)||!html.includes(labels))throw new Error('Could not locate RR staging replacement points');
     if(!html.includes('</body>'))throw new Error('Could not locate staging analysis insertion point');
     html=html.replace(app,app+
       '<script src="session-v001.js?v=001"><\/script>'+ 
@@ -19,6 +22,8 @@
       '<script src="session-browser-bridge-v001.js?v=001"><\/script>');
     html=html.replace(boot,'');
     html=html.replace(scan,'<script src="session-scan-bridge-v001.js?v=001"><\/script>');
+    html=html.replace(rr,'<script src="session-rr-bridge-v001.js?v=001"><\/script>');
+    html=html.replace(labels,'');
     html=html.replace('</body>','<script src="session-analysis-bridge-v001.js?v=001"><\/script></body>');
     document.open();
     document.write(html);
