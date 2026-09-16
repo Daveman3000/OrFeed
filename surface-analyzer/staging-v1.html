@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Surface Analyzer v1 Staging</title>
+<script>
+(async()=>{
+  try{
+    const response=await fetch('index.html?v=staging-v1',{cache:'no-store'});
+    if(!response.ok)throw new Error(`index.html HTTP ${response.status}`);
+    let html=await response.text();
+    const app='<script src="app.js?v=010"><\/script>';
+    const boot='<script src="boot-sync-v030.js?v=030"><\/script>';
+    if(!html.includes(app))throw new Error('Could not locate app.js staging insertion point');
+    html=html.replace(app,app+
+      '<script src="session-v001.js?v=001"><\/script>'+ 
+      '<script src="surface-filter-core-v001.js?v=001"><\/script>'+ 
+      '<script src="session-browser-bridge-v001.js?v=001"><\/script>');
+    html=html.replace(boot,'');
+    document.open();
+    document.write(html);
+    document.close();
+  }catch(err){
+    document.body.innerHTML='<pre style="white-space:pre-wrap;color:#ddd;background:#111;padding:24px">Surface Analyzer v1 staging failed to start: '+String(err&&err.message||err)+'</pre>';
+  }
+})();
+</script>
