@@ -57,6 +57,7 @@
 
   function createSession(options={}){
     const storageAdapter=options.storageAdapter||null;
+    const filterEngine=options.filterEngine||null;
     const activeKey=options.activeKey||DEFAULT_ACTIVE_KEY;
     const listeners=new Set();
     let revision=0;
@@ -120,6 +121,15 @@
       emit('surfaceLoaded',{sourceIdentity:sourceId});
     }
 
+    function commitDomain(surface,spec,eventType){
+      filteredSurface=surface;
+      filterSpec=spec;
+      domainId=spec==null?`${sourceId}|filter:none`:`${sourceId}|filter:${stableStringify(spec)}`;
+      clearDerived();
+      revision++;
+      emit(eventType,{domainIdentity:domainId});
+    }
+
     async function loadSurface(surface,{persist=false}={}){
       const candidate=validateSurface(surface);
       if(persist){
@@ -135,6 +145,23 @@
       const stored=await storageAdapter.get(activeKey);
       if(!stored)return null;
       return loadSurface(stored,{persist:false});
+    }
+
+    function setFilter(spec){
+      if(!sourceSurface)throw new Error('No surface is loaded.');
+      if(!filterEngine?.normalizeFilterSpec||!filterEngine?.activeFilters||!filterEngine?.applySurfaceFilter)throw new Error('Surface Filter engine is unavailable.');
+      const normalized=filterEngine.normalizeFilterSpec(sourceSurface,spec||{});
+      if(!filterEngine.activeFilters(sourceSurface,normalized))return clearFilter();
+      const candidate=validateSurface(filterEngine.applySurfaceFilter(sourceSurface,normalized));
+      commitDomain(candidate,normalized,'filterChanged');
+      return stateSummary();
+    }
+
+    function clearFilter(){
+      if(!sourceSurface)throw new Error('No surface is loaded.');
+      if(filterSpec==null&&filteredSurface===sourceSurface)return stateSummary();
+      commitDomain(sourceSurface,null,'filterCleared');
+      return stateSummary();
     }
 
     async function clear({removePersisted=false}={}){
@@ -165,6 +192,8 @@
       version:VERSION,
       loadSurface,
       restore,
+      setFilter,
+      clearFilter,
       clear,
       subscribe,
       getState:stateSummary,
