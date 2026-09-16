@@ -16,6 +16,8 @@
     return `{${keys.map(k=>`${JSON.stringify(k)}:${stableStringify(value[k])}`).join(',')}}`;
   }
 
+  function cloneJson(value){return value==null?value:JSON.parse(JSON.stringify(value));}
+
   function sourceIdentity(surface){
     const d=surface?.semanticDescriptor||{},p=d.provenance||{};
     const sourceHash=p.source_sha256||p.source?.sha256||p.semantic_csv_sha256||p.canonical_results_sha256||'';
@@ -59,6 +61,8 @@
     const storageAdapter=options.storageAdapter||null;
     const filterEngine=options.filterEngine||null;
     const semanticEngine=options.semanticEngine||null;
+    const scanEngine=options.scanEngine||null;
+    const metricMetadata=options.metricMetadata||{};
     const activeKey=options.activeKey||DEFAULT_ACTIVE_KEY;
     const listeners=new Set();
     let revision=0;
@@ -75,12 +79,14 @@
     let regionalRobustnessResult=null;
     let srCache=new Map();
     let frCache=new Map();
+    let percentileCache=new Map();
 
     function clearDerived(){
       topology=null;
       topologyId='';
       srCache=new Map();
       frCache=new Map();
+      percentileCache=new Map();
       scanResult=null;
       regionalRobustnessResult=null;
     }
@@ -94,11 +100,11 @@
         descriptorIdentity:descriptorId,
         domainIdentity:domainId,
         topologyIdentity:topologyId,
-        filterSpec:filterSpec==null?null:JSON.parse(JSON.stringify(filterSpec)),
+        filterSpec:cloneJson(filterSpec),
         hasTopology:!!topology,
         structuralRobustnessMetrics:[...srCache.keys()],
         facetReplicationMetrics:[...frCache.keys()],
-        scanConfig:scanConfig==null?null:JSON.parse(JSON.stringify(scanConfig)),
+        scanConfig:cloneJson(scanConfig),
         hasScanResult:!!scanResult,
         hasRegionalRobustnessResult:!!regionalRobustnessResult
       };
@@ -185,6 +191,18 @@
       return values;
     }
 
+    function invertMetric(metricId){return !!metricMetadata?.[metricId]?.invert;}
+
+    function getPerformanceSeries(metricId,{basis='raw'}={}){
+      const raw=metricValues(metricId);
+      if(basis==='raw')return raw;
+      if(basis!=='percentile')throw new Error(`Unsupported performance basis ${basis}.`);
+      if(!scanEngine?.midrankPercentile)throw new Error('Scan engine cannot compute performance percentiles.');
+      const key=`${metricId}|${invertMetric(metricId)?1:0}`;
+      if(!percentileCache.has(key))percentileCache.set(key,scanEngine.midrankPercentile(raw,invertMetric(metricId)));
+      return percentileCache.get(key);
+    }
+
     function computeStructuralRobustness(metricId){
       if(srCache.has(metricId))return srCache.get(metricId);
       if(!semanticEngine?.computeSR)throw new Error('Semantic analysis engine cannot compute Structural Robustness.');
@@ -201,6 +219,51 @@
       frCache.set(metricId,candidate);
       emit('analysisComputed',{analysis:'facet_replication',metricId});
       return candidate;
+    }
+
+    async function resolveScanSeries(criterion){
+      if(criterion.source==='performance')return getPerformanceSeries(criterion.metric,{basis:criterion.basis==='percentile'?'percentile':'raw'});
+      if(criterion.source==='structural_robustness')return computeStructuralRobustness(criterion.metric).structural_robustness;
+      if(criterion.source==='facet_replication')return computeFacetReplication(criterion.metric).facet_replication;
+      throw new Error(`Unsupported scan source ${criterion.source}.`);
+    }
+
+    async function runScan(config){
+      if(!filteredSurface?.semanticDescriptor)throw new Error('No semantic surface loaded.');
+      if(!scanEngine?.evaluateScan)throw new Error('Scan engine is unavailable.');
+      const candidateConfig=cloneJson(config||{});
+      const startRevision=revision,startDomain=domainId,surface=filteredSurface,g=ensureTopology();
+      const candidate=await scanEngine.evaluateScan(surface,candidateConfig,g,resolveScanSeries);
+      if(candidateConfig.region_rules?.regional_robustness){
+        if(!candidate.performanceMask)throw new Error('Regional Robustness requires at least one Performance criterion.');
+        if(!scanEngine?.analyzeRegionalRobustness)throw new Error('Scan engine cannot compute Regional Robustness.');
+        candidate.regionalRobustness=scanEngine.analyzeRegionalRobustness(
+          surface,
+          g,
+          candidate.performanceMask,
+          Math.max(1,Math.trunc(Number(candidateConfig.region_rules?.min_cells)||1)),
+          candidate.performanceMetrics,
+          invertMetric,
+          semanticEngine?.TAU
+        );
+      }
+      delete candidate.performanceMask;
+      if(revision!==startRevision||domainId!==startDomain||filteredSurface!==surface)throw new Error('Surface or research domain changed while scan was running. Apply again.');
+      scanConfig=candidateConfig;
+      scanResult=candidate;
+      regionalRobustnessResult=candidate.regionalRobustness||null;
+      revision++;
+      emit('scanApplied',{passingCells:candidate.passingCells,regions:candidate.regions.length});
+      return candidate;
+    }
+
+    function clearScan(){
+      if(!scanResult&&!regionalRobustnessResult)return stateSummary();
+      scanResult=null;
+      regionalRobustnessResult=null;
+      revision++;
+      emit('scanCleared');
+      return stateSummary();
     }
 
     async function clear({removePersisted=false}={}){
@@ -234,14 +297,19 @@
       setFilter,
       clearFilter,
       ensureTopology,
+      getPerformanceSeries,
       computeStructuralRobustness,
       computeFacetReplication,
+      runScan,
+      clearScan,
       clear,
       subscribe,
       getState:stateSummary,
       getSourceSurface:()=>sourceSurface,
       getFilteredSurface:()=>filteredSurface,
-      getTopology:()=>topology
+      getTopology:()=>topology,
+      getScanResult:()=>scanResult,
+      getRegionalRobustnessResult:()=>regionalRobustnessResult
     };
   }
 
