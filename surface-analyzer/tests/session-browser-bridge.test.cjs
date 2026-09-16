@@ -8,9 +8,10 @@ const path=require('node:path');
   const bridge=fs.readFileSync(path.join(__dirname,'..','session-browser-bridge-v001.js'),'utf8');
   new vm.Script(bridge,{filename:'session-browser-bridge-v001.js'});
 
-  const stored={rows:1,cols:1,metrics:{m:Float64Array.from([1])},semanticDescriptor:{study_id:'test'}};
-  const calls={get:0,set:0,clear:0,load:[],activate:[],reset:0};
-  let sessionSerial=0;
+  const stored={rows:1,cols:2,metrics:{m:Float64Array.from([1,2])},semanticDescriptor:{study_id:'test'}};
+  const filtered={...stored,cols:1,metrics:{m:Float64Array.from([2])},surfaceFilter:{active:true}};
+  const calls={get:0,set:0,clear:0,load:[],activate:[],reset:0,filterSurface:0,applyFiltered:[],clearFilter:0};
+  let sessionSerial=0,filterActive=false;
 
   const context={
     console:{info(){},error(){throw new Error('bridge console error: '+[...arguments].join(' '));}},
@@ -26,19 +27,25 @@ const path=require('node:path');
     SurfacePackageV021:{},
     AxisLayerControlsV023:{},
     SurfaceAutoFormatV026:{},
-    SurfaceFilterV029:{},
+    SurfaceFilterV029:{
+      activeFilters(){return filterActive;},
+      filterSurface(source){calls.filterSurface++;assert.equal(source,stored);return filtered;}
+    },
     SurfaceSemanticAnalysisV030:{buildTopology(){},computeSR(){},computeFR(){}},
     SurfaceScanEngineV035:{evaluateScan(){},analyzeRegionalRobustness(){},midrankPercentile(){}},
     SurfaceFilterCoreV001:{applySurfaceFilter:s=>s},
     SurfaceAnalyzerSessionV001:{
       createSession(opts){
         const id=++sessionSerial;
+        let sourceSurface=null,researchSurface=null;
         return {
           id,
-          async loadSurface(surface,opt){calls.load.push({id,surface,opt});if(opt.persist)await opts.storageAdapter.set('active-surface',surface);},
+          async loadSurface(surface,opt){calls.load.push({id,surface,opt});sourceSurface=surface;researchSurface=surface;if(opt.persist)await opts.storageAdapter.set('active-surface',surface);},
+          applyFilteredSurface(surface,spec){calls.applyFiltered.push({surface,spec});researchSurface=surface;},
+          clearFilter(){calls.clearFilter++;researchSurface=sourceSurface;},
           async clearStoredSurface(){await opts.storageAdapter.remove('active-surface');},
-          getState(){return {id};},
-          getAnalysisSnapshot(){return {id};}
+          getState(){return {id,source:{loaded:!!sourceSurface},researchDomain:{filtered:!!sourceSurface&&researchSurface!==sourceSurface}};},
+          getAnalysisSnapshot(){return {id,sourceSurface,researchSurface};}
         };
       }
     }
@@ -49,27 +56,40 @@ const path=require('node:path');
   vm.runInContext(bridge,context,{filename:'session-browser-bridge-v001.js'});
   await new Promise(resolve=>setImmediate(resolve));
 
-  assert.ok(context.SurfaceAnalyzerBrowserSessionV001,'bridge API should publish');
-  assert.equal(calls.get,1,'bridge should read saved surface exactly once');
-  assert.equal(calls.load.length,1,'saved surface should enter canonical session once');
+  assert.ok(context.SurfaceAnalyzerBrowserSessionV001);
+  assert.equal(calls.get,1);
+  assert.equal(calls.load.length,1);
   assert.equal(calls.load[0].surface,stored);
   assert.equal(calls.load[0].opt.persist,false);
-  assert.equal(calls.activate.length,1,'UI activation should happen once after session restore');
-  assert.equal(calls.activate[0].surface,stored);
+  assert.equal(calls.activate.length,1);
   assert.equal(calls.activate[0].opt.persist,false);
-  assert.equal(await context.idbGetActive(),null,'legacy restore hooks must remain gated');
+  assert.equal(await context.idbGetActive(),null);
 
-  const next={rows:1,cols:1,metrics:{m:Float64Array.from([2])},semanticDescriptor:{study_id:'next'}};
+  filterActive=true;
+  await context.activateSurface(stored,{persist:false});
+  assert.equal(calls.load.length,1,'filter refresh must not become a new source load');
+  assert.equal(calls.filterSurface,1);
+  assert.equal(calls.applyFiltered.length,1);
+  assert.equal(calls.applyFiltered[0].surface,filtered);
+  assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().researchDomain.filtered,true);
+
+  filterActive=false;
+  await context.activateSurface(stored,{persist:false});
+  assert.equal(calls.load.length,1,'filter reset must preserve canonical source identity');
+  assert.equal(calls.clearFilter,1);
+  assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().researchDomain.filtered,false);
+
+  const next={rows:1,cols:1,metrics:{m:Float64Array.from([3])},semanticDescriptor:{study_id:'next'}};
   await context.activateSurface(next,{persist:true});
   assert.equal(calls.load.length,2);
-  assert.equal(calls.set,1,'session owns persistence for new loads');
-  assert.equal(calls.activate.length,2);
-  assert.equal(calls.activate[1].opt.persist,false,'legacy UI must not persist a second time');
+  assert.equal(calls.load[1].surface,next);
+  assert.equal(calls.set,1);
+  assert.equal(calls.activate.at(-1).opt.persist,false);
 
   await context.hardReset();
-  assert.equal(calls.clear,1,'session clears stored surface');
-  assert.equal(calls.reset,1,'legacy UI reset still runs');
-  assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().id,2,'hard reset replaces session state');
+  assert.equal(calls.clear,1);
+  assert.equal(calls.reset,1);
+  assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().id,2);
 
-  console.log('PASS  v1 browser bridge owns load/restore persistence without duplicate UI writes');
+  console.log('PASS  v1 bridge keeps source identity stable while session owns filtered research domain');
 })().catch(err=>{console.error(err.stack||err);process.exitCode=1;});

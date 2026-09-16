@@ -13,8 +13,6 @@
     return;
   }
 
-  // Own restore on the staging path. Legacy restore hooks now see an empty store,
-  // while this bridge retains the real IndexedDB functions through the closures above.
   idbGetActive=async()=>null;
 
   let installed=false;
@@ -62,15 +60,35 @@
     };
   }
 
+  function sourceLoaded(){return !!session?.getState?.()?.source?.loaded;}
+
+  function syncResearchDomainFromFilter(){
+    if(!sourceLoaded())return;
+    const api=root.SurfaceFilterV029;
+    if(api?.activeFilters?.()){
+      const source=session.getAnalysisSnapshot().sourceSurface;
+      const filtered=api.filterSurface(source);
+      session.applyFilteredSurface(filtered,null);
+    }else if(session.getState()?.researchDomain?.filtered){
+      session.clearFilter();
+    }
+  }
+
   async function install(){
     const baseActivate=activateSurface;
     const baseHardReset=hardReset;
     session=createSession();
 
-    activateSurface=async function(surface,opt={}){
+    async function activateThroughSession(surface,opt={},sourceLoad=false){
       const persist=opt?.persist!==false;
-      await session.loadSurface(surface,{persist});
-      return baseActivate(surface,{...opt,persist:false});
+      if(sourceLoad||persist||!sourceLoaded())await session.loadSurface(surface,{persist});
+      const out=await baseActivate(surface,{...opt,persist:false});
+      syncResearchDomainFromFilter();
+      return out;
+    }
+
+    activateSurface=async function(surface,opt={}){
+      return activateThroughSession(surface,opt,false);
     };
 
     hardReset=async function(){
@@ -83,7 +101,7 @@
     publish();
 
     const restored=await realGet();
-    if(restored)await activateSurface(restored,{persist:false});
+    if(restored)await activateThroughSession(restored,{persist:false},true);
 
     root.dispatchEvent(new CustomEvent('surface-analyzer-session-ready',{
       detail:{version:VERSION,restored:!!restored}
@@ -99,9 +117,6 @@
       return;
     }
 
-    // Existing browser modules install by wrapping activateSurface. Wait until that
-    // reference has remained unchanged for several ticks so this bridge becomes the
-    // outermost owner and receives the original source surface before presentation wrappers.
     if(activateSurface!==lastActivate){
       lastActivate=activateSurface;
       stableTicks=0;
