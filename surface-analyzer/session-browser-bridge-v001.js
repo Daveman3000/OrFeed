@@ -4,6 +4,7 @@
 
   const VERSION='session-browser-bridge-v001';
   const ACTIVE_KEY='active-surface';
+  const LEGACY_STORAGE_CLEARED='surface-analyzer-refactor-v1:legacy-storage-cleared';
   const realGet=typeof idbGetActive==='function'?idbGetActive:null;
   const realSet=typeof idbSetActive==='function'?idbSetActive:null;
   const realClear=typeof idbClearActive==='function'?idbClearActive:null;
@@ -63,6 +64,32 @@
   function sourceLoaded(){return !!session?.getState?.()?.source?.loaded;}
   function sameFilterSpec(a,b){return JSON.stringify(a||{})===JSON.stringify(b||{});}
 
+  function clearLegacyFallback(){
+    try{if(typeof activeSurface!=='undefined')activeSurface=null;}catch{}
+    try{if(typeof values!=='undefined')values=null;}catch{}
+    try{if(typeof currentStats!=='undefined')currentStats=null;}catch{}
+    try{if(typeof cache!=='undefined'&&cache?.clear)cache.clear();}catch{}
+    try{if(typeof statsCache!=='undefined'&&statsCache?.clear)statsCache.clear();}catch{}
+    try{if(typeof ctx!=='undefined'&&ctx&&typeof canvas!=='undefined'&&canvas)ctx.clearRect(0,0,canvas.width,canvas.height);}catch{}
+    try{if(typeof hover!=='undefined'&&hover)hover.innerHTML='';}catch{}
+    try{if(typeof loading!=='undefined'&&loading){loading.style.display='flex';loading.textContent='Load a surface package to begin';}}catch{}
+    try{if(typeof statusEl!=='undefined'&&statusEl)statusEl.textContent='No surface loaded';}catch{}
+    try{if(typeof surfaceNameEl!=='undefined'&&surfaceNameEl){surfaceNameEl.textContent='No surface loaded';surfaceNameEl.title='';}}catch{}
+  }
+
+  async function clearInheritedLegacyStorageOnce(){
+    try{
+      const ls=root.localStorage;
+      if(!ls||ls.getItem(LEGACY_STORAGE_CLEARED)==='1')return false;
+      await realClear();
+      ls.setItem(LEGACY_STORAGE_CLEARED,'1');
+      return true;
+    }catch(e){
+      console.warn('Surface Analyzer v1: could not clear inherited legacy storage:',e);
+      return false;
+    }
+  }
+
   async function syncResearchDomainFromFilter(){
     if(!sourceLoaded())return;
     const api=root.SurfaceFilterV029,state=session.getState()?.researchDomain;
@@ -93,18 +120,22 @@
       await session.clearStoredSurface();
       session=createSession();
       publish();
-      return baseHardReset();
+      const out=await baseHardReset();
+      clearLegacyFallback();
+      return out;
     };
 
     publish();
 
-    const restored=await realGet();
+    const inheritedCleared=await clearInheritedLegacyStorageOnce();
+    const restored=inheritedCleared?null:await realGet();
     if(restored)await activateThroughSession(restored,{persist:false},true);
+    else clearLegacyFallback();
 
     root.dispatchEvent(new CustomEvent('surface-analyzer-session-ready',{
       detail:{version:VERSION,restored:!!restored}
     }));
-    console.info(`Surface Analyzer v1 session bridge active${restored?' · restored saved surface':''}`);
+    console.info(`Surface Analyzer v1 session bridge active${restored?' · restored saved surface':' · blank session'}`);
   }
 
   function probe(){
