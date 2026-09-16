@@ -41,5 +41,11 @@ const bridge=require('../session-scan-bridge-v001.js');
   assert.match(patched,/const opening=!wrap\.classList\.contains\('open'\)/);
   assert.match(patched,/renderMenu\(false\);wrap\.classList\.add\('open'\)/,'Apply must leave Scan open');
   assert.doesNotMatch(patched,/scanLayerControl[^\n]*remove\('open'\)/,'internal Scan actions must not close Scan');
-  console.log('PASS  Scan Layer delegates execution to session, remaps presentation order, and preserves menu-open rule');
+  assert.doesNotMatch(patched,/textContent='Scanning…'/,'Apply must not move the Scan popover anchor by changing button text');
+
+  const bridgeSource=fs.readFileSync(path.join(__dirname,'..','session-scan-bridge-v001.js'),'utf8');
+  assert.match(bridgeSource,/document\.addEventListener\('click',e=>\{/,'menu exclusivity must be delegated at the document level');
+  assert.match(bridgeSource,/#surfaceFilterControl,#axisLayerControl,#scanLayerControl/,'all three custom menus must share the one-open rule');
+  assert.match(bridgeSource,/addEventListener\('click',e=>\{[\s\S]*\},true\)/,'menu exclusivity must run in capture phase');
+  console.log('PASS  Scan Layer delegates execution to session, remaps presentation order, preserves menu-open rule, and keeps one stable menu anchor');
 })().catch(err=>{console.error(err.stack||err);process.exitCode=1;});

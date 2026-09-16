@@ -89,6 +89,10 @@
       "    reset.addEventListener('click',e=>{e.stopPropagation();root.SurfaceSessionScanBridgeV001?.clearApplied?.();config=defaultConfig();draft=clone(config);saveConfig();clearActive();draft.criteria.push(defaultCriterion());renderMenu(false);});",
       'Reset session invalidation');
     out=patchOnce(out,
+      "    const button=ensureControl()?.querySelector('.sa-scan-btn');\n    if(button){button.disabled=true;button.textContent='Scanning…';}",
+      "    const button=ensureControl()?.querySelector('.sa-scan-btn');\n    if(button)button.disabled=true;",
+      'stable Scan anchor during Apply');
+    out=patchOnce(out,
       "    await new Promise(r=>setTimeout(r,0));\n    const g=ensureGraph();",
       "    await new Promise(r=>setTimeout(r,0));\n    const session=root.SurfaceAnalyzerBrowserSessionV001?.getSession?.();\n    if(session&&root.SurfaceSessionScanBridgeV001?.runForDisplay){\n      const r=await root.SurfaceSessionScanBridgeV001.runForDisplay(session,surface,config,{tau:root.SurfaceSemanticAnalysisV030?.TAU||DEFAULT_TAU});\n      if(activeSurface!==surface)throw new Error('Surface changed while scan was running. Apply again.');\n      result=r;resultSurface=surface;renderOverlay();updateControl();return;\n    }\n    const g=ensureGraph();",
       'session-owned scan execution');
@@ -100,14 +104,14 @@
   }
 
   function installPeerMenuRule(){
-    const scan=()=>document.getElementById('scanLayerControl');
-    for(const id of ['surfaceFilterControl','axisLayerControl']){
-      const wrap=document.getElementById(id),btn=wrap?.querySelector('button');
-      if(btn&&!btn.dataset.scanPeerRule){
-        btn.dataset.scanPeerRule='1';
-        btn.addEventListener('click',()=>scan()?.classList.remove('open'),true);
-      }
-    }
+    if(document.documentElement.dataset.surfaceAnalyzerMenuRule==='1')return;
+    document.documentElement.dataset.surfaceAnalyzerMenuRule='1';
+    const ids=['surfaceFilterControl','axisLayerControl','scanLayerControl'];
+    document.addEventListener('click',e=>{
+      const target=e.target?.closest?.('#surfaceFilterControl,#axisLayerControl,#scanLayerControl');
+      if(!target)return;
+      for(const id of ids)if(id!==target.id)document.getElementById(id)?.classList.remove('open');
+    },true);
   }
 
   async function loadPatchedBrowserScan(){
