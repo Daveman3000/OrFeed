@@ -4,7 +4,6 @@
   let installed=false,fullSurface=null,selection={},draft={},lastIdentity='',suspend=false;
 
   const defsById=d=>Object.fromEntries((d.parameters||[]).map(p=>[p.id,p]));
-  const token=v=>v==null?'':String(v);
   function valueLabel(def,i){const v=def?.values?.[i],m=def?.value_labels||{};return m[String(v)]??String(v);}
   function surfaceIdentity(surface){
     const d=surface?.semanticDescriptor||{},p=d.provenance||{};
@@ -24,22 +23,10 @@
   }
   function cloneSelection(src){const out={};for(const [k,s] of Object.entries(src))out[k]=new Set(s);return out;}
   function saveSelection(){if(!fullSurface)return;const plain={};for(const [k,s] of Object.entries(selection))plain[k]=[...s].sort((a,b)=>a-b);localStorage.setItem(STORE+surfaceIdentity(fullSurface),JSON.stringify(plain));}
-  function activeFilters(surface=fullSurface){if(!surface)return false;const defs=defsById(surface.semanticDescriptor);for(const [id,s] of Object.entries(selection)){const n=defs[id]?.values?.length||0;if(n&&s.size<n)return true;}return false;}
-  function passEntry(sem,ids,defs){
-    for(const id of ids){const raw=sem?.[id];if(raw==null||raw==='')continue;const def=defs[id],set=selection[id];if(!def||!set)continue;const idx=(def.values||[]).findIndex(v=>token(v)===token(raw));if(idx>=0&&!set.has(idx))return false;}
-    return true;
-  }
-  function filterSurface(source){
-    if(!source?.semanticDescriptor||!activeFilters(source))return source;
-    const defs=defsById(source.semanticDescriptor),axes=axisIds(source),xAxis=source.semanticAxis?.x||[],yAxis=source.semanticAxis?.y||[];
-    const keepX=[],keepY=[];for(let c=0;c<xAxis.length;c++)if(passEntry(xAxis[c],axes.x,defs))keepX.push(c);for(let r=0;r<yAxis.length;r++)if(passEntry(yAxis[r],axes.y,defs))keepY.push(r);
-    if(!keepX.length||!keepY.length)throw new Error('Filter removes every configuration. Keep at least one value on each axis.');
-    const oldCols=source.cols,cols=keepX.length,rows=keepY.length,n=rows*cols,metrics={},params={};
-    for(const [k] of Object.entries(source.metrics||{}))metrics[k]=new Float64Array(n);
-    for(const [k] of Object.entries(source.semanticParameterIndices||{})){const a=new Int16Array(n);a.fill(-1);params[k]=a;}
-    let p=0;for(const r of keepY)for(const c of keepX){const old=r*oldCols+c;for(const [k,a] of Object.entries(source.metrics||{}))metrics[k][p]=a[old];for(const [k,a] of Object.entries(source.semanticParameterIndices||{}))params[k][p]=a[old];p++;}
-    return {...source,rows,cols,metrics,semanticParameterIndices:params,semanticAxis:{x:keepX.map(i=>xAxis[i]),y:keepY.map(i=>yAxis[i])},surfaceFilter:{active:true,sourceConfigs:source.rows*source.cols,visibleConfigs:n}};
-  }
+  function filterSpec(){const out={};for(const [k,s] of Object.entries(selection))out[k]=[...s].sort((a,b)=>a-b);return out;}
+  function requireCore(){const api=root.SurfaceFilterCoreV001;if(!api?.applySurfaceFilter||!api?.hasActiveFilters)throw new Error('Surface Filter core is unavailable.');return api;}
+  function activeFilters(surface=fullSurface){return !!surface&&requireCore().hasActiveFilters(surface,filterSpec());}
+  function filterSurface(source){return requireCore().applySurfaceFilter(source,filterSpec());}
   function injectStyle(){
     if(document.getElementById('surfaceFilterV028Style'))return;const s=document.createElement('style');s.id='surfaceFilterV028Style';s.textContent=`
       .sa-filter-wrap{position:relative}.sa-filter-btn.active{box-shadow:inset 0 0 0 1px #6f91b5;color:#fff}.sa-filter-pop{display:none;position:absolute;right:0;top:38px;z-index:80;width:380px;max-width:min(92vw,380px);max-height:68vh;overflow:auto;background:#111821;border:1px solid #34404d;border-radius:10px;box-shadow:0 18px 46px #000a;padding:11px}.sa-filter-wrap.open .sa-filter-pop{display:block}.sa-filter-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.sa-filter-title{font-size:12px;font-weight:800;color:#e0e7ee}.sa-filter-actions{display:flex;gap:6px}.sa-filter-actions button{font-size:10px;padding:5px 8px}.sa-filter-axis{font-size:9px;font-weight:800;letter-spacing:.12em;color:#697785;margin:10px 0 5px}.sa-filter-param{border-top:1px solid #26313d;padding:7px 0}.sa-filter-name{font-size:10px;font-weight:750;color:#aeb9c4;margin-bottom:5px}.sa-filter-values{display:flex;flex-wrap:wrap;gap:5px 9px}.sa-filter-value{display:flex;align-items:center;gap:5px;font-size:10px;color:#c8d1da;cursor:pointer}.sa-filter-value input{margin:0}.sa-filter-note{margin-top:9px;padding-top:8px;border-top:1px solid #26313d;color:#71808f;font-size:9px;line-height:1.4}.sa-filter-error{color:#e7a0a6;margin-top:7px;font-size:9px;display:none}
@@ -61,7 +48,7 @@
   function updateControl(){const wrap=ensureControl();if(!wrap)return;const btn=wrap.querySelector('.sa-filter-btn');const on=activeFilters();btn.classList.toggle('active',on);btn.textContent=on?'Filter Surface •':'Filter Surface ▾';btn.disabled=!fullSurface||((typeof currentMode!=='undefined')&&currentMode!=='performance');btn.title=on?'A semantic value filter is active.':'Filter parameter values without changing the source package.';wrap.style.display=fullSurface?'':'none';}
   async function refreshPerformance(){if(!fullSurface||suspend)return;await activateSurface(fullSurface,{persist:false});updateControl();}
   function install(){
-    if(installed)return;if(!root.SurfaceAutoFormatV026||typeof activateSurface!=='function'||typeof hardReset!=='function'||typeof setMode!=='function'){setTimeout(install,25);return;}installed=true;injectStyle();ensureControl();
+    if(installed)return;if(!root.SurfaceAutoFormatV026||!root.SurfaceFilterCoreV001||typeof activateSurface!=='function'||typeof hardReset!=='function'||typeof setMode!=='function'){setTimeout(install,25);return;}installed=true;injectStyle();ensureControl();
     const baseActivate=activateSurface,baseHardReset=hardReset,baseSetMode=setMode;
     activateSurface=async function(surface,opt){
       if(suspend)return baseActivate(surface,opt);
@@ -77,7 +64,7 @@
       return baseSetMode(mode);
     };
     hardReset=async function(){fullSurface=null;selection={};draft={};lastIdentity='';const out=await baseHardReset();updateControl();return out;};
-    if(activeSurface?.semanticDescriptor){fullSurface=activeSurface;initSelection(fullSurface);if(activeFilters()&&currentMode==='performance')setTimeout(()=>refreshPerformance(),0);}updateControl();const v=document.querySelector('.version');if(v)v.textContent='v029';root.SurfaceFilterV028={version:VERSION,filterSurface,activeFilters};root.SurfaceFilterV029=root.SurfaceFilterV028;
+    if(activeSurface?.semanticDescriptor){fullSurface=activeSurface;initSelection(fullSurface);if(activeFilters()&&currentMode==='performance')setTimeout(()=>refreshPerformance(),0);}updateControl();const v=document.querySelector('.version');if(v)v.textContent='v029';root.SurfaceFilterV028={version:VERSION,filterSurface,activeFilters,getFilterSpec:filterSpec};root.SurfaceFilterV029=root.SurfaceFilterV028;
   }
   install();
 })(typeof window!=='undefined'?window:globalThis);
