@@ -45,7 +45,7 @@ const path=require('node:path');
         return {
           id,
           async loadSurface(surface,opt){calls.load.push({id,surface,opt});sourceSurface=surface;researchSurface=surface;currentFilter=null;if(opt.persist)await opts.storageAdapter.set('active-surface',surface);},
-          async setFilter(spec){calls.setFilter.push(spec);researchSurface=await opts.filterAdapter.apply(sourceSurface,spec);currentFilter=spec;},
+          async setFilter(spec){calls.setFilter.push(spec);researchSurface=await opts.filterAdapter.apply(sourceSurface,spec);currentFilter=JSON.parse(JSON.stringify(spec));},
           clearFilter(){calls.clearFilter++;researchSurface=sourceSurface;currentFilter=null;},
           async clearStoredSurface(){await opts.storageAdapter.remove('active-surface');},
           getState(){return {id,source:{loaded:!!sourceSurface},researchDomain:{filtered:!!sourceSurface&&researchSurface!==sourceSurface,filterSpec:currentFilter}};},
@@ -80,6 +80,11 @@ const path=require('node:path');
   assert.equal(calls.coreApply,1,'session filter adapter must invoke the canonical core exactly once');
   assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().researchDomain.filtered,true);
 
+  await context.activateSurface(stored);
+  assert.equal(calls.load.length,1,'Auto Format refresh must preserve canonical source identity');
+  assert.equal(calls.setFilter.length,1,'unchanged filter spec must not invalidate the research domain');
+  assert.equal(calls.coreApply,1,'unchanged filter spec must not be recomputed');
+
   filterActive=false;
   await context.activateSurface(stored,{persist:false});
   assert.equal(calls.load.length,1,'filter reset must preserve canonical source identity');
@@ -98,5 +103,5 @@ const path=require('node:path');
   assert.equal(calls.reset,1);
   assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().id,2);
 
-  console.log('PASS  v1 bridge preserves canonical source across refreshes and routes filter state through session');
+  console.log('PASS  v1 bridge preserves source/domain across presentation refreshes and routes filter state through session');
 })().catch(err=>{console.error(err.stack||err);process.exitCode=1;});
