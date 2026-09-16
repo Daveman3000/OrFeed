@@ -8,6 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const topology = require(path.join(ROOT, 'robustness-topology-v016.js'));
 const semantic = require(path.join(ROOT, 'semantic-analysis-v030.js'));
 const scanner = require(path.join(ROOT, 'scan-layer-v033.js'));
+const sessionApi = require(path.join(ROOT, 'core', 'surface-analyzer-session-v001.js'));
 const meta = JSON.parse(fs.readFileSync(path.join(ROOT, 'metrics.json'), 'utf8'));
 
 const checks = [];
@@ -37,6 +38,36 @@ function lineGraph4() {
       defs: [{ id: 'x', values: [0, 1, 2, 3] }]
     },
     paramArrays: [Int16Array.from([0, 1, 2, 3])]
+  };
+}
+
+function sessionSurface() {
+  return {
+    fileName: 'session-test.surface.zip',
+    fileSize: 123,
+    rows: 2,
+    cols: 2,
+    metrics: {
+      r_per_trade: Float64Array.from([0.1, 0.2, 0.3, 0.4])
+    },
+    semanticDescriptor: {
+      descriptor_schema_version: 1,
+      descriptor_version: 'session-test-v1',
+      study_id: 'session-test',
+      provenance: { source_sha256: 'session-test-sha' },
+      parameters: [
+        { id: 'x', topology_role: 'ordered', values: [0, 1], active_when: 'always' },
+        { id: 'y', topology_role: 'ordered', values: [0, 1], active_when: 'always' }
+      ],
+      layout: {
+        x_parameter_order: ['x'],
+        y_parameter_order: ['y']
+      }
+    },
+    semanticParameterIndices: {
+      x: Int16Array.from([0, 1, 0, 1]),
+      y: Int16Array.from([0, 0, 1, 1])
+    }
   };
 }
 
@@ -124,6 +155,70 @@ function lineGraph4() {
     assert.equal(result.regions[0].cell_count, 3);
     assert.equal(result.regions[0].metrics.metric.boundary_edges, 1);
     assert.equal(result.regions[0].metrics.metric.boundary_mean_raw_drop, 1);
+  });
+
+  await check('session load owns one canonical source/domain', async () => {
+    const surface = sessionSurface();
+    const session = sessionApi.createSession();
+    const events = [];
+    session.subscribe(event => events.push(event.type));
+
+    const state = await session.loadSurface(surface);
+    assert.equal(state.revision, 1);
+    assert.equal(state.hasSurface, true);
+    assert.equal(state.sourceIdentity, 'session-test:sha:session-test-sha');
+    assert.equal(state.domainIdentity, 'session-test:sha:session-test-sha|filter:none');
+    assert.strictEqual(session.getSourceSurface(), surface);
+    assert.strictEqual(session.getFilteredSurface(), surface);
+    assert.deepEqual(events, ['surfaceLoaded']);
+  });
+
+  await check('session load is atomic on validation/storage failure', async () => {
+    const surface = sessionSurface();
+    let stored = null;
+    const session = sessionApi.createSession({
+      storageAdapter: {
+        async get(){ return stored; },
+        async set(_key,value){ stored = value; },
+        async remove(){ stored = null; }
+      }
+    });
+    await session.loadSurface(surface,{persist:true});
+    const before = session.getState();
+
+    await assert.rejects(
+      () => session.loadSurface({ rows: 2, cols: 2, metrics: { bad: [1] } }),
+      /metric length/
+    );
+    assert.strictEqual(session.getSourceSurface(), surface);
+    assert.deepEqual(session.getState(), before);
+
+    const failing = sessionApi.createSession({
+      storageAdapter: {
+        async set(){ throw new Error('storage failed'); }
+      }
+    });
+    await assert.rejects(() => failing.loadSurface(surface,{persist:true}), /storage failed/);
+    assert.equal(failing.getState().hasSurface, false);
+  });
+
+  await check('session restore and persistent clear use the same load state', async () => {
+    const surface = sessionSurface();
+    let stored = surface;
+    const adapter = {
+      async get(){ return stored; },
+      async set(_key,value){ stored = value; },
+      async remove(){ stored = null; }
+    };
+    const session = sessionApi.createSession({storageAdapter:adapter});
+    const restored = await session.restore();
+    assert.equal(restored.hasSurface, true);
+    assert.strictEqual(session.getSourceSurface(), surface);
+    assert.equal(restored.sourceIdentity, 'session-test:sha:session-test-sha');
+
+    const cleared = await session.clear({removePersisted:true});
+    assert.equal(cleared.hasSurface, false);
+    assert.equal(stored, null);
   });
 
   const failed = checks.filter(x => !x.ok);
