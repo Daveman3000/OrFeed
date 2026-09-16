@@ -9,6 +9,7 @@ const topology = require(path.join(ROOT, 'robustness-topology-v016.js'));
 const semantic = require(path.join(ROOT, 'semantic-analysis-v030.js'));
 const scanner = require(path.join(ROOT, 'scan-layer-v033.js'));
 const sessionApi = require(path.join(ROOT, 'core', 'surface-analyzer-session-v001.js'));
+const filterEngine = require(path.join(ROOT, 'core', 'surface-filter-engine-v001.js'));
 const meta = JSON.parse(fs.readFileSync(path.join(ROOT, 'metrics.json'), 'utf8'));
 
 const checks = [];
@@ -67,6 +68,49 @@ function sessionSurface() {
     semanticParameterIndices: {
       x: Int16Array.from([0, 1, 0, 1]),
       y: Int16Array.from([0, 0, 1, 1])
+    }
+  };
+}
+
+function filterFixture() {
+  return {
+    fileName: 'filter-test.surface.zip',
+    fileSize: 456,
+    rows: 2,
+    cols: 3,
+    metrics: {
+      r_per_trade: Float64Array.from([0, 1, 2, 3, 4, 5]),
+      total_r: Float64Array.from([10, 11, 12, 13, 14, 15])
+    },
+    semanticDescriptor: {
+      descriptor_schema_version: 1,
+      descriptor_version: 'filter-test-v1',
+      study_id: 'filter-test',
+      parameters: [
+        { id: 'regime', topology_role: 'regime', values: [0, 1], active_when: 'always' },
+        { id: 'x', topology_role: 'ordered', values: [10, 20, 30], active_when: 'always' },
+        { id: 'conditional', topology_role: 'ordered', values: [0, 1], active_when: 'always' }
+      ],
+      layout: {
+        x_parameter_order: ['x', 'conditional'],
+        y_parameter_order: ['regime']
+      }
+    },
+    semanticAxis: {
+      x: [
+        { x: 10, conditional: '' },
+        { x: 20, conditional: 0 },
+        { x: 30, conditional: 1 }
+      ],
+      y: [
+        { regime: 0 },
+        { regime: 1 }
+      ]
+    },
+    semanticParameterIndices: {
+      regime: Int16Array.from([0, 0, 0, 1, 1, 1]),
+      x: Int16Array.from([0, 1, 2, 0, 1, 2]),
+      conditional: Int16Array.from([-1, 0, 1, -1, 0, 1])
     }
   };
 }
@@ -219,6 +263,46 @@ function sessionSurface() {
     const cleared = await session.clear({removePersisted:true});
     assert.equal(cleared.hasSurface, false);
     assert.equal(stored, null);
+  });
+
+  await check('pure Surface Filter matches current row/column materialization semantics', () => {
+    const source = filterFixture();
+    const filtered = filterEngine.applySurfaceFilter(source, {
+      regime: [1],
+      x: [0, 2],
+      conditional: [0, 1]
+    });
+
+    assert.equal(filtered.rows, 1);
+    assert.equal(filtered.cols, 2);
+    assert.deepEqual(Array.from(filtered.metrics.r_per_trade), [3, 5]);
+    assert.deepEqual(Array.from(filtered.metrics.total_r), [13, 15]);
+    assert.deepEqual(Array.from(filtered.semanticParameterIndices.regime), [1, 1]);
+    assert.deepEqual(Array.from(filtered.semanticParameterIndices.x), [0, 2]);
+    assert.deepEqual(filtered.semanticAxis.x, [source.semanticAxis.x[0], source.semanticAxis.x[2]]);
+    assert.deepEqual(filtered.semanticAxis.y, [source.semanticAxis.y[1]]);
+    assert.deepEqual(filtered.surfaceFilter, {active:true,sourceConfigs:6,visibleConfigs:2});
+  });
+
+  await check('Surface Filter retains inactive parameter states', () => {
+    const source = filterFixture();
+    const filtered = filterEngine.applySurfaceFilter(source, {
+      regime: [0, 1],
+      x: [0, 1, 2],
+      conditional: [1]
+    });
+
+    assert.equal(filtered.rows, 2);
+    assert.equal(filtered.cols, 2);
+    assert.deepEqual(filtered.semanticAxis.x, [source.semanticAxis.x[0], source.semanticAxis.x[2]]);
+    assert.deepEqual(Array.from(filtered.metrics.r_per_trade), [0, 2, 3, 5]);
+    assert.deepEqual(Array.from(filtered.semanticParameterIndices.conditional), [-1, 1, -1, 1]);
+  });
+
+  await check('Surface Filter no-op preserves source object identity', () => {
+    const source = filterFixture();
+    const filtered = filterEngine.applySurfaceFilter(source, {});
+    assert.strictEqual(filtered, source);
   });
 
   const failed = checks.filter(x => !x.ok);
