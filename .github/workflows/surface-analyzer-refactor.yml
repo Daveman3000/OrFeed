@@ -20,5 +20,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run Surface Analyzer baseline regression harness
-        run: node surface-analyzer/tests/baseline-regression.cjs
+      - name: Run Surface Analyzer regression harnesses
+        shell: bash
+        run: |
+          set -euo pipefail
+          for test in surface-analyzer/tests/*.cjs; do
+            echo "==> $test"
+            node "$test"
+          done
