@@ -1,0 +1,24 @@
+name: Surface Analyzer Refactor
+
+on:
+  push:
+    branches:
+      - surface-analyzer-refactor-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out refactor branch
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run Surface Analyzer baseline regression harness
+        run: node surface-analyzer/tests/baseline-regression.cjs
