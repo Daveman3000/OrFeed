@@ -17,8 +17,10 @@ const labels=fs.readFileSync(path.join(__dirname,'..','rr-fragment-labels-v037.j
 const pr=bridge.patchPresentationSource(rr),pl=bridge.patchLabelsSource(labels);
 assert.match(pr,/SurfaceSessionRrBridgeV001\?\.presentationState/);
 assert.match(pr,/SurfaceSessionRrBridgeV001\?\.bind/);
+assert.match(pr,/forceSync:\(\)=>\{lastResult=null;lastMenuResult=null;sync\(\);\}/);
 assert.doesNotMatch(pr,/setInterval\(sync,200\)/);
 assert.match(pl,/SurfaceSessionRrBridgeV001\?\.presentationState/);
+assert.match(pl,/SurfaceRrPresentationV036\?\.forceSync/);
 assert.match(pl,/SurfaceSessionRrBridgeV001\?\.bind/);
 assert.doesNotMatch(pl,/setInterval\(drawExtraLabels,250\)/);
-console.log('PASS RR presentation is session-sourced and event-driven');
+console.log('PASS RR presentation is session-sourced, event-driven, and extra labels repaint from the current RR result');

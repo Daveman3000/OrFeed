@@ -57,6 +57,10 @@
       "    setInterval(sync,200);sync();",
       "    root.SurfaceSessionRrBridgeV001?.bind?.(sync);sync();",
       'RR presentation event binding');
+    out=patchOnce(out,
+      "    installed=true;injectStyle();root.SurfaceRrPresentationV036={version:VERSION};",
+      "    installed=true;injectStyle();root.SurfaceRrPresentationV036={version:VERSION,sync,forceSync:()=>{lastResult=null;lastMenuResult=null;sync();}};",
+      'RR presentation forced repaint API');
     return out;
   }
 
@@ -68,7 +72,7 @@
       'RR labels session source');
     out=patchOnce(out,
       "    setInterval(drawExtraLabels,250);drawExtraLabels();",
-      "    root.SurfaceSessionRrBridgeV001?.bind?.(drawExtraLabels);drawExtraLabels();",
+      "    root.SurfaceSessionRrBridgeV001?.bind?.(()=>{root.SurfaceRrPresentationV036?.forceSync?.();drawExtraLabels();});root.SurfaceRrPresentationV036?.forceSync?.();drawExtraLabels();",
       'RR labels event binding');
     return out;
   }
