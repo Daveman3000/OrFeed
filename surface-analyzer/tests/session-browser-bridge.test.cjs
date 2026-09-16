@@ -69,6 +69,9 @@ const path=require('node:path');
   assert.equal(calls.activate[0].opt.persist,false);
   assert.equal(await context.idbGetActive(),null);
 
+  await context.activateSurface(stored);
+  assert.equal(calls.load.length,1,'internal refresh without explicit persist must not replace canonical source');
+
   filterActive=true;
   await context.activateSurface(stored,{persist:false});
   assert.equal(calls.load.length,1,'filter refresh must not become a new source load');
@@ -95,5 +98,5 @@ const path=require('node:path');
   assert.equal(calls.reset,1);
   assert.equal(context.SurfaceAnalyzerBrowserSessionV001.getState().id,2);
 
-  console.log('PASS  v1 bridge routes filter state through session.setFilter and canonical core');
+  console.log('PASS  v1 bridge preserves canonical source across refreshes and routes filter state through session');
 })().catch(err=>{console.error(err.stack||err);process.exitCode=1;});
