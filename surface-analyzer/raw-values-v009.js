@@ -115,7 +115,7 @@
     document.head.appendChild(a);
   };
   const s=document.createElement('script');
-  s.src='surface-package-v021.js?v=029';
+  s.src='surface-package-v021.js?v=038';
   s.async=false;
   s.onload=loadAxisChrome;
   document.head.appendChild(s);
