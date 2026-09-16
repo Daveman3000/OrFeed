@@ -67,16 +67,11 @@
     document.getElementById('surfaceFilterControl')?.classList.remove('open');
   }
 
-  function syncResearchDomainFromFilter(){
+  async function syncResearchDomainFromFilter(){
     if(!sourceLoaded())return;
     const api=root.SurfaceFilterV029;
-    if(api?.activeFilters?.()){
-      const source=session.getAnalysisSnapshot().sourceSurface;
-      const filtered=api.filterSurface(source);
-      session.applyFilteredSurface(filtered,null);
-    }else if(session.getState()?.researchDomain?.filtered){
-      session.clearFilter();
-    }
+    if(api?.activeFilters?.())await session.setFilter(api.getFilterSpec?.()||{});
+    else if(session.getState()?.researchDomain?.filtered)session.clearFilter();
   }
 
   async function install(){
@@ -88,7 +83,7 @@
       const persist=opt?.persist!==false;
       if(sourceLoad||persist||!sourceLoaded())await session.loadSurface(surface,{persist});
       const out=await baseActivate(surface,{...opt,persist:false});
-      syncResearchDomainFromFilter();
+      await syncResearchDomainFromFilter();
       closeFilterPopover();
       return out;
     }
