@@ -58,6 +58,7 @@
   function createSession(options={}){
     const storageAdapter=options.storageAdapter||null;
     const filterEngine=options.filterEngine||null;
+    const semanticEngine=options.semanticEngine||null;
     const activeKey=options.activeKey||DEFAULT_ACTIVE_KEY;
     const listeners=new Set();
     let revision=0;
@@ -164,6 +165,44 @@
       return stateSummary();
     }
 
+    function ensureTopology(){
+      if(!filteredSurface)throw new Error('No surface is loaded.');
+      if(!filteredSurface.semanticDescriptor||!filteredSurface.semanticParameterIndices)throw new Error('Current surface has no semantic topology.');
+      if(!semanticEngine?.buildTopology)throw new Error('Semantic analysis engine is unavailable.');
+      const expectedId=`${domainId}|descriptor:${descriptorId}`;
+      if(topology&&topologyId===expectedId)return topology;
+      const candidate=semanticEngine.buildTopology(filteredSurface);
+      topology=candidate;
+      topologyId=expectedId;
+      emit('topologyComputed',{topologyIdentity:topologyId});
+      return topology;
+    }
+
+    function metricValues(metricId){
+      if(!filteredSurface)throw new Error('No surface is loaded.');
+      const values=filteredSurface.metrics?.[metricId];
+      if(!values)throw new Error(`Surface does not contain ${metricId}.`);
+      return values;
+    }
+
+    function computeStructuralRobustness(metricId){
+      if(srCache.has(metricId))return srCache.get(metricId);
+      if(!semanticEngine?.computeSR)throw new Error('Semantic analysis engine cannot compute Structural Robustness.');
+      const candidate=semanticEngine.computeSR(metricValues(metricId),ensureTopology());
+      srCache.set(metricId,candidate);
+      emit('analysisComputed',{analysis:'structural_robustness',metricId});
+      return candidate;
+    }
+
+    function computeFacetReplication(metricId){
+      if(frCache.has(metricId))return frCache.get(metricId);
+      if(!semanticEngine?.computeFR)throw new Error('Semantic analysis engine cannot compute Facet Replication.');
+      const candidate=semanticEngine.computeFR(metricValues(metricId),ensureTopology());
+      frCache.set(metricId,candidate);
+      emit('analysisComputed',{analysis:'facet_replication',metricId});
+      return candidate;
+    }
+
     async function clear({removePersisted=false}={}){
       if(removePersisted){
         if(!storageAdapter?.remove)throw new Error('Persistent clear requested but storageAdapter.remove is unavailable.');
@@ -194,11 +233,15 @@
       restore,
       setFilter,
       clearFilter,
+      ensureTopology,
+      computeStructuralRobustness,
+      computeFacetReplication,
       clear,
       subscribe,
       getState:stateSummary,
       getSourceSurface:()=>sourceSurface,
-      getFilteredSurface:()=>filteredSurface
+      getFilteredSurface:()=>filteredSurface,
+      getTopology:()=>topology
     };
   }
 
