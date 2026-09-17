@@ -57,6 +57,14 @@
     }
     for(const a of ['x_parameter_order','y_parameter_order'])for(const id of d.layout[a]||[])if(!ids.has(id))fail(`${a}: unknown parameter ${id}`);
     if(!Array.isArray(d.results.metrics)||!d.results.metrics.length)fail('Descriptor must declare results.metrics');
+    const support=d.results.support_fields||[];
+    if(!Array.isArray(support))fail('Descriptor results.support_fields must be an array when present');
+    const resultIds=new Set();
+    for(const id of [...d.results.metrics,...support]){
+      if(typeof id!=='string'||!id)fail('Descriptor result ids must be non-empty strings');
+      if(resultIds.has(id))fail(`Duplicate descriptor result id ${id}`);
+      resultIds.add(id);
+    }
     return d;
   }
 
@@ -96,16 +104,17 @@
   function signature(sem,ids){return ids.map(id=>`${id}=${sem[id]??''}`).join('|');}
 
   function buildSemanticSurface(text,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
-    const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
+    const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,supportIds=d.results.support_fields||[],constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
     let header=null,col=null,n=0;
     const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=[],yIdsByRow=[];
     const metricTmp=Object.fromEntries(metricIds.map(k=>[k,expected?new Float64Array(expected):[]]));
+    const supportTmp=Object.fromEntries(supportIds.map(k=>[k,expected?new Float64Array(expected):[]]));
     const paramTmp=Object.fromEntries(paramIds.map(k=>{const a=expected?new Int16Array(expected):[];if(expected)a.fill(-1);return[k,a];}));
 
     eachCsvRow(text,(cells,rowNo)=>{
       if(!header){
         header=cells.map(x=>x.trim());col=Object.fromEntries(header.map((name,i)=>[name,i]));
-        const req=['analysis_key',...paramIds,...metricIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
+        const req=['analysis_key',...paramIds,...metricIds,...supportIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
         if(missing.length)fail(`Semantic CSV missing required columns: ${missing.join(', ')}`);return;
       }
       if(cells.every(v=>v===''))return;
@@ -125,6 +134,7 @@
       let ye=yMap.get(ys);if(!ye){ye={temp:yMap.size,sig:ys,sem:Object.fromEntries(yIds.map(id=>[id,sem[id]])),rank:rankFor(sem,ySpec,maps,paramDefs)};yMap.set(ys,ye);}
       xIdsByRow[n]=xe.temp;yIdsByRow[n]=ye.temp;
       for(const k of metricIds){const v=Number(cells[col[k]]);if(!Number.isFinite(v))fail(`Row ${rowNo}: invalid ${k}`);if(expected)metricTmp[k][n]=v;else metricTmp[k].push(v);}
+      for(const k of supportIds){const v=Number(cells[col[k]]);if(!Number.isFinite(v))fail(`Row ${rowNo}: invalid support field ${k}`);if(expected)supportTmp[k][n]=v;else supportTmp[k].push(v);}
       for(const p of params){const raw=sem[p.id],v=onById[p.id]?maps[p.id].get(raw):-1;if(expected)paramTmp[p.id][n]=v;else paramTmp[p.id].push(v);}
       n++;
     });
@@ -134,10 +144,11 @@
     const x=[...xMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),y=[...yMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),cols=x.length,rows=y.length;
     if(rows*cols!==n)fail(`Semantic surface is not a complete rectangle: ${rows} × ${cols} != ${n}`);
     const xr=new Int32Array(x.length),yr=new Int32Array(y.length);x.forEach((v,i)=>xr[v.temp]=i);y.forEach((v,i)=>yr[v.temp]=i);
-    const metrics=Object.fromEntries(metricIds.map(k=>[k,new Float64Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),seen=new Uint8Array(n);
+    const metrics=Object.fromEntries(metricIds.map(k=>[k,new Float64Array(n)])),support=Object.fromEntries(supportIds.map(k=>[k,new Float64Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),seen=new Uint8Array(n);
     for(let j=0;j<n;j++){
       const pos=yr[yIdsByRow[j]]*cols+xr[xIdsByRow[j]];if(seen[pos])fail(`Duplicate visual cell ${pos}`);seen[pos]=1;
       for(const k of metricIds)metrics[k][pos]=metricTmp[k][j];
+      for(const k of supportIds)support[k][pos]=supportTmp[k][j];
       for(const id of paramIds)parameterIndices[id][pos]=paramTmp[id][j];
     }
     if(seen.some(v=>v!==1))fail('Semantic package does not cover every resolved visual cell');
@@ -146,7 +157,7 @@
     return {
       schemaVersion:2,packageVersion:VERSION,packageKind:'semantic-surface-v1',fileName:file.name||'surface.surface.zip',fileSize:file.size||0,loadedAt:new Date().toISOString(),rows,cols,
       jobId:d.provenance?.job_id??null,runId:d.provenance?.run_id??null,generationId:d.provenance?.data_generation_id??null,buildId:d.provenance?.backtester_build??null,
-      metrics,semanticDescriptor:d,semanticParameterIndices:parameterIndices,semanticAxis:{x:x.map(v=>v.sem),y:y.map(v=>v.sem)}
+      metrics,support,semanticDescriptor:d,semanticParameterIndices:parameterIndices,semanticAxis:{x:x.map(v=>v.sem),y:y.map(v=>v.sem)}
     };
   }
 

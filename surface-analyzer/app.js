@@ -171,7 +171,7 @@ async function activateSurface(surface,{persist=true}={}){
   cache.clear();statsCache.clear();setSurfaceLabel();updateRobustnessAvailability();
   if(currentMode==='robustness'){currentMode='performance';for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode==='performance');readCopy.innerHTML=performanceRead;}
   setViewForMode('performance');populateMetricOptions('performance');
-  if(!METRICS.includes(lastPerformanceKey))lastPerformanceKey='r_per_trade';
+  if(!activeSurface.metrics?.[lastPerformanceKey]||!meta[lastPerformanceKey])lastPerformanceKey='r_per_trade';
   currentKey=lastPerformanceKey;metricSel.value=currentKey;
   await setMetric(currentKey);
 }
@@ -179,7 +179,7 @@ async function hardReset(){
   loading.style.display='flex';loading.textContent='Clearing local surface…';
   await idbClearActive();activeSurface=null;cache.clear();statsCache.clear();setSurfaceLabel();updateRobustnessAvailability();
   currentMode='performance';for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode==='performance');
-  setViewForMode('performance');populateMetricOptions('performance');currentKey=lastPerformanceKey;metricSel.value=currentKey;readCopy.innerHTML=performanceRead;
+  setViewForMode('performance');populateMetricOptions('performance');if(!METRICS.includes(lastPerformanceKey))lastPerformanceKey='r_per_trade';currentKey=lastPerformanceKey;metricSel.value=currentKey;readCopy.innerHTML=performanceRead;
   await setMetric(currentKey);
 }
 
@@ -246,7 +246,7 @@ function setViewForMode(mode){
     const allowed=activeSurface?['raw','pct','log']:['raw','pct'];viewSel.value=allowed.includes(lastPerformanceView)?lastPerformanceView:'raw';
   }
 }
-function populateMetricOptions(mode){metricSel.innerHTML='';const keys=mode==='robustness'?robustnessOrder:Object.keys(meta).filter(k=>!k.startsWith('__')&&!robustnessKeys.has(k));for(const k of keys){const opt=document.createElement('option');opt.value=k;opt.textContent=meta[k].label;metricSel.appendChild(opt);}}
+function populateMetricOptions(mode){metricSel.innerHTML='';const keys=mode==='robustness'?robustnessOrder:Object.keys(meta).filter(k=>!k.startsWith('__')&&!robustnessKeys.has(k)).filter(k=>activeSurface?!!activeSurface.metrics?.[k]:METRICS.includes(k));for(const k of keys){const opt=document.createElement('option');opt.value=k;opt.textContent=meta[k].label;metricSel.appendChild(opt);}}
 async function setMode(mode){
   if(mode==='robustness'&&activeSurface)return;
   if(mode===currentMode)return;

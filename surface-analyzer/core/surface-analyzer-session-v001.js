@@ -48,6 +48,9 @@
     for(const [metric,values] of Object.entries(surface.metrics)){
       if(!values||values.length!==n)throw new Error(`${metric}: metric length must equal rows × cols.`);
     }
+    for(const [field,values] of Object.entries(surface.support||{})){
+      if(!values||values.length!==n)throw new Error(`${field}: support field length must equal rows × cols.`);
+    }
     if(surface.semanticDescriptor){
       if(!surface.semanticParameterIndices||typeof surface.semanticParameterIndices!=='object')throw new Error('Semantic surfaces require semanticParameterIndices.');
       for(const [id,values] of Object.entries(surface.semanticParameterIndices)){
