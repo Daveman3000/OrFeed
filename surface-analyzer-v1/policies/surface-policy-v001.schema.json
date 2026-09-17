@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "surface-policy-v001.schema.json",
+  "title": "Surface Policy v001",
+  "description": "Interpretation only. The bound surface descriptor remains authoritative for parameter values, topology, source, and activation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_type",
+    "policy_id",
+    "policy_version",
+    "policy_origin",
+    "identity",
+    "descriptor_binding",
+    "descriptor_assertions",
+    "parameter_meaning",
+    "regime_contexts",
+    "analysis_scopes",
+    "metric_roles",
+    "comparison_rules",
+    "run_requirements"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "policy_type": { "const": "surface_policy-v001" },
+    "policy_id": { "$ref": "#/$defs/id" },
+    "policy_version": { "type": "string", "minLength": 1 },
+    "policy_origin": {
+      "enum": ["predeclared_confirmatory", "post_result_exploratory"]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hash_method", "encoding", "bom"],
+      "properties": {
+        "hash_method": { "const": "sha256_exact_file_bytes" },
+        "encoding": { "const": "UTF-8" },
+        "bom": { "const": false }
+      }
+    },
+    "descriptor_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "member",
+        "hash_basis",
+        "descriptor_sha256",
+        "study_id",
+        "descriptor_schema_version"
+      ],
+      "properties": {
+        "member": { "const": "surface_descriptor.json" },
+        "hash_basis": { "const": "sha256_uncompressed_member_bytes" },
+        "descriptor_sha256": { "$ref": "#/$defs/sha256" },
+        "study_id": { "type": "string", "minLength": 1 },
+        "descriptor_schema_version": { "const": 1 }
+      }
+    },
+    "descriptor_assertions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/descriptorAssertion" }
+    },
+    "parameter_meaning": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/parameterMeaning" }
+    },
+    "regime_contexts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/regimeContext" }
+    },
+    "analysis_scopes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/analysisScope" }
+    },
+    "metric_roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["performance", "risk", "derived"],
+      "properties": {
+        "performance": { "$ref": "#/$defs/idList" },
+        "risk": { "$ref": "#/$defs/idList" },
+        "derived": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "comparison_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "never_connect_across_regimes",
+        "facet_changes_are_not_ordered_edges",
+        "compare_families_on_common_active_parameter_support",
+        "regional_robustness_membership"
+      ],
+      "properties": {
+        "never_connect_across_regimes": { "const": true },
+        "facet_changes_are_not_ordered_edges": { "const": true },
+        "compare_families_on_common_active_parameter_support": { "const": true },
+        "regional_robustness_membership": { "const": "performance_criteria_only" }
+      }
+    },
+    "run_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_selection_timing", "record_before_result_inspection", "post_result_scope_change"],
+      "properties": {
+        "scope_selection_timing": { "const": "before_result_inspection" },
+        "record_before_result_inspection": {
+          "const": ["policy_sha256", "regime_context_id", "analysis_scope_id", "research_domain"]
+        },
+        "post_result_scope_change": { "const": "new_exploratory_run" }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "idList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "scalar": { "type": ["string", "number", "integer", "boolean"] },
+    "activeRule": {
+      "oneOf": [
+        { "const": "always" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "parameter", "value"],
+          "properties": {
+            "op": { "const": "eq" },
+            "parameter": { "$ref": "#/$defs/id" },
+            "value": { "$ref": "#/$defs/scalar" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "parameter", "values"],
+          "properties": {
+            "op": { "const": "in" },
+            "parameter": { "$ref": "#/$defs/id" },
+            "values": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/scalar" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "clauses"],
+          "properties": {
+            "op": { "const": "and" },
+            "clauses": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/activeRule" }
+            }
+          }
+        }
+      ]
+    },
+    "descriptorAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topology_role", "source", "active_when"],
+      "properties": {
+        "topology_role": { "enum": ["regime", "facet", "ordered"] },
+        "source": { "enum": ["outer", "inner", "derived"] },
+        "active_when": { "$ref": "#/$defs/activeRule" }
+      }
+    },
+    "parameterMeaning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interpretation", "hypothesis_effect", "local_smoothness", "monotonicity"],
+      "properties": {
+        "interpretation": {
+          "enum": ["hard_regime", "model_family", "local_tuning", "trade_management"]
+        },
+        "hypothesis_effect": {
+          "enum": ["changes_context", "changes_family", "tunes_within_context"]
+        },
+        "local_smoothness": { "enum": ["not_assumed", "assess_within_context"] },
+        "monotonicity": { "const": "not_assumed" }
+      }
+    },
+    "regimeContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["context_id", "domain"],
+      "properties": {
+        "context_id": { "$ref": "#/$defs/id" },
+        "domain": { "$ref": "#/$defs/domain" }
+      }
+    },
+    "domain": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": { "$ref": "#/$defs/scalar" }
+      }
+    },
+    "domainRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exactly_one_regime_context"],
+      "properties": {
+        "exactly_one_regime_context": { "const": true },
+        "retain_at_least_two_values_each": { "$ref": "#/$defs/idList" },
+        "exactly_one_value_each": { "$ref": "#/$defs/idList" },
+        "common_active_parameter_support": { "type": "boolean" }
+      }
+    },
+    "analysisScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain_requirements", "allowed_analyses", "facet_replication_requirements"],
+      "properties": {
+        "domain_requirements": { "$ref": "#/$defs/domainRequirements" },
+        "allowed_analyses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "performance",
+              "structural_robustness",
+              "facet_replication",
+              "scan",
+              "regional_robustness"
+            ]
+          }
+        },
+        "facet_replication_requirements": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["facets", "eligible_matched_peer_required", "report_peer_coverage"],
+              "properties": {
+                "facets": { "$ref": "#/$defs/idList" },
+                "eligible_matched_peer_required": { "const": true },
+                "report_peer_coverage": { "const": true }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

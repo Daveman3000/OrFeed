@@ -1,0 +1,59 @@
+{
+  "baseline_commit": "708a8b621187818ff29c62b087f98d1571e8d4ed",
+  "fixtures": [
+    {
+      "analysis_key_count": 56000,
+      "descriptor_sha256": "8ac9d77f1c22caf48059a9ad8019bc07e9ef71d3d67537fb5c62b5be2088f8a5",
+      "file_name": "nxm_56k_20260911_01.surface.zip",
+      "metric_ranges": {
+        "expectancy_per_contract": {"max": 1833.054, "min": -645.45},
+        "max_drawdown_r": {"max": 319.58, "min": 0.22},
+        "profit_factor": {"max": 150.14, "min": 0.0},
+        "r_per_trade": {"max": 62.505, "min": -14.074},
+        "romad": {"max": 250.02, "min": -1.0},
+        "total_r": {"max": 250.02, "min": -230.72}
+      },
+      "package_sha256": "0c986334483511d74f1105ff70c4b30999ba9e5aa6bc4c0ce5832c831857828d",
+      "resolved_shape": {"cols": 250, "rows": 224},
+      "semantic_csv_sha256": "f8649bcd04d7ba8618fe489995e0cdcd304b7dabd2444926606bce6739686787",
+      "source_rows": 56000,
+      "study_id": "volspike",
+      "topology": {
+        "components": 160,
+        "directed_edge_count": 367040,
+        "fiber_step_count": 56000,
+        "hard_surface_count": 6,
+        "missing_expected_neighbors": 0,
+        "undirected_edge_count": 183520
+      }
+    },
+    {
+      "analysis_key_count": 224532,
+      "descriptor_sha256": "cccefc3278c545c9aece757090621ff1c34f7ba2c29f8449db6e1a407b958445",
+      "file_name": "volbands_nxm_24948x9_results_20260915_02.surface.zip",
+      "metric_ranges": {
+        "expectancy_per_contract": {"max": 7.357, "min": -2.25},
+        "max_drawdown_r": {"max": 41.0, "min": 2.0},
+        "profit_factor": {"max": 3.4, "min": 0.53},
+        "r_per_trade": {"max": 0.92, "min": -0.375},
+        "romad": {"max": 13.29, "min": -0.93},
+        "total_r": {"max": 43.21, "min": -22.12}
+      },
+      "package_sha256": "668afbb8d16edbfeaa2c5b047c4f6fe4e775e1971532c9141dc6371373475551",
+      "resolved_shape": {"cols": 9, "rows": 24948},
+      "semantic_csv_sha256": "2d58a938dcc89d7e8968a54f2b8de7078427ee10c45bb6d70de716c905fa9f54",
+      "source_rows": 224532,
+      "study_id": "volume_bands",
+      "topology": {
+        "components": 36,
+        "directed_edge_count": 1791072,
+        "fiber_step_count": 0,
+        "hard_surface_count": 4,
+        "missing_expected_neighbors": 0,
+        "undirected_edge_count": 895536
+      }
+    }
+  ],
+  "note": "Large production .surface.zip fixtures are intentionally not checked into GitHub. These fingerprints were computed from the existing Library fixtures before lifecycle refactoring.",
+  "schema_version": 1
+}
