@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "policy_type": "tuning_policy_exploratory_calibration",
+  "policy_id": "mostly_dead_edge_rescue_v001",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": false,
+  "primary_performance_metric": "r_per_trade",
+  "sanity_metrics": {
+    "r_per_trade": { "operator": ">", "value": 0 },
+    "expectancy_per_contract": { "operator": ">", "value": 0 },
+    "profit_factor": { "operator": ">", "value": 1 },
+    "total_r": { "operator": ">", "value": 0 }
+  },
+  "data_support": {
+    "maximum_missing_fraction": 0.10,
+    "missing_fraction_operator": ">"
+  },
+  "mostly_dead": {
+    "sanity_fraction_below": 0.10,
+    "coherent_survival": {
+      "minimum_component_fraction": 0.025,
+      "minimum_component_cells": {
+        "when_n_evaluable_below": 240,
+        "small_domain_fixed_minimum": 4,
+        "small_domain_fraction": 0.05,
+        "otherwise": 12
+      }
+    }
+  },
+  "edge_rescue": {
+    "minimum_boundary_component_support": {
+      "small_domain_cap": 12,
+      "small_domain_fraction": 0.05,
+      "overall_fraction": 0.01,
+      "formula": "max(min(small_domain_cap, ceil(small_domain_fraction * N_evaluable)), ceil(overall_fraction * N_evaluable))"
+    },
+    "minimum_level_support": {
+      "fixed_minimum": 3,
+      "overall_fraction": 0.005,
+      "formula": "max(fixed_minimum, ceil(overall_fraction * N_evaluable))"
+    },
+    "directional_levels": 3,
+    "strict_edge_improvement_over_each_interior_level": true,
+    "material_improvement": {
+      "iqr_multiplier": 0.25,
+      "zero_iqr_fallback": {
+        "absolute_floor": 0.02,
+        "median_fraction": 0.05,
+        "formula": "max(absolute_floor, median_fraction * abs(median_sane_primary_metric))"
+      }
+    }
+  },
+  "quantiles": {
+    "method": "linear_interpolation_sorted_finite_values",
+    "index": "(n - 1) * q",
+    "empty_population": "unsupported",
+    "single_value_iqr": 0
+  },
+  "classifications": [
+    "PARAMETER_SHAPE_ADEQUACY",
+    "BOUNDED_RESCUE",
+    "STOP_FAMILY"
+  ]
+}
