@@ -51,11 +51,20 @@ function collectSeries(surface,cells,source,id){
 }
 
 function edgeEvidence({surface,cells,definition,edge}){
-  if(definition.values.length<2)return {supported:false,reason:'FEWER_THAN_TWO_DECLARED_VALUES'};
-  const last=definition.values.length-1;
-  const levelIndices=definition.values.length===2
-    ? (edge==='max'?[0,1]:[1,0])
-    : (edge==='max'?[last-2,last-1,last]:[2,1,0]);
+  const presentIndices=[...new Set(cells
+    .map(cell=>surface.semanticParameterIndices[definition.id][cell])
+    .filter(index=>Number.isInteger(index)&&index>=0))]
+    .sort((a,b)=>a-b);
+  if(presentIndices.length<2)return {
+    supported:false,
+    reason:'FEWER_THAN_TWO_FAMILY_LOCAL_VALUES',
+    family_local_indices:presentIndices,
+    family_local_values:presentIndices.map(index=>definition.values[index])
+  };
+  const take=Math.min(3,presentIndices.length);
+  const levelIndices=edge==='max'
+    ? presentIndices.slice(-take)
+    : presentIndices.slice(0,take).reverse();
   const levels=levelIndices.map(index=>{
     const levelCells=cells.filter(cell=>surface.semanticParameterIndices[definition.id][cell]===index);
     const metrics=Object.fromEntries(METRICS.map(id=>[id,summary(collectSeries(surface,levelCells,'metric',id))]));
@@ -81,6 +90,8 @@ function edgeEvidence({surface,cells,definition,edge}){
   return {
     supported:true,
     evidence_depth:levels.length===2?'two_level_direct_comparison':'three_level_shape',
+    family_local_indices:presentIndices,
+    family_local_values:presentIndices.map(index=>definition.values[index]),
     levels,
     deltas
   };
@@ -137,7 +148,7 @@ function analyzeSurface(surface,{surfaceId=null,surfaceRecord=null}={}){
       metrics:METRICS,
       support_fields:SUPPORT_FIELDS,
       classification:null,
-      note:'Evidence only. Three-level shape is used when available; two-level ordered parameters use a direct boundary-vs-other-level comparison. No materiality or minimum-trades thresholds are encoded.'
+      note:'Evidence only. Boundaries are selected from values actually present inside each fixed regime/family context, not descriptor-wide extremes. Three-level shape is used when available; two-level ordered parameters use a direct boundary-vs-other-level comparison. No materiality or minimum-trades thresholds are encoded.'
     },
     parameter_roles:{
       regimes:defs.regime.map(p=>p.id),

@@ -86,3 +86,38 @@ assert.equal(twoMax.deltas.r_per_trade.edge_minus_two_in,null);
 const twoMin=twoReport.families[0].ordered_edges['x:min'];
 assert.equal(twoMin.evidence_depth,'two_level_direct_comparison');
 assert.deepEqual(twoMin.levels.map(v=>v.value),[20,10]);
+
+const sparseDescriptor={
+  ...descriptor,
+  parameters:[
+    descriptor.parameters[0],
+    descriptor.parameters[1],
+    {id:'x',topology_role:'ordered',values:[10,20,30,40,50,60],active_when:'always'}
+  ]
+};
+const sparseSurface={
+  ...surface,
+  rows:1,
+  cols:3,
+  semanticDescriptor:sparseDescriptor,
+  metrics:{
+    r_per_trade:Float64Array.from([.2,.3,.5]),
+    profit_factor:Float64Array.from([1.2,1.3,1.6]),
+    win_pct:Float64Array.from([48,49,50]),
+    max_drawdown_r:Float64Array.from([5,4,3]),
+    total_r:Float64Array.from([20,30,50])
+  },
+  supportFields:{trades:Int32Array.from([90,90,90])},
+  semanticParameterIndices:{
+    regime:Int16Array.from([0,0,0]),
+    family:Int16Array.from([0,0,0]),
+    x:Int16Array.from([2,3,4])
+  }
+};
+const sparseReport=Evidence.analyzeSurface(sparseSurface,{surfaceId:'sparse'});
+const sparseMax=sparseReport.families[0].ordered_edges['x:max'];
+assert.deepEqual(sparseMax.family_local_indices,[2,3,4]);
+assert.deepEqual(sparseMax.family_local_values,[30,40,50]);
+assert.deepEqual(sparseMax.levels.map(v=>v.value),[30,40,50]);
+const sparseMin=sparseReport.families[0].ordered_edges['x:min'];
+assert.deepEqual(sparseMin.levels.map(v=>v.value),[50,40,30]);
