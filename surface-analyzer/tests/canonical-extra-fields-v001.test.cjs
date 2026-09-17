@@ -25,7 +25,7 @@ const csv=[
   'b,0,20,0.2,45,90',
   'c,1,10,0.3,50,80',
   'd,1,20,0.4,55,70'
-].join('\\n');
+].join('\n');
 
 (async()=>{
   const surface=Package.buildSemanticSurface(csv,descriptor,{name:'support.surface.zip',size:1},{requiredMetrics:['r_per_trade','win_pct']});
