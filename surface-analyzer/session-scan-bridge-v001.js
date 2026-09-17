@@ -8,6 +8,7 @@
 
   const VERSION='session-scan-bridge-v001';
   const LEGACY_SCAN='scan-layer-v033.js?v=035';
+  let applied=false,refreshPromise=null,refreshSurface=null,generation=0;
 
   function remapper(){
     const fn=root.SurfaceSessionAnalysisBridgeV001?.remapSeries;
@@ -33,7 +34,7 @@
     };
   }
 
-  async function runForDisplay(session,display,config,{tau,remap}={}){
+  async function runForDisplay(session,display,config,{tau,remap,markApplied=true}={}){
     if(!session?.runScan)throw new Error('Canonical Surface Analyzer session is unavailable.');
     const canonical=await session.runScan(config);
     const snapshot=session.getAnalysisSnapshot?.();
@@ -51,10 +52,12 @@
     const out=remapScanResult(research,display,canonical,remap||remapper());
     if(regional)out.regionalRobustness=remapRegional(research,display,regional,remap||remapper());
     delete out.performanceMask;
+    if(markApplied){applied=true;generation++;}
     return out;
   }
 
   function getCurrentForDisplay(session,display,{remap}={}){
+    if(!applied)return null;
     const snapshot=session?.getAnalysisSnapshot?.();
     if(!snapshot?.scanResult||!snapshot.researchSurface)return null;
     const map=remap||remapper();
@@ -65,7 +68,25 @@
   }
 
   function session(){return root.SurfaceAnalyzerBrowserSessionV001?.getSession?.()||null;}
-  function clearApplied(){const s=session();if(s?.clearScan)s.clearScan();}
+  function isApplied(){return applied;}
+  function clearApplied(){
+    applied=false;generation++;refreshPromise=null;refreshSurface=null;
+    const s=session();if(s?.clearScan)s.clearScan();
+  }
+
+  function refreshApplied(sessionInstance,display,config,{tau,remap}={}){
+    if(!applied||!sessionInstance||!display)return Promise.resolve(null);
+    if(refreshPromise&&refreshSurface===display)return refreshPromise;
+    const token=generation;
+    const p=(async()=>{
+      const out=await runForDisplay(sessionInstance,display,config,{tau,remap,markApplied:false});
+      if(!applied||generation!==token){sessionInstance.clearScan?.();return null;}
+      return out;
+    })();
+    refreshPromise=p;refreshSurface=display;
+    p.finally(()=>{if(refreshPromise===p){refreshPromise=null;refreshSurface=null;}});
+    return p;
+  }
 
   function patchOnce(source,needle,replacement,label){
     const first=source.indexOf(needle),last=source.lastIndexOf(needle);
@@ -98,8 +119,8 @@
       'session-owned scan execution');
     out=patchOnce(out,
       "    if(result&&resultSurface!==surface){clearActive();clearCaches();}",
-      "    if(result&&resultSurface!==surface){const session=root.SurfaceAnalyzerBrowserSessionV001?.getSession?.(),next=session&&root.SurfaceSessionScanBridgeV001?.getCurrentForDisplay?.(session,surface);if(next){result=next;resultSurface=surface;renderOverlay();}else clearActive();clearCaches();}",
-      'presentation remap after display reorder');
+      "    if(result&&resultSurface!==surface){\n      const session=root.SurfaceAnalyzerBrowserSessionV001?.getSession?.(),next=session&&root.SurfaceSessionScanBridgeV001?.getCurrentForDisplay?.(session,surface);\n      if(next){result=next;resultSurface=surface;renderOverlay();clearCaches();}\n      else if(session&&root.SurfaceSessionScanBridgeV001?.isApplied?.()){\n        root.SurfaceSessionScanBridgeV001.refreshApplied(session,surface,config,{tau:root.SurfaceSemanticAnalysisV030?.TAU||DEFAULT_TAU}).then(next=>{\n          if(root.SurfaceSessionScanBridgeV001?.isApplied?.()&&next&&activeSurface===surface){result=next;resultSurface=surface;clearCaches();renderOverlay();updateControl();}\n        }).catch(error=>{if(activeSurface===surface)console.warn('Surface Analyzer v1: sticky Scan refresh failed:',error);});\n        clearCaches();\n      }else{clearActive();clearCaches();}\n    }",
+      'sticky scan refresh after domain/display change');
     return out;
   }
 
@@ -131,5 +152,5 @@
     }
   }
 
-  return {VERSION,remapScanResult,remapRegional,runForDisplay,getCurrentForDisplay,clearApplied,patchLegacySource,installPeerMenuRule,loadPatchedBrowserScan};
+  return {VERSION,remapScanResult,remapRegional,runForDisplay,getCurrentForDisplay,isApplied,clearApplied,refreshApplied,patchLegacySource,installPeerMenuRule,loadPatchedBrowserScan};
 });
