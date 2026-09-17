@@ -122,7 +122,7 @@
         cols:surface.cols,
         configurations:surface.rows*surface.cols,
         metrics:Object.keys(surface.metrics||{}),
-        support_fields:Object.keys(surface.support||{}),
+        support_fields:clone(surface.semanticDescriptor?.results?.support_fields||[]),
         parameters:descriptorParameters(surface),
         provenance:clone(surface.semanticDescriptor?.provenance||{})
       };

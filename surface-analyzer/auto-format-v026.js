@@ -66,18 +66,20 @@
     const cmp=(a,b)=>{for(let i=0;i<a.rank.length;i++)if(a.rank[i]!==b.rank[i])return a.rank[i]-b.rank[i];return 0;};
     const x=[...xMap.values()].sort(cmp),y=[...yMap.values()].sort(cmp),cols=x.length,rows=y.length;
     if(rows*cols!==n)return surface;
-    const xr=new Map(x.map((v,i)=>[v.sig,i])),yr=new Map(y.map((v,i)=>[v.sig,i])),metrics={},params={},seen=new Uint8Array(n);
+    const xr=new Map(x.map((v,i)=>[v.sig,i])),yr=new Map(y.map((v,i)=>[v.sig,i])),metrics={},supportFields={},params={},seen=new Uint8Array(n);
     for(const [k,a] of Object.entries(surface.metrics||{}))metrics[k]=new Float64Array(n);
+    for(const [k] of Object.entries(surface.supportFields||{}))supportFields[k]=new Int32Array(n);
     for(const [k] of Object.entries(surface.semanticParameterIndices||{})){const a=new Int16Array(n);a.fill(-1);params[k]=a;}
     for(let old=0;old<n;old++){
       const pos=yr.get(ySig[old])*cols+xr.get(xSig[old]);if(seen[pos])return surface;seen[pos]=1;
       for(const [k,a] of Object.entries(surface.metrics||{}))metrics[k][pos]=a[old];
+      for(const [k,a] of Object.entries(surface.supportFields||{}))supportFields[k][pos]=a[old];
       for(const [k,a] of Object.entries(surface.semanticParameterIndices||{}))params[k][pos]=a[old];
     }
     const d=surface.semanticDescriptor,l=d.layout||{},divider=(original.divider_presentation||l.divider_presentation||[]).map(v=>({...v,axis:xOrder.includes(v.parameter)?'x':yOrder.includes(v.parameter)?'y':v.axis}));
     const descriptor={...d,layout:{...l,x_parameter_order:[...xOrder],y_parameter_order:[...yOrder],divider_presentation:divider}};
     const semanticAxis={x:x.map(v=>axisEntry(surface,xOrder,v.pos)),y:y.map(v=>axisEntry(surface,yOrder,v.pos))};
-    return {...surface,rows,cols,metrics,semanticParameterIndices:params,semanticAxis,semanticDescriptor:descriptor,autoFormatOriginalLayout:original,autoFormat:autoInfo};
+    return {...surface,rows,cols,metrics,supportFields,semanticParameterIndices:params,semanticAxis,semanticDescriptor:descriptor,autoFormatOriginalLayout:original,autoFormat:autoInfo};
   }
   function format(surface,on){
     if(!surface?.semanticDescriptor?.layout||!surface.semanticParameterIndices)return surface;

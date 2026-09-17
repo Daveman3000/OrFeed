@@ -48,9 +48,20 @@
     for(const [metric,values] of Object.entries(surface.metrics)){
       if(!values||values.length!==n)throw new Error(`${metric}: metric length must equal rows × cols.`);
     }
-    for(const [field,values] of Object.entries(surface.support||{})){
-      if(!values||values.length!==n)throw new Error(`${field}: support field length must equal rows × cols.`);
+    const supportDeclarations=surface.semanticDescriptor?.results?.support_fields||[];
+    if(!Array.isArray(supportDeclarations))throw new Error('Semantic descriptor support_fields must be an array.');
+    const declaredSupport=new Set();
+    for(const field of supportDeclarations){
+      if(!field||typeof field!=='object'||Array.isArray(field)||typeof field.id!=='string'||!field.id)throw new Error('Semantic descriptor support_fields entries must be typed objects.');
+      if(field.type!=='integer')throw new Error(`${field.id}: unsupported support field type ${field.type||'(missing)'}.`);
+      if(typeof field.role!=='string'||!field.role)throw new Error(`${field.id}: support field role is required.`);
+      if(declaredSupport.has(field.id))throw new Error(`${field.id}: duplicate support field declaration.`);
+      declaredSupport.add(field.id);
+      const values=surface.supportFields?.[field.id];
+      if(!(values instanceof Int32Array))throw new Error(`${field.id}: integer support field must be an Int32Array.`);
+      if(values.length!==n)throw new Error(`${field.id}: support field length must equal rows × cols.`);
     }
+    for(const field of Object.keys(surface.supportFields||{}))if(!declaredSupport.has(field))throw new Error(`${field}: undeclared support field.`);
     if(surface.semanticDescriptor){
       if(!surface.semanticParameterIndices||typeof surface.semanticParameterIndices!=='object')throw new Error('Semantic surfaces require semanticParameterIndices.');
       for(const [id,values] of Object.entries(surface.semanticParameterIndices)){

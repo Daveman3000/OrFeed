@@ -54,21 +54,23 @@
     for(let r=0;r<yAxis.length;r++)if(passEntry(yAxis[r],axes.y,defs,filterSpec))keepY.push(r);
     if(!keepX.length||!keepY.length)throw new Error('Filter removes every configuration. Keep at least one value on each axis.');
 
-    const oldCols=source.cols,cols=keepX.length,rows=keepY.length,n=rows*cols,metrics={},params={};
+    const oldCols=source.cols,cols=keepX.length,rows=keepY.length,n=rows*cols,metrics={},supportFields={},params={};
     for(const [k] of Object.entries(source.metrics||{}))metrics[k]=new Float64Array(n);
+    for(const [k] of Object.entries(source.supportFields||{}))supportFields[k]=new Int32Array(n);
     for(const [k] of Object.entries(source.semanticParameterIndices||{})){const a=new Int16Array(n);a.fill(-1);params[k]=a;}
 
     let p=0;
     for(const r of keepY)for(const c of keepX){
       const old=r*oldCols+c;
       for(const [k,a] of Object.entries(source.metrics||{}))metrics[k][p]=a[old];
+      for(const [k,a] of Object.entries(source.supportFields||{}))supportFields[k][p]=a[old];
       for(const [k,a] of Object.entries(source.semanticParameterIndices||{}))params[k][p]=a[old];
       p++;
     }
 
     return {
       ...source,
-      rows,cols,metrics,semanticParameterIndices:params,
+      rows,cols,metrics,supportFields,semanticParameterIndices:params,
       semanticAxis:{x:keepX.map(i=>xAxis[i]),y:keepY.map(i=>yAxis[i])},
       surfaceFilter:{active:true,sourceConfigs:source.rows*source.cols,visibleConfigs:n}
     };
