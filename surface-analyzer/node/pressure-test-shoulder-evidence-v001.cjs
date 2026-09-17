@@ -51,9 +51,11 @@ function collectSeries(surface,cells,source,id){
 }
 
 function edgeEvidence({surface,cells,definition,edge}){
-  if(definition.values.length<3)return {supported:false,reason:'FEWER_THAN_THREE_DECLARED_VALUES'};
+  if(definition.values.length<2)return {supported:false,reason:'FEWER_THAN_TWO_DECLARED_VALUES'};
   const last=definition.values.length-1;
-  const levelIndices=edge==='max'?[last-2,last-1,last]:[2,1,0];
+  const levelIndices=definition.values.length===2
+    ? (edge==='max'?[0,1]:[1,0])
+    : (edge==='max'?[last-2,last-1,last]:[2,1,0]);
   const levels=levelIndices.map(index=>{
     const levelCells=cells.filter(cell=>surface.semanticParameterIndices[definition.id][cell]===index);
     const metrics=Object.fromEntries(METRICS.map(id=>[id,summary(collectSeries(surface,levelCells,'metric',id))]));
@@ -68,13 +70,20 @@ function edgeEvidence({surface,cells,definition,edge}){
   });
   const deltas={};
   for(const id of METRICS){
-    const a=levels[0].metrics[id].median,b=levels[1].metrics[id].median,c=levels[2].metrics[id].median;
+    const edgeMedian=levels[levels.length-1].metrics[id].median;
+    const oneInMedian=levels[levels.length-2]?.metrics[id].median??null;
+    const twoInMedian=levels.length>=3?(levels[levels.length-3]?.metrics[id].median??null):null;
     deltas[id]={
-      edge_minus_two_in:(c==null||a==null)?null:c-a,
-      edge_minus_one_in:(c==null||b==null)?null:c-b
+      edge_minus_two_in:(edgeMedian==null||twoInMedian==null)?null:edgeMedian-twoInMedian,
+      edge_minus_one_in:(edgeMedian==null||oneInMedian==null)?null:edgeMedian-oneInMedian
     };
   }
-  return {supported:true,levels,deltas};
+  return {
+    supported:true,
+    evidence_depth:levels.length===2?'two_level_direct_comparison':'three_level_shape',
+    levels,
+    deltas
+  };
 }
 
 function analyzeSurface(surface,{surfaceId=null,surfaceRecord=null}={}){
@@ -123,12 +132,12 @@ function analyzeSurface(surface,{surfaceId=null,surfaceRecord=null}={}){
     },
     semantics:{
       scope:'within_family',
-      edge_levels:3,
+      edge_levels:'up_to_3_with_two_level_fallback',
       aggregation:'median_across_family_cells_at_each_ordered_level',
       metrics:METRICS,
       support_fields:SUPPORT_FIELDS,
       classification:null,
-      note:'Evidence only. No materiality or minimum-trades thresholds are encoded.'
+      note:'Evidence only. Three-level shape is used when available; two-level ordered parameters use a direct boundary-vs-other-level comparison. No materiality or minimum-trades thresholds are encoded.'
     },
     parameter_roles:{
       regimes:defs.regime.map(p=>p.id),

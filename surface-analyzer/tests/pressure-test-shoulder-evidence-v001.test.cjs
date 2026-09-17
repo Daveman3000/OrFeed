@@ -48,3 +48,41 @@ const min=report.families[0].ordered_edges['x:min'];
 assert.deepEqual(min.levels.map(v=>v.value),[30,20,10]);
 assert.equal(report.semantics.classification,null);
 console.log('PASS  shoulder evidence reports canonical metrics/support without inventing classification thresholds');
+
+const twoDescriptor={
+  ...descriptor,
+  parameters:[
+    descriptor.parameters[0],
+    descriptor.parameters[1],
+    {id:'x',topology_role:'ordered',values:[10,20],active_when:'always'}
+  ]
+};
+const twoSurface={
+  ...surface,
+  rows:1,
+  cols:2,
+  semanticDescriptor:twoDescriptor,
+  metrics:{
+    r_per_trade:Float64Array.from([.1,.3]),
+    profit_factor:Float64Array.from([1.1,1.4]),
+    win_pct:Float64Array.from([50,45]),
+    max_drawdown_r:Float64Array.from([3,5]),
+    total_r:Float64Array.from([10,25])
+  },
+  supportFields:{trades:Int32Array.from([100,80])},
+  semanticParameterIndices:{
+    regime:Int16Array.from([0,0]),
+    family:Int16Array.from([0,0]),
+    x:Int16Array.from([0,1])
+  }
+};
+const twoReport=Evidence.analyzeSurface(twoSurface,{surfaceId:'two'});
+const twoMax=twoReport.families[0].ordered_edges['x:max'];
+assert.equal(twoMax.supported,true);
+assert.equal(twoMax.evidence_depth,'two_level_direct_comparison');
+assert.deepEqual(twoMax.levels.map(v=>v.value),[10,20]);
+assert.equal(twoMax.deltas.r_per_trade.edge_minus_one_in,.19999999999999998);
+assert.equal(twoMax.deltas.r_per_trade.edge_minus_two_in,null);
+const twoMin=twoReport.families[0].ordered_edges['x:min'];
+assert.equal(twoMin.evidence_depth,'two_level_direct_comparison');
+assert.deepEqual(twoMin.levels.map(v=>v.value),[20,10]);
