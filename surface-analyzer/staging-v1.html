@@ -18,6 +18,8 @@
     if(!html.includes('</body>'))throw new Error('Could not locate staging analysis insertion point');
     html=html.replace(app,app+
       '<script src="session-v001.js?v=001"><\/script>'+ 
+      '<script src="surface-package-core-v001.js?v=001"><\/script>'+ 
+      '<script src="session-package-bridge-v001.js?v=001"><\/script>'+ 
       '<script src="surface-filter-core-v001.js?v=001"><\/script>'+ 
       '<script src="session-browser-bridge-v001.js?v=001"><\/script>');
     html=html.replace(boot,'');
