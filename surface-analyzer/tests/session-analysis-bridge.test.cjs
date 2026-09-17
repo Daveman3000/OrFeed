@@ -27,4 +27,8 @@ assert.deepEqual(Array.from(srOut.values),[3,4,1,2]);
 assert.deepEqual(Array.from(frOut.values),[7,8,5,6]);
 assert.equal(bridge.computeForDisplay(session,display,'m'),null);
 
+const fs=require('node:fs'),path=require('node:path');
+const bridgeSource=fs.readFileSync(path.join(__dirname,'..','session-analysis-bridge-v001.js'),'utf8');
+assert.match(bridgeSource,/if\(isFr\)lastFacetKey=key;else lastRobustnessKey=key;/,'FR selection must preserve legacy lastFacetKey state');
+
 console.log('PASS  session SR/FR results remap from canonical research order into presentation order');

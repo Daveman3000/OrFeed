@@ -97,7 +97,7 @@
         if(!match||!activeSurface?.semanticDescriptor)return baseSetMetric(key);
         const metric=match[2],isFr=match[1]==='fr',session=root.SurfaceAnalyzerBrowserSessionV001.getSession?.();
         if(!session)return baseSetMetric(key);
-        currentKey=key;lastPerformanceKey=metric;if(!isFr)lastRobustnessKey=key;
+        currentKey=key;lastPerformanceKey=metric;if(isFr)lastFacetKey=key;else lastRobustnessKey=key;
         loading.style.display='flex';loading.textContent=`Calculating ${meta[metric]?.label||metric}…`;
         try{
           await new Promise(r=>setTimeout(r,0));
