@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Install Node adapter dependencies
+        working-directory: surface-analyzer/node
+        run: npm ci
       - name: Run Surface Analyzer regression harnesses
         shell: bash
         run: |
