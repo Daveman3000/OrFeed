@@ -6,6 +6,8 @@ Status: **conceptual contract only**. No collector, pruning action, executable t
 
 After the viability and broad-box shoulder stages, clean the final broad IS surface **without rerunning N×M**. Remove only obviously weak macro-regions so the subsequent performance-qualification ladder can work on a credible domain. Cleaning does not identify a winner, set the P1 economic floor, or evaluate SR, FR, or RR. Preserve plausible moderate performers, their ordered neighbors, and comparison peers. When evidence is uncertain, keep the block.
 
+**Decision boundary:** cleaning defines the valid IS search domain from predeclared economic-performance, data-support, semantic-topology, and required-peer evidence. SR, RR, and FR evaluate the surviving valid domain; their values must not be used to propose, justify, tune, or retrospectively validate a cleaning deletion. Preserving peers required for a planned FR comparison is a domain-coverage constraint, not an FR-score optimization. An improved robustness score after cleaning is neither a pruning objective nor proof that the deletion was valid.
+
 The descriptor remains authoritative for hard regimes, facets, activation, tested values, and semantic adjacency. Evaluate weakness within each fixed regime × family context; never pool contexts to justify a deletion. Record the source surface and policy identity, initial analysis domain, each candidate block, the evidence and veto checks, and the resulting filtered-domain identity.
 
 ## Allowed candidate shapes and pass budget
