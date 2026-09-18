@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "policy_type": "step5_robustness_adjudication",
+  "policy_id": "global_noncompensating_robustness_profiles",
+  "policy_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": true,
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "calibration_bindings": {
+    "evidence_schema_sha256": "38b274bcacf75c14b7194797f361f4c9928bac02330394bec467c82deee850ff",
+    "volume_bands_evidence_sha256": "dd92c1dc8bd0463deb4d08b5ee3a1b89c8713d520a5005b5bf17e8367d024efb",
+    "volspike_evidence_sha256": "63bedfebea81a96485839088e197c24d90a13073ab14f8e57731aa3c45e74929"
+  },
+  "scope": {
+    "metrics": ["r_per_trade", "profit_factor", "romad"],
+    "surfaces_are_equal_calibration_cases": true,
+    "anchors_are_not_independent_statistical_observations": true,
+    "lineage_is_descriptive_context_only": true,
+    "composite_score": false,
+    "cross_axis_compensation": false
+  },
+  "evidence_sufficiency": {
+    "sr": {
+      "required": "all policy metrics have complete finite anchor-cell scores and finite full-domain neighbor coverage",
+      "failure_state": "INSUFFICIENT"
+    },
+    "rr": {
+      "required": "all policy metrics have finite interior and boundary evidence with at least one interior edge and one boundary edge",
+      "failure_state": "INSUFFICIENT"
+    },
+    "fr": {
+      "facet_states": ["APPLICABLE_SUPPORTED", "APPLICABLE_UNSUPPORTED", "N/A"],
+      "unsupported_is_not_failure": true,
+      "overall_insufficient_only_when": "one_or_more_facets_are_applicable_but_no_applicable_facet_is_supported",
+      "n_a_is_neutral": true
+    }
+  },
+  "boundary_conditioning": {
+    "comparison_scope": "fixed regime and facet context in the full cleaned domain",
+    "reported_tags": ["touches_min", "touches_max", "pinned_single_value_at_min", "pinned_single_value_at_max"],
+    "effect_on_band": "report_only_no_automatic_upgrade_or_downgrade"
+  },
+  "bands": {
+    "sr": {
+      "aggregation": "minimum_anchor_median_across_policy_metrics",
+      "STRONG": { "minimum": 0.35 },
+      "MODERATE": { "minimum": 0.15, "maximum_exclusive": 0.35 },
+      "SENSITIVE": { "maximum_exclusive": 0.15 }
+    },
+    "rr": {
+      "aggregation": "minimum_across_policy_metrics; normalized boundary drop must also be positive",
+      "STRONG": { "minimum_interior_similarity": 0.75, "minimum_boundary_worse_fraction": 0.75 },
+      "MODERATE": { "minimum_interior_similarity": 0.50, "minimum_boundary_worse_fraction": 0.60 },
+      "WEAK": { "definition": "does_not_meet_MODERATE" }
+    },
+    "fr_per_supported_facet": {
+      "structural_similarity": {
+        "aggregation": "minimum_median_across_policy_metrics",
+        "STRONG": { "minimum": 0.35 },
+        "MODERATE": { "minimum": 0.15, "maximum_exclusive": 0.35 },
+        "LOW": { "maximum_exclusive": 0.15 }
+      },
+      "peer_coverage": {
+        "STRONG": { "minimum": 0.80 },
+        "MODERATE": { "minimum": 0.50, "maximum_exclusive": 0.80 },
+        "LOW": { "maximum_exclusive": 0.50 }
+      },
+      "peer_economics": {
+        "measure": "joint_p1_peer_cells_divided_by_unique_matched_peers",
+        "STRONG": { "minimum": 0.75 },
+        "MODERATE": { "minimum": 0.50, "maximum_exclusive": 0.75 },
+        "WEAK": { "maximum_exclusive": 0.50 }
+      }
+    },
+    "fr_overall": {
+      "STRONG": "every supported facet is STRONG on similarity, coverage, and economics",
+      "ADEQUATE": "every supported facet is at least MODERATE on similarity, coverage, and economics",
+      "DIVERGENT_VIABLE": "coverage and economics are at least MODERATE for every supported facet, but at least one similarity band is LOW",
+      "ECONOMICALLY_WEAK": "at least one supported facet has WEAK peer economics",
+      "MIXED": "supported facet evidence does not fit another state",
+      "INSUFFICIENT": "applicable facets exist but none is supported",
+      "N/A": "no facet is applicable"
+    }
+  },
+  "profiles": {
+    "BROAD_LOCAL_STRUCTURE_STRONG": "SR is STRONG or MODERATE, RR is STRONG, and FR is STRONG, ADEQUATE, or N/A",
+    "REGIONALLY_COHERENT_LOCALLY_SENSITIVE": "SR is SENSITIVE, RR is STRONG, and FR is not ECONOMICALLY_WEAK, MIXED, or INSUFFICIENT",
+    "LOCALLY_SMOOTH_REGIONALLY_WEAK": "SR is STRONG or MODERATE, RR is WEAK, and FR is not ECONOMICALLY_WEAK, MIXED, or INSUFFICIENT",
+    "MIXED_AMBIGUOUS": "sufficient evidence exists but the combination does not fit another profile",
+    "INSUFFICIENT_EVIDENCE": "SR or RR is insufficient, or FR overall is INSUFFICIENT"
+  },
+  "profile_semantics": {
+    "selection_rule": false,
+    "robust_or_fragile_label": false,
+    "full_decomposition_remains_authoritative": true,
+    "lineage_may_not_change_profile": true,
+    "unsupported_fr_may_not_be_reclassified_as_failed_replication": true
+  }
+}

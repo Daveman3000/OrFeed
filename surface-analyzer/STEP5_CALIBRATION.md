@@ -39,3 +39,16 @@ Compared with Volume Bands, VolSpike has materially higher SR anchor medians but
 FR availability also differs by facet. `london_close_beyond_asia` and `pm_close_mode` have matched peers for all 71 anchors. `entry_location` is unsupported for 44 anchors and supported for 27, consistent with the scoped categorical cleaning rather than evidence of failed replication. `reentry_after_stop` is N/A for all terminal anchors under the available active support. Peer availability, similarity, coverage, and P1 economics remain separate evidence fields.
 
 These two surfaces are sufficient to begin exploratory global-band calibration, but the anchors are not independent statistical observations: Volume Bands includes shared lineages, and VolSpike anchors share source data and contexts. Any proposed bands must remain research-policy rules, not significance claims.
+
+## Frozen exploratory adjudication
+
+`policies/exploratory/step5-robustness-adjudication-v001.json` freezes the first global, non-compensating Step-5 policy. It evaluates evidence sufficiency before categorical SR, RR, and FR bands and assigns one of five descriptive profiles. It does not produce a composite score, a robust/fragile verdict, or a selection decision.
+
+The calibration gives Volume Bands and VolSpike equal status as two calibration cases; their anchor counts are not statistical weights. Lineage breadth remains adjacent descriptive performance context and cannot change a robustness profile. Boundary contact is recorded per ordered dimension against the actual fixed-context cleaned domain, including explicit single-value min/max pinning, but it does not automatically upgrade or downgrade SR.
+
+The deterministic 78-anchor result is materialized in `policies/exploratory/step5-joint-calibration-v001.json`:
+
+- Volume Bands: seven SR-sensitive and RR-strong anchors; three are `REGIONALLY_COHERENT_LOCALLY_SENSITIVE`, three are `INSUFFICIENT_EVIDENCE` because their only applicable required facet has no matched peer evidence, and one is `MIXED_AMBIGUOUS` because matched-peer coverage is only 29% despite economically viable peers.
+- VolSpike: 42 moderate, 20 sensitive, and nine strong SR anchors; RR is weak for 42, moderate for 25, and strong for four. Fourteen anchors are `LOCALLY_SMOOTH_REGIONALLY_WEAK`; 57 are `MIXED_AMBIGUOUS` once facet economics and the non-compensating profile rules are retained.
+
+An unsupported FR facet is never treated as failed replication. VolSpike anchors remain classifiable when other applicable facets are supported; the unavailable facet is retained explicitly in the decomposition. The profile label is shorthand only, and the full SR/RR/FR evidence remains authoritative.
