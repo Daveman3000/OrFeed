@@ -135,7 +135,7 @@ function nodeRecord(cells, rung, keysByIndex) {
   return { rung: `P${rung}`, cell_count: cells.length, membership_sha256: membershipHash(keys) };
 }
 
-function materializeAnchors(bundle) {
+function materializeAnchors(bundle, { regionPrefix = 'VB' } = {}) {
   const { surface, graph, fixed, keysByIndex, bindings } = bundle;
   const trades = surface.supportFields.trades;
   if (!(trades instanceof Int32Array)) fail('Canonical integer trades support is required.');
@@ -165,7 +165,7 @@ function materializeAnchors(bundle) {
         const analysisKeys = sortedKeys(node.cells.map(i => keysByIndex[i]));
         const membershipSha = membershipHash(analysisKeys);
         anchors.push({
-          region_id: `VB-${membershipSha.slice(0, 16)}`,
+          region_id: `${regionPrefix}-${membershipSha.slice(0, 16)}`,
           context_id: group.context_id,
           context: group.context,
           performance_class: `P${node.rung}`,
@@ -212,12 +212,42 @@ function summary(values) {
   return { count: finite.length, missing: values.length - finite.length, min: q(0), q1: q(0.25), median: q(0.5), q3: q(0.75), max: q(1) };
 }
 
+function fraction(values, predicate) {
+  const finite = values.filter(Number.isFinite);
+  return finite.length ? finite.filter(predicate).length / finite.length : null;
+}
+
+function srDecomposition(cells, result, graph) {
+  const cellScores = cells.map(i => result.structural_robustness[i]);
+  const categories = Object.fromEntries(Object.entries(result.categories).map(([id, values]) => [id, summary(cells.map(i => values[i]))]));
+  const directional = Object.fromEntries(graph.info.ordered.map(parameterIndex => {
+    const id = graph.info.defs[parameterIndex].id;
+    return [id, summary(cells.map(i => result.norm.directional[id][i]))];
+  }));
+  return {
+    structural_robustness: summary(cellScores),
+    score_concentration_descriptive_only: {
+      fraction_below_0_05: fraction(cellScores, value => value < 0.05),
+      fraction_below_0_10: fraction(cellScores, value => value < 0.10)
+    },
+    categories,
+    ordered_dimension_directional_stability: directional,
+    neighbor_coverage: summary(cells.map(i => result.raw.coverage[i])),
+    normalization_identity: {
+      semantic_analysis_version: result.version,
+      robust_scale_scope: 'descriptor_hard_regime_over_full_cleaned_domain',
+      normalized_component_scope: 'full_cleaned_domain_midranks'
+    }
+  };
+}
+
 function evaluateAnchor(bundle, artifact, anchor, caches = { sr: new Map(), fr: new Map() }) {
   const cells = verifyAnchor(bundle, artifact, anchor), { surface, graph } = bundle;
-  const sr = {}, fr = {};
+  const sr = {}, sr_decomposition = {}, fr = {};
   for (const metric of METRICS) {
     if (!caches.sr.has(metric)) caches.sr.set(metric, Semantic.computeSR(surface.metrics[metric], graph));
     sr[metric] = summary(cells.map(i => caches.sr.get(metric).structural_robustness[i]));
+    sr_decomposition[metric] = srDecomposition(cells, caches.sr.get(metric), graph);
     if (!caches.fr.has(metric)) caches.fr.set(metric, Semantic.computeFR(surface.metrics[metric], graph));
   }
   for (const facet of graph.info.facets.map(k => graph.info.defs[k].id)) {
@@ -252,7 +282,7 @@ function evaluateAnchor(bundle, artifact, anchor, caches = { sr: new Map(), fr: 
   }
   const rr = Scan.analyzeFrozenAnchor(surface, graph, cells, METRICS, () => false);
   if (rr.regions.length !== 1 || rr.regions[0].cell_count !== cells.length || rr.definition !== 'frozen_anchor_membership') fail('RR changed frozen anchor membership.');
-  return { region_id: anchor.region_id, anchor_membership_sha256: anchor.anchor_membership_sha256, performance_class: anchor.performance_class, sr, fr, rr: rr.regions[0] };
+  return { region_id: anchor.region_id, anchor_membership_sha256: anchor.anchor_membership_sha256, performance_class: anchor.performance_class, sr, sr_decomposition, fr, rr: rr.regions[0] };
 }
 
 module.exports = { POLICY_PATH, CLEANED_PATH, METRICS, membershipPreimage, membershipHash, sortedKeys, contextFor, contextId, components, threshold, loadVolumeBands, materializeAnchors, verifyAnchor, evaluateAnchor };

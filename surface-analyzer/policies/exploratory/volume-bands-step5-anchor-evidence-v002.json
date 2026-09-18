@@ -1,0 +1,5487 @@
+{
+  "schema_version": 2,
+  "artifact_type": "step5_exact_anchor_evidence",
+  "policy_origin": "post_result_exploratory",
+  "evidence_schema_id": "step5-robustness-evidence-schema-v001",
+  "evidence_schema_sha256": "38b274bcacf75c14b7194797f361f4c9928bac02330394bec467c82deee850ff",
+  "anchor_artifact_sha256": "08581b3f083166e7ca1542622c19f85cc91b1aead632c679765425f243b3ed4f",
+  "bindings": {
+    "surface_id": "volbands_20260918_bandtp_shoulder_winpct_v1",
+    "package_sha256": "c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4",
+    "descriptor_sha256": "f3322fb51058b63be155247ad095bc2099a1acea3013c07b8173215336c30337",
+    "surface_policy_sha256": "92ee5dbdc245aa6f736d361c7c40570d9aaecfff8720a6e1f54145e16aa09e33",
+    "cleaned_domain_identity": "cbc46330f2492ab7ef4a6cedfd755b5e657001aec3e0c17205576125e48374c2",
+    "step4_policy_id": "connected_performance_ladder",
+    "step4_policy_version": "1",
+    "step4_policy_sha256": "f1d959ffc44d47683f06e4585cf2b761d849d13013c0ba735f20ccfcdc784e55",
+    "topology_engine_version": "generic-semantic-analysis-v030"
+  },
+  "metrics": [
+    "r_per_trade",
+    "profit_factor",
+    "romad"
+  ],
+  "interpretation": "descriptive_only_no_robustness_thresholds_or_labels",
+  "results": [
+    {
+      "region_id": "VB-b0bc1ae3ceb1d497",
+      "anchor_membership_sha256": "b0bc1ae3ceb1d4978d0a424cc29d10949ac5ba2d87dc00cb9c83ae91a49d07a3",
+      "performance_class": "P16",
+      "sr": {
+        "r_per_trade": {
+          "count": 48,
+          "missing": 0,
+          "min": 0,
+          "q1": 0.008099574130028486,
+          "median": 0.023414787836372852,
+          "q3": 0.04250785429030657,
+          "max": 0.08123163878917694
+        },
+        "profit_factor": {
+          "count": 48,
+          "missing": 0,
+          "min": 0.0032506317365914583,
+          "q1": 0.009937799768522382,
+          "median": 0.019548911601305008,
+          "q3": 0.02652831608429551,
+          "max": 0.05075962468981743
+        },
+        "romad": {
+          "count": 48,
+          "missing": 0,
+          "min": 0,
+          "q1": 0.004193249624222517,
+          "median": 0.00763306743465364,
+          "q3": 0.011997618479654193,
+          "max": 0.02426714450120926
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0,
+            "q1": 0.008099574130028486,
+            "median": 0.023414787836372852,
+            "q3": 0.04250785429030657,
+            "max": 0.08123163878917694
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.7916666666666666,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.00022145094408188015,
+              "median": 0.0024478959385305643,
+              "q3": 0.0066842008382081985,
+              "max": 0.014162748120725155
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.000007750728400424123,
+              "q1": 0.0007208199676824734,
+              "median": 0.00938700046390295,
+              "q3": 0.02804339211434126,
+              "max": 0.08411811292171478
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0002201517636422068,
+              "q1": 0.00038968468288658187,
+              "median": 0.0004716389812529087,
+              "q3": 0.0006182729121064767,
+              "max": 0.0008902487461455166
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.022053690627217293,
+              "q1": 0.06656074151396751,
+              "median": 0.21101462095975876,
+              "q3": 0.28278324753046036,
+              "max": 0.3544083833694458
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.002848781645298004,
+              "q1": 0.006153436959721148,
+              "median": 0.009089742787182331,
+              "q3": 0.01130898599512875,
+              "max": 0.01655104197561741
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.005833304487168789,
+              "q1": 0.03530741482973099,
+              "median": 0.07256292551755905,
+              "q3": 0.10424981266260147,
+              "max": 0.22860832512378693
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0000016069471939772484,
+              "q1": 0.000037361520298873074,
+              "median": 0.013240441214293242,
+              "q3": 0.03273994196206331,
+              "max": 0.04617884010076523
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.050652582198381424,
+              "q1": 0.40103374421596527,
+              "median": 0.6043350696563721,
+              "q3": 0.905018150806427,
+              "max": 0.9849525690078735
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0035143934655934572,
+              "q1": 0.13818299025297165,
+              "median": 0.1457211822271347,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0002201517636422068,
+              "q1": 0.00038968468288658187,
+              "median": 0.0004716389812529087,
+              "q3": 0.0006182729121064767,
+              "max": 0.0008902487461455166
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.4359413981437683,
+              "q1": 0.48461198806762695,
+              "median": 0.49601949751377106,
+              "q3": 0.8572920262813568,
+              "max": 0.889579713344574
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.5752388834953308,
+              "q1": 0.7159487754106522,
+              "median": 0.8084824085235596,
+              "q3": 0.8911084532737732,
+              "max": 0.968145489692688
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0.0032506317365914583,
+            "q1": 0.009937799768522382,
+            "median": 0.019548911601305008,
+            "q3": 0.02652831608429551,
+            "max": 0.05075962468981743
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.9791666666666666,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00007922715303720906,
+              "q1": 0.0003915725610568188,
+              "median": 0.0024087249767035246,
+              "q3": 0.004456385155208409,
+              "max": 0.009740594774484634
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.000049505269998917356,
+              "q1": 0.001056372158927843,
+              "median": 0.005830106092616916,
+              "q3": 0.011973877903074026,
+              "max": 0.029496679082512856
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.000151053027366288,
+              "q1": 0.00027800185489468277,
+              "median": 0.00033585194614715874,
+              "q3": 0.00047887026448734105,
+              "max": 0.0006202816148288548
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.024469980970025063,
+              "q1": 0.08296025544404984,
+              "median": 0.1662963628768921,
+              "q3": 0.1913432590663433,
+              "max": 0.3088822364807129
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0026081986725330353,
+              "q1": 0.0051705032819882035,
+              "median": 0.006982594728469849,
+              "q3": 0.008409517351537943,
+              "max": 0.013085996732115746
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.006225280929356813,
+              "q1": 0.027978549245744944,
+              "median": 0.04404195584356785,
+              "q3": 0.06564236246049404,
+              "max": 0.12196918576955795
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0000016069471939772484,
+              "q1": 0.00008597167470725253,
+              "median": 0.01038971683010459,
+              "q3": 0.019680282101035118,
+              "max": 0.02563241496682167
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.08580133318901062,
+              "q1": 0.38249921053647995,
+              "median": 0.481857568025589,
+              "q3": 0.9142609536647797,
+              "max": 0.9802072048187256
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.005936062894761562,
+              "q1": 0.06390105560421944,
+              "median": 0.07287666201591492,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.000151053027366288,
+              "q1": 0.00027800185489468277,
+              "median": 0.00033585194614715874,
+              "q3": 0.00047887026448734105,
+              "max": 0.0006202816148288548
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.2597055733203888,
+              "q1": 0.2991418093442917,
+              "median": 0.3179546147584915,
+              "q3": 0.7602945119142532,
+              "max": 0.8193596601486206
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.5602123141288757,
+              "q1": 0.6868887841701508,
+              "median": 0.7689756155014038,
+              "q3": 0.8824566602706909,
+              "max": 0.9662573337554932
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0,
+            "q1": 0.004193249624222517,
+            "median": 0.00763306743465364,
+            "q3": 0.011997618479654193,
+            "max": 0.02426714450120926
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 1,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.000049146114179166034,
+              "median": 0.00023955893266247585,
+              "q3": 0.0005556126852752641,
+              "max": 0.0012910360237583518
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.0000985967526503373,
+              "median": 0.0003683364047901705,
+              "q3": 0.0007771524542476982,
+              "max": 0.003507353365421295
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00045155215775594115,
+              "q1": 0.0005041796830482781,
+              "median": 0.0006202816148288548,
+              "q3": 0.0006769264728063717,
+              "max": 0.0008034735801629722
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.008139831945300102,
+              "q1": 0.024186449125409126,
+              "median": 0.05399235710501671,
+              "q3": 0.1302226074039936,
+              "max": 0.18551145493984222
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0020039076916873455,
+              "q1": 0.003754455829039216,
+              "median": 0.005634488770738244,
+              "q3": 0.00850608036853373,
+              "max": 0.011798983439803123
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.013399197719991207,
+              "q1": 0.03943844884634018,
+              "median": 0.06814716383814812,
+              "q3": 0.10461176000535488,
+              "max": 0.1723441332578659
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00002089031295327004,
+              "q1": 0.00009039077849593014,
+              "median": 0.0011457533109933138,
+              "q3": 0.0012124415952712297,
+              "max": 0.0013337661512196064
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0005897496012039483,
+              "q1": 0.012943156063556671,
+              "median": 0.7740519940853119,
+              "q3": 0.8818227052688599,
+              "max": 0.9666992425918579
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.000302106054732576,
+              "q1": 0.001463125372538343,
+              "median": 0.4491594135761261,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00045155215775594115,
+              "q1": 0.0005041796830482781,
+              "median": 0.0006202816148288548,
+              "q3": 0.0006769264728063717,
+              "max": 0.0008034735801629722
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.2251451015472412,
+              "q1": 0.26471953839063644,
+              "median": 0.272692009806633,
+              "q3": 0.6591487526893616,
+              "max": 0.7233225703239441
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.37433353066444397,
+              "q1": 0.5201105326414108,
+              "median": 0.6396951079368591,
+              "q3": 0.7941758036613464,
+              "max": 0.9679141044616699
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "SUPPORTED",
+          "applicable_anchor_cells": 48,
+          "anchor_cells_with_matched_peer": 14,
+          "expected_peer_relationships": 14,
+          "unique_matched_peers": 14,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 14,
+                "missing": 34,
+                "min": 0.00018027333135250956,
+                "q1": 0.0010340206499677151,
+                "median": 0.0028027400840073824,
+                "q3": 0.01293206075206399,
+                "max": 0.017085149884223938
+              },
+              "peer_coverage": {
+                "count": 14,
+                "missing": 34,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 14,
+                "missing": 34,
+                "min": 0.000030612452974310145,
+                "q1": 0.00032313144765794277,
+                "median": 0.0015884462045505643,
+                "q3": 0.006415009498596191,
+                "max": 0.00767012033611536
+              },
+              "peer_coverage": {
+                "count": 14,
+                "missing": 34,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 14,
+                "missing": 34,
+                "min": 0.000003401383764867205,
+                "q1": 0.00004761937179864617,
+                "median": 0.00015986503422027454,
+                "q3": 0.0003945605058106594,
+                "max": 0.0004659895785152912
+              },
+              "peer_coverage": {
+                "count": 14,
+                "missing": 34,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 14,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 14,
+                "missing": 0,
+                "min": 0.579,
+                "q1": 0.8815,
+                "median": 1.2315,
+                "q3": 1.5742500000000001,
+                "max": 1.657
+              },
+              "profit_factor": {
+                "count": 14,
+                "missing": 0,
+                "min": 1.76,
+                "q1": 2.1525,
+                "median": 2.8499999999999996,
+                "q3": 3.3975,
+                "max": 3.53
+              },
+              "romad": {
+                "count": 14,
+                "missing": 0,
+                "min": 2.02,
+                "q1": 3.1375,
+                "median": 5.279999999999999,
+                "q3": 7.1925,
+                "max": 7.58
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 48,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "1400-1500"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            1
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 3,
+            "max_index": 3,
+            "unique_values": 1
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 5,
+            "max_index": 7,
+            "unique_values": 3
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 0,
+            "max_index": 2,
+            "unique_values": 3
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 5,
+            "max_index": 6,
+            "unique_values": 2
+          },
+          "tp2_band_width_pct": {
+            "min_index": 6,
+            "max_index": 9,
+            "unique_values": 4
+          }
+        },
+        "boundary_exposure": 0.5320088300220751,
+        "internal_half_edges": 212,
+        "boundary_half_edges": 241,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.012588771737406804,
+            "interior_edges": 106,
+            "boundary_mean_normalized_drop": 0.29013517388199483,
+            "boundary_mean_raw_drop": 0.7007634854771789,
+            "boundary_worse_fraction": 0.941908713692946,
+            "boundary_edges": 241,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.013199361519256735,
+            "interior_edges": 106,
+            "boundary_mean_normalized_drop": 0.3473326072672614,
+            "boundary_mean_raw_drop": 1.6012033195020767,
+            "boundary_worse_fraction": 0.941908713692946,
+            "boundary_edges": 241,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.01850618403977996,
+            "interior_edges": 106,
+            "boundary_mean_normalized_drop": 0.8421317143268436,
+            "boundary_mean_raw_drop": 13.83622406639004,
+            "boundary_worse_fraction": 0.9585062240663901,
+            "boundary_edges": 241,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-b81107d62901368b",
+      "anchor_membership_sha256": "b81107d62901368ba69c8794ef9da2b4c158e3b3327b5332c89e84f6c85b1797",
+      "performance_class": "P14",
+      "sr": {
+        "r_per_trade": {
+          "count": 32,
+          "missing": 0,
+          "min": 0.0015225715469568968,
+          "q1": 0.00401606090599671,
+          "median": 0.006446376908570528,
+          "q3": 0.014014082727953792,
+          "max": 0.024152465164661407
+        },
+        "profit_factor": {
+          "count": 32,
+          "missing": 0,
+          "min": 0.001301871845498681,
+          "q1": 0.003146642295178026,
+          "median": 0.004959721118211746,
+          "q3": 0.008657752303406596,
+          "max": 0.016359610483050346
+        },
+        "romad": {
+          "count": 32,
+          "missing": 0,
+          "min": 0.026125086471438408,
+          "q1": 0.05183830764144659,
+          "median": 0.06823509559035301,
+          "q3": 0.08019617572426796,
+          "max": 0.13557365536689758
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 32,
+            "missing": 0,
+            "min": 0.0015225715469568968,
+            "q1": 0.00401606090599671,
+            "median": 0.006446376908570528,
+            "q3": 0.014014082727953792,
+            "max": 0.024152465164661407
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 1,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00006079845115891658,
+              "q1": 0.000393245616578497,
+              "median": 0.000695759168593213,
+              "q3": 0.0019613701733760536,
+              "max": 0.004240979440510273
+            },
+            "smoothness": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00012164262443548068,
+              "q1": 0.0006995232397457585,
+              "median": 0.0017129930201917887,
+              "q3": 0.0030728800338692963,
+              "max": 0.013210817240178585
+            },
+            "tmStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0021581300534307957,
+              "q1": 0.0032878138590604067,
+              "median": 0.003822927363216877,
+              "q3": 0.005201688036322594,
+              "max": 0.0056612747721374035
+            },
+            "contextStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.025813158601522446,
+              "q1": 0.03966251388192177,
+              "median": 0.04338564723730087,
+              "q3": 0.10580302774906158,
+              "max": 0.11928306519985199
+            },
+            "directionalStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0074637895449995995,
+              "q1": 0.011558081954717636,
+              "median": 0.014984671957790852,
+              "q3": 0.02011762745678425,
+              "max": 0.024909300729632378
+            },
+            "breadth": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00006679954094579443,
+              "q1": 0.000360429025022313,
+              "median": 0.0007111759332474321,
+              "q3": 0.003175426973029971,
+              "max": 0.006044765468686819
+            },
+            "evidence": {
+              "count": 32,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.02187858521938324,
+              "q1": 0.04251178726553917,
+              "median": 0.05317307822406292,
+              "q3": 0.07647381350398064,
+              "max": 0.1261887401342392
+            },
+            "scale_1_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0015619526384398341,
+              "q1": 0.001928336569108069,
+              "median": 0.002574329264461994,
+              "q3": 0.003063242940697819,
+              "max": 0.023111114278435707
+            },
+            "scale_2_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.01618356443941593,
+              "q1": 0.8204975724220276,
+              "median": 0.8204975724220276,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0021581300534307957,
+              "q1": 0.0032878138590604067,
+              "median": 0.003822927363216877,
+              "q3": 0.005201688036322594,
+              "max": 0.0056612747721374035
+            },
+            "tp1_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.1852729171514511,
+              "q1": 0.3745402693748474,
+              "median": 0.3763037323951721,
+              "q3": 0.5460655987262726,
+              "max": 0.5797985196113586
+            },
+            "tp2_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0037522215861827135,
+              "q1": 0.004452850669622421,
+              "median": 0.005140624009072781,
+              "q3": 0.23811742663383484,
+              "max": 0.2880709767341614
+            }
+          },
+          "neighbor_coverage": {
+            "count": 32,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 32,
+            "missing": 0,
+            "min": 0.001301871845498681,
+            "q1": 0.003146642295178026,
+            "median": 0.004959721118211746,
+            "q3": 0.008657752303406596,
+            "max": 0.016359610483050346
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 1,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00004690894274972379,
+              "q1": 0.0002192923529946711,
+              "median": 0.00042663564090617,
+              "q3": 0.0010191579931415617,
+              "max": 0.003048477228730917
+            },
+            "smoothness": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00006395646778400987,
+              "q1": 0.0003377293614903465,
+              "median": 0.0008157373231370002,
+              "q3": 0.0011982796422671527,
+              "max": 0.004913239739835262
+            },
+            "tmStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0010252322535961866,
+              "q1": 0.0019363713217899203,
+              "median": 0.0025646877475082874,
+              "q3": 0.0035722434986382723,
+              "max": 0.0062510245479643345
+            },
+            "contextStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.009917942807078362,
+              "q1": 0.016617894871160388,
+              "median": 0.01932778675109148,
+              "q3": 0.05850409250706434,
+              "max": 0.06643354147672653
+            },
+            "directionalStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.003188760718330741,
+              "q1": 0.005733821075409651,
+              "median": 0.008685301057994366,
+              "q3": 0.012846493162214756,
+              "max": 0.020073916763067245
+            },
+            "breadth": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0001937421184265986,
+              "q1": 0.0006593308207811788,
+              "median": 0.0011845948174595833,
+              "q3": 0.002223688701633364,
+              "max": 0.007992280647158623
+            },
+            "evidence": {
+              "count": 32,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.02027645893394947,
+              "q1": 0.025037843734025955,
+              "median": 0.034959133714437485,
+              "q3": 0.0487113893032074,
+              "max": 0.08440329134464264
+            },
+            "scale_1_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.00006588483665836975,
+              "q1": 0.00019765450269915164,
+              "median": 0.0003567422681953758,
+              "q3": 0.0004274479579180479,
+              "max": 0.030644482001662254
+            },
+            "scale_2_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.016895443201065063,
+              "q1": 0.8194916248321533,
+              "median": 0.8194916248321533,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0010252322535961866,
+              "q1": 0.0019363713217899203,
+              "median": 0.0025646877475082874,
+              "q3": 0.0035722434986382723,
+              "max": 0.0062510245479643345
+            },
+            "tp1_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.08675225079059601,
+              "q1": 0.2060931921005249,
+              "median": 0.2158389687538147,
+              "q3": 0.3579391688108444,
+              "max": 0.4292878210544586
+            },
+            "tp2_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.001364298164844513,
+              "q1": 0.0017371098510921001,
+              "median": 0.0022481190972030163,
+              "q3": 0.23840346932411194,
+              "max": 0.2918457090854645
+            }
+          },
+          "neighbor_coverage": {
+            "count": 32,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 32,
+            "missing": 0,
+            "min": 0.026125086471438408,
+            "q1": 0.05183830764144659,
+            "median": 0.06823509559035301,
+            "q3": 0.08019617572426796,
+            "max": 0.13557365536689758
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.21875,
+            "fraction_below_0_10": 0.875
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.008961169049143791,
+              "q1": 0.016097991727292538,
+              "median": 0.021511477418243885,
+              "q3": 0.03333915024995804,
+              "max": 0.055754899978637695
+            },
+            "smoothness": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.006934620905667543,
+              "q1": 0.019606585148721933,
+              "median": 0.028646528720855713,
+              "q3": 0.03792607318609953,
+              "max": 0.09769310057163239
+            },
+            "tmStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.027117233723402023,
+              "q1": 0.03074411256238818,
+              "median": 0.032958485186100006,
+              "q3": 0.036194875836372375,
+              "max": 0.037755224853754044
+            },
+            "contextStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.07488895952701569,
+              "q1": 0.0942993238568306,
+              "median": 0.11144522577524185,
+              "q3": 0.21004371345043182,
+              "max": 0.2498321831226349
+            },
+            "directionalStability": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.04506419226527214,
+              "q1": 0.05570806283503771,
+              "median": 0.06035078130662441,
+              "q3": 0.08610912784934044,
+              "max": 0.09509282559156418
+            },
+            "breadth": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.0038283916655927896,
+              "q1": 0.01906018750742078,
+              "median": 0.02883823122829199,
+              "q3": 0.040988823398947716,
+              "max": 0.0884263664484024
+            },
+            "evidence": {
+              "count": 32,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.16432802379131317,
+              "q1": 0.177284836769104,
+              "median": 0.30239612609148026,
+              "q3": 0.44717803597450256,
+              "max": 0.5590938925743103
+            },
+            "scale_1_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.011880160309374332,
+              "q1": 0.013818138279020786,
+              "median": 0.0169806107878685,
+              "q3": 0.018177384976297617,
+              "max": 0.07346319407224655
+            },
+            "scale_2_atr_ratio": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.048319295048713684,
+              "q1": 0.8202324509620667,
+              "median": 0.8202324509620667,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.027117233723402023,
+              "q1": 0.03074411256238818,
+              "median": 0.032958485186100006,
+              "q3": 0.036194875836372375,
+              "max": 0.037755224853754044
+            },
+            "tp1_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.26051101088523865,
+              "q1": 0.43074944615364075,
+              "median": 0.4330509603023529,
+              "q3": 0.5804989337921143,
+              "max": 0.5804989337921143
+            },
+            "tp2_band_width_pct": {
+              "count": 32,
+              "missing": 0,
+              "min": 0.006866485346108675,
+              "q1": 0.008268948644399643,
+              "median": 0.010244288481771946,
+              "q3": 0.2591668367385864,
+              "max": 0.30390745401382446
+            }
+          },
+          "neighbor_coverage": {
+            "count": 32,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "UNSUPPORTED",
+          "applicable_anchor_cells": 32,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 32,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 32,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "1400-1500"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            1
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 2,
+            "max_index": 3,
+            "unique_values": 2
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 2,
+            "max_index": 2,
+            "unique_values": 1
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 1,
+            "max_index": 7,
+            "unique_values": 7
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 4,
+            "max_index": 6,
+            "unique_values": 3
+          },
+          "tp2_band_width_pct": {
+            "min_index": 6,
+            "max_index": 7,
+            "unique_values": 2
+          }
+        },
+        "boundary_exposure": 0.6513761467889908,
+        "internal_half_edges": 114,
+        "boundary_half_edges": 213,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 0.9824561403508771,
+            "interior_mean_normalized_delta": 0.03588962469519983,
+            "interior_edges": 57,
+            "boundary_mean_normalized_drop": 0.2817931617083518,
+            "boundary_mean_raw_drop": 0.6806150234741786,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 213,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 0.9824561403508771,
+            "interior_mean_normalized_delta": 0.03946417018685544,
+            "interior_edges": 57,
+            "boundary_mean_normalized_drop": 0.37764402757834076,
+            "boundary_mean_raw_drop": 1.7409389671361521,
+            "boundary_worse_fraction": 0.9953051643192489,
+            "boundary_edges": 213,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.027890786003352888,
+            "interior_edges": 57,
+            "boundary_mean_normalized_drop": 0.27419211964830137,
+            "boundary_mean_raw_drop": 4.504976525821597,
+            "boundary_worse_fraction": 0.971830985915493,
+            "boundary_edges": 213,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-c8f1c209be790205",
+      "anchor_membership_sha256": "c8f1c209be7902057b3f8a4eaec19c5e7f139d122a0071180317206595c4a611",
+      "performance_class": "P16",
+      "sr": {
+        "r_per_trade": {
+          "count": 60,
+          "missing": 0,
+          "min": 0.03206949681043625,
+          "q1": 0.06420836970210075,
+          "median": 0.10616382583975792,
+          "q3": 0.14443672820925713,
+          "max": 0.2112634778022766
+        },
+        "profit_factor": {
+          "count": 60,
+          "missing": 0,
+          "min": 0.025414958596229553,
+          "q1": 0.049063483253121376,
+          "median": 0.06932073086500168,
+          "q3": 0.09801433980464935,
+          "max": 0.15472541749477386
+        },
+        "romad": {
+          "count": 60,
+          "missing": 0,
+          "min": 0.06754008680582047,
+          "q1": 0.21607954055070877,
+          "median": 0.34969039261341095,
+          "q3": 0.3860180750489235,
+          "max": 0.4279910922050476
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 60,
+            "missing": 0,
+            "min": 0.03206949681043625,
+            "q1": 0.06420836970210075,
+            "median": 0.10616382583975792,
+            "q3": 0.14443672820925713,
+            "max": 0.2112634778022766
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.11666666666666667,
+            "fraction_below_0_10": 0.45
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.007574027869850397,
+              "q1": 0.019174031913280487,
+              "median": 0.031701783649623394,
+              "q3": 0.0424785977229476,
+              "max": 0.07309292256832123
+            },
+            "smoothness": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.025613486766815186,
+              "q1": 0.1434292495250702,
+              "median": 0.27673791348934174,
+              "q3": 0.39140699058771133,
+              "max": 0.5122594833374023
+            },
+            "tmStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.00013016271986998618,
+              "q1": 0.0002201517636422068,
+              "median": 0.00042905488226097077,
+              "q3": 0.0007729415665380657,
+              "max": 0.0009529196540825069
+            },
+            "contextStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.22601696848869324,
+              "q1": 0.316944919526577,
+              "median": 0.4241531789302826,
+              "q3": 0.5751070380210876,
+              "max": 0.7122515439987183
+            },
+            "directionalStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.006336723454296589,
+              "q1": 0.008951767347753048,
+              "median": 0.012276566121727228,
+              "q3": 0.018252160400152206,
+              "max": 0.023702722042798996
+            },
+            "breadth": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.011310928501188755,
+              "q1": 0.054669314064085484,
+              "median": 0.12768946215510368,
+              "q3": 0.2804630622267723,
+              "max": 0.523653507232666
+            },
+            "evidence": {
+              "count": 60,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.04861658066511154,
+              "q1": 0.1272079460322857,
+              "median": 0.1530834138393402,
+              "q3": 0.8064914345741272,
+              "max": 0.9259213209152222
+            },
+            "scale_1_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.26447296142578125,
+              "q1": 0.28048619627952576,
+              "median": 0.29817867279052734,
+              "q3": 0.5112180709838867,
+              "max": 0.5164278149604797
+            },
+            "scale_2_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.12323999404907227,
+              "q1": 0.14533711969852448,
+              "median": 0.8204975724220276,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.00013016271986998618,
+              "q1": 0.0002201517636422068,
+              "median": 0.00042905488226097077,
+              "q3": 0.0007729415665380657,
+              "max": 0.0009529196540825069
+            },
+            "tp1_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.4219977855682373,
+              "q1": 0.4219977855682373,
+              "median": 0.4359413981437683,
+              "q3": 0.4874933958053589,
+              "max": 0.5035252571105957
+            },
+            "tp2_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.4624440371990204,
+              "q1": 0.8518732190132141,
+              "median": 0.862419605255127,
+              "q3": 0.968145489692688,
+              "max": 0.968145489692688
+            }
+          },
+          "neighbor_coverage": {
+            "count": 60,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 60,
+            "missing": 0,
+            "min": 0.025414958596229553,
+            "q1": 0.049063483253121376,
+            "median": 0.06932073086500168,
+            "q3": 0.09801433980464935,
+            "max": 0.15472541749477386
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.3,
+            "fraction_below_0_10": 0.8
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.0054959580302238464,
+              "q1": 0.013040913036093116,
+              "median": 0.020902475342154503,
+              "q3": 0.030906863044947386,
+              "max": 0.055896639823913574
+            },
+            "smoothness": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.008747884072363377,
+              "q1": 0.05446709971874952,
+              "median": 0.17174659669399261,
+              "q3": 0.2636602595448494,
+              "max": 0.41399961709976196
+            },
+            "tmStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.00010605851275613531,
+              "q1": 0.000151053027366288,
+              "median": 0.00030692690052092075,
+              "q3": 0.0005543967708945274,
+              "max": 0.0006202816148288548
+            },
+            "contextStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.13607510924339294,
+              "q1": 0.19511178880929947,
+              "median": 0.2868422567844391,
+              "q3": 0.4315658509731293,
+              "max": 0.5479057431221008
+            },
+            "directionalStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.004179391078650951,
+              "q1": 0.0063287835801020265,
+              "median": 0.008685508742928505,
+              "q3": 0.012887472286820412,
+              "max": 0.01693618856370449
+            },
+            "breadth": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.01835021562874317,
+              "q1": 0.04882634989917278,
+              "median": 0.0670539140701294,
+              "q3": 0.11113117448985577,
+              "max": 0.24296732246875763
+            },
+            "evidence": {
+              "count": 60,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.0439869649708271,
+              "q1": 0.07190766930580139,
+              "median": 0.08579812198877335,
+              "q3": 0.8406213521957397,
+              "max": 0.9320068359375
+            },
+            "scale_1_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.11089863628149033,
+              "q1": 0.1146106868982315,
+              "median": 0.12097419798374176,
+              "q3": 0.22208812832832336,
+              "max": 0.22208812832832336
+            },
+            "scale_2_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.043096717447042465,
+              "q1": 0.07287666201591492,
+              "median": 0.8194916248321533,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.00010605851275613531,
+              "q1": 0.000151053027366288,
+              "median": 0.00030692690052092075,
+              "q3": 0.0005543967708945274,
+              "max": 0.0006202816148288548
+            },
+            "tp1_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.2414558380842209,
+              "q1": 0.2414558380842209,
+              "median": 0.2597055733203888,
+              "q3": 0.30126410722732544,
+              "max": 0.3225584626197815
+            },
+            "tp2_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.45420682430267334,
+              "q1": 0.8115710020065308,
+              "median": 0.83571857213974,
+              "q3": 0.9662573337554932,
+              "max": 0.9662573337554932
+            }
+          },
+          "neighbor_coverage": {
+            "count": 60,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 60,
+            "missing": 0,
+            "min": 0.06754008680582047,
+            "q1": 0.21607954055070877,
+            "median": 0.34969039261341095,
+            "q3": 0.3860180750489235,
+            "max": 0.4279910922050476
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0,
+            "fraction_below_0_10": 0.11666666666666667
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.012804277241230011,
+              "q1": 0.07945051230490208,
+              "median": 0.17526429891586304,
+              "q3": 0.22689323872327805,
+              "max": 0.28572365641593933
+            },
+            "smoothness": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.009749657474458218,
+              "q1": 0.21414590254426003,
+              "median": 0.5917466282844543,
+              "q3": 0.676178440451622,
+              "max": 0.7654423713684082
+            },
+            "tmStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.0074771251529455185,
+              "q1": 0.007830653339624405,
+              "median": 0.00840352987870574,
+              "q3": 0.009765418246388435,
+              "max": 0.009966285899281502
+            },
+            "contextStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.14951440691947937,
+              "q1": 0.49110158532857895,
+              "median": 0.6814965605735779,
+              "q3": 0.7457845211029053,
+              "max": 0.7945277094841003
+            },
+            "directionalStability": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.035172540694475174,
+              "q1": 0.06412294134497643,
+              "median": 0.07379208505153656,
+              "q3": 0.08179257810115814,
+              "max": 0.0860913023352623
+            },
+            "breadth": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.2742288410663605,
+              "q1": 0.4728586971759796,
+              "median": 0.6633622348308563,
+              "q3": 0.717913806438446,
+              "max": 0.7702025771141052
+            },
+            "evidence": {
+              "count": 60,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.001982972724363208,
+              "q1": 0.2684871256351471,
+              "median": 0.7002336382865906,
+              "q3": 0.8340088129043579,
+              "max": 0.9362074136734009
+            },
+            "scale_1_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.8043959736824036,
+              "q1": 0.8166923522949219,
+              "median": 0.8465140461921692,
+              "q3": 0.9498616456985474,
+              "max": 0.9953092932701111
+            },
+            "scale_2_atr_ratio": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.0012823438737541437,
+              "q1": 0.5139643549919128,
+              "median": 0.8202324509620667,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.0074771251529455185,
+              "q1": 0.007830653339624405,
+              "median": 0.00840352987870574,
+              "q3": 0.009765418246388435,
+              "max": 0.009966285899281502
+            },
+            "tp1_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.3919123709201813,
+              "q1": 0.3965580463409424,
+              "median": 0.4078655242919922,
+              "q3": 0.4484758675098419,
+              "max": 0.4621012508869171
+            },
+            "tp2_band_width_pct": {
+              "count": 60,
+              "missing": 0,
+              "min": 0.41017165780067444,
+              "q1": 0.7941758036613464,
+              "median": 0.8219245672225952,
+              "q3": 0.9679141044616699,
+              "max": 0.9679141044616699
+            }
+          },
+          "neighbor_coverage": {
+            "count": 60,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "SUPPORTED",
+          "applicable_anchor_cells": 60,
+          "anchor_cells_with_matched_peer": 60,
+          "expected_peer_relationships": 60,
+          "unique_matched_peers": 60,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 60,
+                "missing": 0,
+                "min": 0.004534044302999973,
+                "q1": 0.00900346226990223,
+                "median": 0.01683684904128313,
+                "q3": 0.03194579482078552,
+                "max": 0.09879318624734879
+              },
+              "peer_coverage": {
+                "count": 60,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 60,
+                "missing": 0,
+                "min": 0.0032211104407906532,
+                "q1": 0.005772148258984089,
+                "median": 0.00958850048482418,
+                "q3": 0.017193995416164398,
+                "max": 0.050262246280908585
+              },
+              "peer_coverage": {
+                "count": 60,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 60,
+                "missing": 0,
+                "min": 0.006935421377420425,
+                "q1": 0.011865726904943585,
+                "median": 0.017370865680277348,
+                "q3": 0.02269743336364627,
+                "max": 0.052160218358039856
+              },
+              "peer_coverage": {
+                "count": 60,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 60,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 60,
+                "missing": 0,
+                "min": 1.358,
+                "q1": 1.53725,
+                "median": 1.6355,
+                "q3": 1.8745,
+                "max": 2.479
+              },
+              "profit_factor": {
+                "count": 60,
+                "missing": 0,
+                "min": 3.16,
+                "q1": 3.5,
+                "median": 3.59,
+                "q3": 4.0875,
+                "max": 5.04
+              },
+              "romad": {
+                "count": 60,
+                "missing": 0,
+                "min": 5.01,
+                "q1": 5.890000000000001,
+                "median": 6.9,
+                "q3": 7.68,
+                "max": 10.98
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 60,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "1400-1500"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            1
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 3,
+            "max_index": 4,
+            "unique_values": 2
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 7,
+            "max_index": 7,
+            "unique_values": 1
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 2,
+            "max_index": 7,
+            "unique_values": 6
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 5,
+            "max_index": 6,
+            "unique_values": 2
+          },
+          "tp2_band_width_pct": {
+            "min_index": 6,
+            "max_index": 9,
+            "unique_values": 4
+          }
+        },
+        "boundary_exposure": 0.4672131147540984,
+        "internal_half_edges": 260,
+        "boundary_half_edges": 228,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.016503762870673906,
+            "interior_edges": 130,
+            "boundary_mean_normalized_drop": 0.17615043280374254,
+            "boundary_mean_raw_drop": 0.4254561403508776,
+            "boundary_worse_fraction": 0.9385964912280702,
+            "boundary_edges": 228,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.017487068246287353,
+            "interior_edges": 130,
+            "boundary_mean_normalized_drop": 0.2269094645507481,
+            "boundary_mean_raw_drop": 1.046052631578946,
+            "boundary_worse_fraction": 0.9385964912280702,
+            "boundary_edges": 228,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.016114986656678692,
+            "interior_edges": 130,
+            "boundary_mean_normalized_drop": 0.13776147611878137,
+            "boundary_mean_raw_drop": 2.263421052631576,
+            "boundary_worse_fraction": 0.8157894736842105,
+            "boundary_edges": 228,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-f85d84baad1b100e",
+      "anchor_membership_sha256": "f85d84baad1b100e743d42d662ad3c103eb36c89992cd236fd39243dff794563",
+      "performance_class": "P14",
+      "sr": {
+        "r_per_trade": {
+          "count": 48,
+          "missing": 0,
+          "min": 0.013636095449328423,
+          "q1": 0.02503338037058711,
+          "median": 0.034210121259093285,
+          "q3": 0.047360002994537354,
+          "max": 0.06506727635860443
+        },
+        "profit_factor": {
+          "count": 48,
+          "missing": 0,
+          "min": 0.00492703914642334,
+          "q1": 0.009331066394224763,
+          "median": 0.013331613503396511,
+          "q3": 0.016752746887505054,
+          "max": 0.024762609973549843
+        },
+        "romad": {
+          "count": 48,
+          "missing": 0,
+          "min": 0.022534895688295364,
+          "q1": 0.035601464100182056,
+          "median": 0.0462931077927351,
+          "q3": 0.05506394989788532,
+          "max": 0.06747166067361832
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0.013636095449328423,
+            "q1": 0.02503338037058711,
+            "median": 0.034210121259093285,
+            "q3": 0.047360002994537354,
+            "max": 0.06506727635860443
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.7916666666666666,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0019494451116770506,
+              "q1": 0.004787227953784168,
+              "median": 0.008632745128124952,
+              "q3": 0.01326226000674069,
+              "max": 0.02416996657848358
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0012614630395546556,
+              "q1": 0.0073810332687571645,
+              "median": 0.014235581737011671,
+              "q3": 0.03160958085209131,
+              "max": 0.05772323161363602
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0046231867745518684,
+              "q1": 0.005059874965809286,
+              "median": 0.0054194291587919,
+              "q3": 0.005858527729287744,
+              "max": 0.0062542385421693325
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.08511645346879959,
+              "q1": 0.16302603483200073,
+              "median": 0.19551043212413788,
+              "q3": 0.2279076837003231,
+              "max": 0.27327173948287964
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.02046738937497139,
+              "q1": 0.029903932474553585,
+              "median": 0.032757917419075966,
+              "q3": 0.03481299243867397,
+              "max": 0.040563929826021194
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.003825494786724448,
+              "q1": 0.008976955199614167,
+              "median": 0.013106530997902155,
+              "q3": 0.017086684703826904,
+              "max": 0.03160243481397629
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.004904402885586023,
+              "q1": 0.011578857433050871,
+              "median": 0.022736694663763046,
+              "q3": 0.03823931701481342,
+              "max": 0.11514419317245483
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.03646484389901161,
+              "q1": 0.04750457312911749,
+              "median": 0.06303009204566479,
+              "q3": 0.06700527854263783,
+              "max": 0.07516495138406754
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.001928336569108069,
+              "q1": 0.8204975724220276,
+              "median": 0.8204975724220276,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0046231867745518684,
+              "q1": 0.005059874965809286,
+              "median": 0.0054194291587919,
+              "q3": 0.005858527729287744,
+              "max": 0.0062542385421693325
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.31177759170532227,
+              "q1": 0.5867620706558228,
+              "median": 0.7599409818649292,
+              "q3": 0.9297733902931213,
+              "max": 0.9322914481163025
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.557425856590271,
+              "q1": 0.6051686555147171,
+              "median": 0.6567560732364655,
+              "q3": 0.7333066165447235,
+              "max": 0.760164737701416
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0.00492703914642334,
+            "q1": 0.009331066394224763,
+            "median": 0.013331613503396511,
+            "q3": 0.016752746887505054,
+            "max": 0.024762609973549843
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 1,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0004127924330532551,
+              "q1": 0.0008952433418016881,
+              "median": 0.0013640635297633708,
+              "q3": 0.0020685310009866953,
+              "max": 0.003925508353859186
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00009536305879009888,
+              "q1": 0.0009708248981041834,
+              "median": 0.0018640728667378426,
+              "q3": 0.004083385574631393,
+              "max": 0.00817817822098732
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0012341353576630354,
+              "q1": 0.0013755467953160405,
+              "median": 0.0015651665162295103,
+              "q3": 0.0017266647482756525,
+              "max": 0.0019363713217899203
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.036913856863975525,
+              "q1": 0.07165022566914558,
+              "median": 0.08628527820110321,
+              "q3": 0.103283716365695,
+              "max": 0.12689806520938873
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.007194876670837402,
+              "q1": 0.010587390279397368,
+              "median": 0.011526043061167002,
+              "q3": 0.012569846585392952,
+              "max": 0.015675514936447144
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0035020422656089067,
+              "q1": 0.007530047441832721,
+              "median": 0.012032741215080023,
+              "q3": 0.016704073175787926,
+              "max": 0.02783634141087532
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0008243639022111893,
+              "q1": 0.0018287058919668198,
+              "median": 0.005028137471526861,
+              "q3": 0.007434541126713157,
+              "max": 0.02358677051961422
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.005539146717637777,
+              "q1": 0.00688054587226361,
+              "median": 0.00811026245355606,
+              "q3": 0.008698003133758903,
+              "max": 0.009265657514333725
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0016423000488430262,
+              "q1": 0.8194916248321533,
+              "median": 0.8194916248321533,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0012341353576630354,
+              "q1": 0.0013755467953160405,
+              "median": 0.0015651665162295103,
+              "q3": 0.0017266647482756525,
+              "max": 0.0019363713217899203
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.13889317214488983,
+              "q1": 0.3773142397403717,
+              "median": 0.6156795173883438,
+              "q3": 0.8866072297096252,
+              "max": 0.8866072297096252
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.5317886471748352,
+              "q1": 0.5654911249876022,
+              "median": 0.6227996945381165,
+              "q3": 0.6968382000923157,
+              "max": 0.7399172186851501
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 48,
+            "missing": 0,
+            "min": 0.022534895688295364,
+            "q1": 0.035601464100182056,
+            "median": 0.0462931077927351,
+            "q3": 0.05506394989788532,
+            "max": 0.06747166067361832
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.6041666666666666,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.003977123647928238,
+              "q1": 0.005797889200039208,
+              "median": 0.007554797222837806,
+              "q3": 0.01173515641130507,
+              "max": 0.016728483140468597
+            },
+            "smoothness": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.00282062659971416,
+              "q1": 0.008093760814517736,
+              "median": 0.01346017699688673,
+              "q3": 0.022837733384221792,
+              "max": 0.03893990442156792
+            },
+            "tmStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.012029606848955154,
+              "q1": 0.012745099607855082,
+              "median": 0.01310706464573741,
+              "q3": 0.013548573246225715,
+              "max": 0.014189342968165874
+            },
+            "contextStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.07986775040626526,
+              "q1": 0.1714150756597519,
+              "median": 0.19498319178819656,
+              "q3": 0.21610936522483826,
+              "max": 0.24499113857746124
+            },
+            "directionalStability": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.03285454586148262,
+              "q1": 0.0482753049582243,
+              "median": 0.05013597011566162,
+              "q3": 0.05313015729188919,
+              "max": 0.05800310894846916
+            },
+            "breadth": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.008821441791951656,
+              "q1": 0.029549025930464268,
+              "median": 0.036530692130327225,
+              "q3": 0.044640032574534416,
+              "max": 0.053855590522289276
+            },
+            "evidence": {
+              "count": 48,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.009734885767102242,
+              "q1": 0.012132852803915739,
+              "median": 0.022505294531583786,
+              "q3": 0.031466033309698105,
+              "max": 0.08945553749799728
+            },
+            "scale_1_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.047940053045749664,
+              "q1": 0.05736359488219023,
+              "median": 0.06448518484830856,
+              "q3": 0.06808152981102467,
+              "max": 0.07127614319324493
+            },
+            "scale_2_atr_ratio": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.0022143730893731117,
+              "q1": 0.8202324509620667,
+              "median": 0.8202324509620667,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.012029606848955154,
+              "q1": 0.012745099607855082,
+              "median": 0.01310706464573741,
+              "q3": 0.013548573246225715,
+              "max": 0.014189342968165874
+            },
+            "tp1_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.27678897976875305,
+              "q1": 0.511363223195076,
+              "median": 0.6975531280040741,
+              "q3": 0.8846924304962158,
+              "max": 0.8898487091064453
+            },
+            "tp2_band_width_pct": {
+              "count": 48,
+              "missing": 0,
+              "min": 0.48269960284233093,
+              "q1": 0.5208662152290344,
+              "median": 0.5717903673648834,
+              "q3": 0.647365465760231,
+              "max": 0.6776849627494812
+            }
+          },
+          "neighbor_coverage": {
+            "count": 48,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "SUPPORTED",
+          "applicable_anchor_cells": 48,
+          "anchor_cells_with_matched_peer": 48,
+          "expected_peer_relationships": 48,
+          "unique_matched_peers": 48,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 48,
+                "missing": 0,
+                "min": 0.0031054632272571325,
+                "q1": 0.004790848819538951,
+                "median": 0.00598303391598165,
+                "q3": 0.00830447836779058,
+                "max": 0.04973163083195686
+              },
+              "peer_coverage": {
+                "count": 48,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 48,
+                "missing": 0,
+                "min": 0.0007381002651527524,
+                "q1": 0.00171089603099972,
+                "median": 0.002119062002748251,
+                "q3": 0.0025833508698269725,
+                "max": 0.01315995305776596
+              },
+              "peer_coverage": {
+                "count": 48,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 48,
+                "missing": 0,
+                "min": 0.007704134099185467,
+                "q1": 0.01001367368735373,
+                "median": 0.010744971223175526,
+                "q3": 0.012171851238235831,
+                "max": 0.02339811809360981
+              },
+              "peer_coverage": {
+                "count": 48,
+                "missing": 0,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 48,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 48,
+                "missing": 0,
+                "min": 0.674,
+                "q1": 0.826,
+                "median": 0.888,
+                "q3": 0.94025,
+                "max": 1.53
+              },
+              "profit_factor": {
+                "count": 48,
+                "missing": 0,
+                "min": 1.91,
+                "q1": 2.1425,
+                "median": 2.2300000000000004,
+                "q3": 2.3075,
+                "max": 3.19
+              },
+              "romad": {
+                "count": 48,
+                "missing": 0,
+                "min": 2.63,
+                "q1": 3.105,
+                "median": 3.315,
+                "q3": 3.6675,
+                "max": 5.56
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 48,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "1400-1500"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            1
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 1,
+            "max_index": 1,
+            "unique_values": 1
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 5,
+            "max_index": 5,
+            "unique_values": 1
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 2,
+            "max_index": 7,
+            "unique_values": 6
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 5,
+            "max_index": 6,
+            "unique_values": 2
+          },
+          "tp2_band_width_pct": {
+            "min_index": 5,
+            "max_index": 9,
+            "unique_values": 5
+          }
+        },
+        "boundary_exposure": 0.6223175965665236,
+        "internal_half_edges": 176,
+        "boundary_half_edges": 290,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.009851966441210069,
+            "interior_edges": 88,
+            "boundary_mean_normalized_drop": 0.2274936932229462,
+            "boundary_mean_raw_drop": 0.5494655172413792,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 290,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.010500887398935161,
+            "interior_edges": 88,
+            "boundary_mean_normalized_drop": 0.3717256339292393,
+            "boundary_mean_raw_drop": 1.7136551724137925,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 290,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 1,
+            "interior_mean_normalized_delta": 0.010167100094062947,
+            "interior_edges": 88,
+            "boundary_mean_normalized_drop": 0.3567842676348987,
+            "boundary_mean_raw_drop": 5.861965517241379,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 290,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-f65664cf610dac78",
+      "anchor_membership_sha256": "f65664cf610dac78bbad4492fa56cbaabe784c94ad83c7bd715943388423b709",
+      "performance_class": "P13",
+      "sr": {
+        "r_per_trade": {
+          "count": 80,
+          "missing": 0,
+          "min": 0.0036164703778922558,
+          "q1": 0.024549111258238554,
+          "median": 0.05318163149058819,
+          "q3": 0.0922523494809866,
+          "max": 0.1628791093826294
+        },
+        "profit_factor": {
+          "count": 80,
+          "missing": 0,
+          "min": 0.0026211910881102085,
+          "q1": 0.009255766170099378,
+          "median": 0.026857994496822357,
+          "q3": 0.07499618455767632,
+          "max": 0.16241568326950073
+        },
+        "romad": {
+          "count": 80,
+          "missing": 0,
+          "min": 0.015430903993546963,
+          "q1": 0.03711603954434395,
+          "median": 0.09919551014900208,
+          "q3": 0.14505479484796524,
+          "max": 0.2854574918746948
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 80,
+            "missing": 0,
+            "min": 0.0036164703778922558,
+            "q1": 0.024549111258238554,
+            "median": 0.05318163149058819,
+            "q3": 0.0922523494809866,
+            "max": 0.1628791093826294
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.4875,
+            "fraction_below_0_10": 0.775
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00011370936408638954,
+              "q1": 0.0033514045062474906,
+              "median": 0.009088155813515186,
+              "q3": 0.022656363900750875,
+              "max": 0.05360164865851402
+            },
+            "smoothness": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.000027123782274429686,
+              "q1": 0.01016723900102079,
+              "median": 0.04974609054625034,
+              "q3": 0.13753779605031013,
+              "max": 0.46545401215553284
+            },
+            "tmStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.000008034735401452053,
+              "q1": 0.00009480988228460774,
+              "median": 0.00018238850316265598,
+              "q3": 0.00034870754461735487,
+              "max": 0.0004885119269602001
+            },
+            "contextStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.036240335553884506,
+              "q1": 0.18275833502411842,
+              "median": 0.3130953758955002,
+              "q3": 0.4210553616285324,
+              "max": 0.669893205165863
+            },
+            "directionalStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.001218138844706118,
+              "q1": 0.005384555086493492,
+              "median": 0.0064794160425662994,
+              "q3": 0.009394360706210136,
+              "max": 0.01303667388856411
+            },
+            "breadth": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.01995738223195076,
+              "q1": 0.06880315579473972,
+              "median": 0.1666347235441208,
+              "q3": 0.26127226650714874,
+              "max": 0.4597686529159546
+            },
+            "evidence": {
+              "count": 80,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00004338757207733579,
+              "q1": 0.02296206960454583,
+              "median": 0.04266525059938431,
+              "q3": 0.25546642392873764,
+              "max": 0.9928217530250549
+            },
+            "scale_1_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.059707727283239365,
+              "q1": 0.3715727925300598,
+              "median": 0.40106186270713806,
+              "q3": 0.6120781302452087,
+              "max": 0.9883673191070557
+            },
+            "scale_2_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.004165207035839558,
+              "q1": 0.17698273062705994,
+              "median": 0.19988172501325607,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.000008034735401452053,
+              "q1": 0.00009480988228460774,
+              "median": 0.00018238850316265598,
+              "q3": 0.00034870754461735487,
+              "max": 0.0004885119269602001
+            },
+            "tp1_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.4512071907520294,
+              "q1": 0.45679447054862976,
+              "median": 0.4914894700050354,
+              "q3": 0.5397245287895203,
+              "max": 0.903649628162384
+            },
+            "tp2_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.4832524061203003,
+              "q1": 0.8021414279937744,
+              "median": 0.8664707541465759,
+              "q3": 0.9189713001251221,
+              "max": 0.968145489692688
+            }
+          },
+          "neighbor_coverage": {
+            "count": 80,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 80,
+            "missing": 0,
+            "min": 0.0026211910881102085,
+            "q1": 0.009255766170099378,
+            "median": 0.026857994496822357,
+            "q3": 0.07499618455767632,
+            "max": 0.16241568326950073
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.7,
+            "fraction_below_0_10": 0.775
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.000170412560692057,
+              "q1": 0.0014157966361381114,
+              "median": 0.004623178858309984,
+              "q3": 0.020170335192233324,
+              "max": 0.05556892603635788
+            },
+            "smoothness": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00008670948591316119,
+              "q1": 0.003395402047317475,
+              "median": 0.01241604471579194,
+              "q3": 0.07521643489599228,
+              "max": 0.339069664478302
+            },
+            "tmStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00002089031295327004,
+              "q1": 0.00024264902458526194,
+              "median": 0.0004178062663413584,
+              "q3": 0.0008211500244215131,
+              "max": 0.0008211500244215131
+            },
+            "contextStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.04394450783729553,
+              "q1": 0.09099113196134567,
+              "median": 0.1891477331519127,
+              "q3": 0.3522263839840889,
+              "max": 0.4522016644477844
+            },
+            "directionalStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0011996073881164193,
+              "q1": 0.005603566998615861,
+              "median": 0.008236343506723642,
+              "q3": 0.013982631266117096,
+              "max": 0.019269805401563644
+            },
+            "breadth": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00011300163896521553,
+              "q1": 0.01718401606194675,
+              "median": 0.04629657231271267,
+              "q3": 0.10693302750587463,
+              "max": 0.319886714220047
+            },
+            "evidence": {
+              "count": 80,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0000594570446992293,
+              "q1": 0.005432284786365926,
+              "median": 0.01943441852927208,
+              "q3": 0.12493893411010504,
+              "max": 0.4558185935020447
+            },
+            "scale_1_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.09341826289892197,
+              "q1": 0.1878248006105423,
+              "median": 0.20819929242134094,
+              "q3": 0.557511031627655,
+              "max": 0.9869467616081238
+            },
+            "scale_2_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.006464748177677393,
+              "q1": 0.07371387630701065,
+              "median": 0.10678083449602127,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.00002089031295327004,
+              "q1": 0.00024264902458526194,
+              "median": 0.0004178062663413584,
+              "q3": 0.0008211500244215131,
+              "max": 0.0008211500244215131
+            },
+            "tp1_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.24732036888599396,
+              "q1": 0.28684476017951965,
+              "median": 0.28684476017951965,
+              "q3": 0.3284558057785034,
+              "max": 0.8003569841384888
+            },
+            "tp2_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.4489344358444214,
+              "q1": 0.7819854617118835,
+              "median": 0.8646002411842346,
+              "q3": 0.91700279712677,
+              "max": 0.9662573337554932
+            }
+          },
+          "neighbor_coverage": {
+            "count": 80,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 80,
+            "missing": 0,
+            "min": 0.015430903993546963,
+            "q1": 0.03711603954434395,
+            "median": 0.09919551014900208,
+            "q3": 0.14505479484796524,
+            "max": 0.2854574918746948
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.3,
+            "fraction_below_0_10": 0.525
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0025834194384515285,
+              "q1": 0.008156803552992642,
+              "median": 0.026730780489742756,
+              "q3": 0.03678583353757858,
+              "max": 0.11069992184638977
+            },
+            "smoothness": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.002308898139744997,
+              "q1": 0.010649760719388723,
+              "median": 0.03826317377388477,
+              "q3": 0.13596371561288834,
+              "max": 0.399931937456131
+            },
+            "tmStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0036300935316830873,
+              "q1": 0.003806857857853174,
+              "median": 0.007097885711118579,
+              "q3": 0.022159399464726448,
+              "max": 0.023630157113075256
+            },
+            "contextStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.035070501267910004,
+              "q1": 0.09467857889831066,
+              "median": 0.22380831837654114,
+              "q3": 0.35342346131801605,
+              "max": 0.6561368107795715
+            },
+            "directionalStability": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.01468783337622881,
+              "q1": 0.02270358568057418,
+              "median": 0.03300536796450615,
+              "q3": 0.08913351781666279,
+              "max": 0.11938180774450302
+            },
+            "breadth": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0091274818405509,
+              "q1": 0.026925201527774334,
+              "median": 0.18001766502857208,
+              "q3": 0.30369238555431366,
+              "max": 0.5100769400596619
+            },
+            "evidence": {
+              "count": 80,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.007894931361079216,
+              "q1": 0.03459917940199375,
+              "median": 0.09196719527244568,
+              "q3": 0.4056782200932503,
+              "max": 0.6056680083274841
+            },
+            "scale_1_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0014478593366220593,
+              "q1": 0.011631083383690566,
+              "median": 0.015190471895039082,
+              "q3": 0.9237455129623413,
+              "max": 0.9861673712730408
+            },
+            "scale_2_atr_ratio": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.004930113907903433,
+              "q1": 0.017318471800535917,
+              "median": 0.5442970991134644,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.0036300935316830873,
+              "q1": 0.003806857857853174,
+              "median": 0.007097885711118579,
+              "q3": 0.022159399464726448,
+              "max": 0.023630157113075256
+            },
+            "tp1_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.3240561783313751,
+              "q1": 0.34966158866882324,
+              "median": 0.36593131721019745,
+              "q3": 0.5131857395172119,
+              "max": 0.8660182356834412
+            },
+            "tp2_band_width_pct": {
+              "count": 80,
+              "missing": 0,
+              "min": 0.3502967953681946,
+              "q1": 0.735896646976471,
+              "median": 0.7900041341781616,
+              "q3": 0.8932794332504272,
+              "max": 0.9679141044616699
+            }
+          },
+          "neighbor_coverage": {
+            "count": 80,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "SUPPORTED",
+          "applicable_anchor_cells": 80,
+          "anchor_cells_with_matched_peer": 55,
+          "expected_peer_relationships": 55,
+          "unique_matched_peers": 55,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 55,
+                "missing": 25,
+                "min": 0.00039796187775209546,
+                "q1": 0.005234729498624802,
+                "median": 0.01522799488157034,
+                "q3": 0.03027231525629759,
+                "max": 0.1273035854101181
+              },
+              "peer_coverage": {
+                "count": 55,
+                "missing": 25,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 55,
+                "missing": 25,
+                "min": 0.000003401383764867205,
+                "q1": 0.0011394635075703263,
+                "median": 0.005391193088144064,
+                "q3": 0.012282396201044321,
+                "max": 0.06021469458937645
+              },
+              "peer_coverage": {
+                "count": 55,
+                "missing": 25,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 55,
+                "missing": 25,
+                "min": 0.0008469445165246725,
+                "q1": 0.0017755223088897765,
+                "median": 0.0027789303567260504,
+                "q3": 0.005880992393940687,
+                "max": 0.03754787519574165
+              },
+              "peer_coverage": {
+                "count": 55,
+                "missing": 25,
+                "min": 1,
+                "q1": 1,
+                "median": 1,
+                "q3": 1,
+                "max": 1
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 55,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 55,
+                "missing": 0,
+                "min": 0.553,
+                "q1": 1.175,
+                "median": 1.364,
+                "q3": 1.5150000000000001,
+                "max": 2.138
+              },
+              "profit_factor": {
+                "count": 55,
+                "missing": 0,
+                "min": 1.74,
+                "q1": 2.81,
+                "median": 3.21,
+                "q3": 3.4050000000000002,
+                "max": 4.48
+              },
+              "romad": {
+                "count": 55,
+                "missing": 0,
+                "min": 2.21,
+                "q1": 6.16,
+                "median": 7.26,
+                "q3": 8.05,
+                "max": 11.3
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 80,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "None"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            1
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 3,
+            "max_index": 4,
+            "unique_values": 2
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 5,
+            "max_index": 7,
+            "unique_values": 3
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 0,
+            "max_index": 7,
+            "unique_values": 8
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 4,
+            "max_index": 6,
+            "unique_values": 3
+          },
+          "tp2_band_width_pct": {
+            "min_index": 6,
+            "max_index": 9,
+            "unique_values": 4
+          }
+        },
+        "boundary_exposure": 0.5253256150506512,
+        "internal_half_edges": 328,
+        "boundary_half_edges": 363,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 0.9878048780487805,
+            "interior_mean_normalized_delta": 0.01762241668218208,
+            "interior_edges": 164,
+            "boundary_mean_normalized_drop": 0.23446680545917176,
+            "boundary_mean_raw_drop": 0.46072727272727265,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 363,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 0.8902439024390244,
+            "interior_mean_normalized_delta": 0.03437952984181006,
+            "interior_edges": 164,
+            "boundary_mean_normalized_drop": 0.2942604337953174,
+            "boundary_mean_raw_drop": 1.1387878787878796,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 363,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 0.8658536585365854,
+            "interior_mean_normalized_delta": 0.06910841014764663,
+            "interior_edges": 164,
+            "boundary_mean_normalized_drop": 0.2895934105420271,
+            "boundary_mean_raw_drop": 4.3294214876033,
+            "boundary_worse_fraction": 0.9366391184573003,
+            "boundary_edges": 363,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-98bb2a5ef2e2b20c",
+      "anchor_membership_sha256": "98bb2a5ef2e2b20ca651697e01d1a8cef4f6c9700db7002586ae1099e56d1bb4",
+      "performance_class": "P13",
+      "sr": {
+        "r_per_trade": {
+          "count": 46,
+          "missing": 0,
+          "min": 0.0014843831304460764,
+          "q1": 0.006360396160744131,
+          "median": 0.015438517555594444,
+          "q3": 0.02926267171278596,
+          "max": 0.058292191475629807
+        },
+        "profit_factor": {
+          "count": 46,
+          "missing": 0,
+          "min": 0.0012155522126704454,
+          "q1": 0.005969420541077852,
+          "median": 0.013302262406796217,
+          "q3": 0.02447798941284418,
+          "max": 0.05799292400479317
+        },
+        "romad": {
+          "count": 46,
+          "missing": 0,
+          "min": 0.011875041760504246,
+          "q1": 0.05702689476311207,
+          "median": 0.13793819397687912,
+          "q3": 0.21109020337462425,
+          "max": 0.2817864716053009
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 46,
+            "missing": 0,
+            "min": 0.0014843831304460764,
+            "q1": 0.006360396160744131,
+            "median": 0.015438517555594444,
+            "q3": 0.02926267171278596,
+            "max": 0.058292191475629807
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.9782608695652174,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00006084706910769455,
+              "q1": 0.000636863594991155,
+              "median": 0.0023678821744397283,
+              "q3": 0.007006064057350159,
+              "max": 0.016413552686572075
+            },
+            "smoothness": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.000037613157473970205,
+              "q1": 0.0010445203515700996,
+              "median": 0.004196357447654009,
+              "q3": 0.018300878815352917,
+              "max": 0.06761964410543442
+            },
+            "tmStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.002940713195130229,
+              "q1": 0.004734066314995289,
+              "median": 0.006899427622556686,
+              "q3": 0.008966363500803709,
+              "max": 0.011722679249942303
+            },
+            "contextStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.01230880431830883,
+              "q1": 0.04564817436039448,
+              "median": 0.0774681530892849,
+              "q3": 0.16914337873458862,
+              "max": 0.27141690254211426
+            },
+            "directionalStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.006016366183757782,
+              "q1": 0.015690823085606098,
+              "median": 0.026499022729694843,
+              "q3": 0.03546993061900139,
+              "max": 0.051536452025175095
+            },
+            "breadth": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00012684708053711802,
+              "q1": 0.0007651157065993175,
+              "median": 0.002619176870211959,
+              "q3": 0.004805303062312305,
+              "max": 0.023171711713075638
+            },
+            "evidence": {
+              "count": 46,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.000565645401366055,
+              "q1": 0.0024264901876449585,
+              "median": 0.037657201290130615,
+              "q3": 0.08112029731273651,
+              "max": 0.5850444436073303
+            },
+            "scale_1_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00486904988065362,
+              "q1": 0.0337511133402586,
+              "median": 0.057175178080797195,
+              "q3": 0.1175072081387043,
+              "max": 0.4070686399936676
+            },
+            "scale_2_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.007261794060468674,
+              "q1": 0.022121233865618706,
+              "median": 0.8204975724220276,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.002940713195130229,
+              "q1": 0.004734066314995289,
+              "median": 0.006899427622556686,
+              "q3": 0.008966363500803709,
+              "max": 0.011722679249942303
+            },
+            "tp1_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.2140115350484848,
+              "q1": 0.2207077443599701,
+              "median": 0.4336283951997757,
+              "q3": 0.6379023790359497,
+              "max": 0.7279486060142517
+            },
+            "tp2_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.002649855799973011,
+              "q1": 0.0038325688801705837,
+              "median": 0.1447698650881648,
+              "q3": 0.3369430601596832,
+              "max": 0.46571898460388184
+            }
+          },
+          "neighbor_coverage": {
+            "count": 46,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 46,
+            "missing": 0,
+            "min": 0.0012155522126704454,
+            "q1": 0.005969420541077852,
+            "median": 0.013302262406796217,
+            "q3": 0.02447798941284418,
+            "max": 0.05799292400479317
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.9565217391304348,
+            "fraction_below_0_10": 1
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00004569755765260197,
+              "q1": 0.0004920638239127584,
+              "median": 0.0021907479967921972,
+              "q3": 0.004585199407301843,
+              "max": 0.016369787976145744
+            },
+            "smoothness": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0000952825284912251,
+              "q1": 0.0008769014821154997,
+              "median": 0.003095724037848413,
+              "q3": 0.00971469166688621,
+              "max": 0.05991320684552193
+            },
+            "tmStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0007616929360665381,
+              "q1": 0.0023107901215553284,
+              "median": 0.003720082575455308,
+              "q3": 0.0050249239429831505,
+              "max": 0.012878074310719967
+            },
+            "contextStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0056048245169222355,
+              "q1": 0.0294943954795599,
+              "median": 0.06114097684621811,
+              "q3": 0.09967037290334702,
+              "max": 0.22412234544754028
+            },
+            "directionalStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0020661933813244104,
+              "q1": 0.008697351440787315,
+              "median": 0.015407321974635124,
+              "q3": 0.023097884375602007,
+              "max": 0.03827763348817825
+            },
+            "breadth": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00029497878858819604,
+              "q1": 0.001584540877956897,
+              "median": 0.004297545179724693,
+              "q3": 0.008568792371079326,
+              "max": 0.03325433284044266
+            },
+            "evidence": {
+              "count": 46,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.00015426691970787942,
+              "q1": 0.0044837844325229526,
+              "median": 0.01187855377793312,
+              "q3": 0.10384092479944229,
+              "max": 0.403134822845459
+            },
+            "scale_1_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.007498015649616718,
+              "q1": 0.013777562882751226,
+              "median": 0.02366551011800766,
+              "q3": 0.04273997247219086,
+              "max": 0.25619879364967346
+            },
+            "scale_2_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.007498015649616718,
+              "q1": 0.016979003325104713,
+              "median": 0.8194916248321533,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0007616929360665381,
+              "q1": 0.0023107901215553284,
+              "median": 0.003720082575455308,
+              "q3": 0.0050249239429831505,
+              "max": 0.012878074310719967
+            },
+            "tp1_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0895688608288765,
+              "q1": 0.10461976379156113,
+              "median": 0.2414558380842209,
+              "q3": 0.4292878210544586,
+              "max": 0.5446212291717529
+            },
+            "tp2_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0010637990199029446,
+              "q1": 0.001751572359353304,
+              "median": 0.140251939650625,
+              "q3": 0.32492148876190186,
+              "max": 0.45420682430267334
+            }
+          },
+          "neighbor_coverage": {
+            "count": 46,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 46,
+            "missing": 0,
+            "min": 0.011875041760504246,
+            "q1": 0.05702689476311207,
+            "median": 0.13793819397687912,
+            "q3": 0.21109020337462425,
+            "max": 0.2817864716053009
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.2391304347826087,
+            "fraction_below_0_10": 0.3695652173913043
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.003540630219504237,
+              "q1": 0.023832466918975115,
+              "median": 0.06205467879772186,
+              "q3": 0.13452577218413353,
+              "max": 0.1996283084154129
+            },
+            "smoothness": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0023500460665673018,
+              "q1": 0.03243055194616318,
+              "median": 0.07753489539027214,
+              "q3": 0.1759600229561329,
+              "max": 0.392917275428772
+            },
+            "tmStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.015876637771725655,
+              "q1": 0.02402345882728696,
+              "median": 0.053943607956171036,
+              "q3": 0.06898784637451172,
+              "max": 0.09073787927627563
+            },
+            "contextStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.02114350162446499,
+              "q1": 0.09315917640924454,
+              "median": 0.19252008199691772,
+              "q3": 0.34981174021959305,
+              "max": 0.42907336354255676
+            },
+            "directionalStability": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.01832178235054016,
+              "q1": 0.05630364827811718,
+              "median": 0.10589136928319931,
+              "q3": 0.1523469053208828,
+              "max": 0.1908625066280365
+            },
+            "breadth": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.0010576593922451138,
+              "q1": 0.009838515426963568,
+              "median": 0.07689109072089195,
+              "q3": 0.1263839267194271,
+              "max": 0.21803107857704163
+            },
+            "evidence": {
+              "count": 46,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.01760571263730526,
+              "q1": 0.046787070110440254,
+              "median": 0.16000694036483765,
+              "q3": 0.1778733804821968,
+              "max": 0.9069738388061523
+            },
+            "scale_1_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.003970766440033913,
+              "q1": 0.006131306756287813,
+              "median": 0.3752414435148239,
+              "q3": 0.40746554732322693,
+              "max": 0.7928982377052307
+            },
+            "scale_2_atr_ratio": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.03390658646821976,
+              "q1": 0.07752234488725662,
+              "median": 0.8202324509620667,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.015876637771725655,
+              "q1": 0.02402345882728696,
+              "median": 0.053943607956171036,
+              "q3": 0.06898784637451172,
+              "max": 0.09073787927627563
+            },
+            "tp1_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.22703486680984497,
+              "q1": 0.3387904763221741,
+              "median": 0.5283613204956055,
+              "q3": 0.6623020172119141,
+              "max": 0.7608932256698608
+            },
+            "tp2_band_width_pct": {
+              "count": 46,
+              "missing": 0,
+              "min": 0.002691636560484767,
+              "q1": 0.015616312623023987,
+              "median": 0.14372776821255684,
+              "q3": 0.3328823149204254,
+              "max": 0.45538151264190674
+            }
+          },
+          "neighbor_coverage": {
+            "count": 46,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "UNSUPPORTED",
+          "applicable_anchor_cells": 46,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 46,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 46,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "1400-1500"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            3
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 0,
+            "max_index": 3,
+            "unique_values": 4
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 7,
+            "max_index": 9,
+            "unique_values": 3
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 8,
+            "max_index": 10,
+            "unique_values": 3
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 4,
+            "max_index": 6,
+            "unique_values": 3
+          },
+          "tp2_band_width_pct": {
+            "min_index": 5,
+            "max_index": 7,
+            "unique_values": 3
+          }
+        },
+        "boundary_exposure": 0.6067146282973621,
+        "internal_half_edges": 164,
+        "boundary_half_edges": 253,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 0.9512195121951219,
+            "interior_mean_normalized_delta": 0.042190385883488904,
+            "interior_edges": 82,
+            "boundary_mean_normalized_drop": 0.2675434225390226,
+            "boundary_mean_raw_drop": 0.6461976284584983,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 253,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 0.9512195121951219,
+            "interior_mean_normalized_delta": 0.0523252737950373,
+            "interior_edges": 82,
+            "boundary_mean_normalized_drop": 0.33186148002709365,
+            "boundary_mean_raw_drop": 1.529881422924901,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 253,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 0.9390243902439024,
+            "interior_mean_normalized_delta": 0.0485800810533973,
+            "interior_edges": 82,
+            "boundary_mean_normalized_drop": 0.23764972490792177,
+            "boundary_mean_raw_drop": 3.9045849802371544,
+            "boundary_worse_fraction": 0.9209486166007905,
+            "boundary_edges": 253,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    },
+    {
+      "region_id": "VB-a5162befb570e3f6",
+      "anchor_membership_sha256": "a5162befb570e3f6ebb86e54e7439abba2f5cde5c07b588fc508660238d2efac",
+      "performance_class": "P10",
+      "sr": {
+        "r_per_trade": {
+          "count": 148,
+          "missing": 0,
+          "min": 0,
+          "q1": 0.010606830008327961,
+          "median": 0.02427281253039837,
+          "q3": 0.058551982045173645,
+          "max": 0.2520909309387207
+        },
+        "profit_factor": {
+          "count": 148,
+          "missing": 0,
+          "min": 0,
+          "q1": 0.018945605028420687,
+          "median": 0.041210100054740906,
+          "q3": 0.09002109989523888,
+          "max": 0.33045685291290283
+        },
+        "romad": {
+          "count": 148,
+          "missing": 0,
+          "min": 0.0042702932842075825,
+          "q1": 0.03969593532383442,
+          "median": 0.0786740630865097,
+          "q3": 0.13033867627382278,
+          "max": 0.3458179831504822
+        }
+      },
+      "sr_decomposition": {
+        "r_per_trade": {
+          "structural_robustness": {
+            "count": 148,
+            "missing": 0,
+            "min": 0,
+            "q1": 0.010606830008327961,
+            "median": 0.02427281253039837,
+            "q3": 0.058551982045173645,
+            "max": 0.2520909309387207
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.7162162162162162,
+            "fraction_below_0_10": 0.8581081081081081
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.0017316702578682452,
+              "median": 0.005585639970377088,
+              "q3": 0.014470933936536312,
+              "max": 0.11574701964855194
+            },
+            "smoothness": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.0020382722141221166,
+              "median": 0.00893354183062911,
+              "q3": 0.03304298780858517,
+              "max": 0.24535860121250153
+            },
+            "tmStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0009818447288125753,
+              "q1": 0.007487168535590172,
+              "median": 0.011658401228487492,
+              "q3": 0.01703203283250332,
+              "max": 0.02248922549188137
+            },
+            "contextStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.006396215409040451,
+              "q1": 0.0431097038090229,
+              "median": 0.10642361268401146,
+              "q3": 0.1822425127029419,
+              "max": 0.6083157062530518
+            },
+            "directionalStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0025060109328478575,
+              "q1": 0.020483339671045542,
+              "median": 0.03440632484853268,
+              "q3": 0.048139539547264576,
+              "max": 0.11696387827396393
+            },
+            "breadth": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.000914443691726774,
+              "median": 0.005315294256433845,
+              "q3": 0.03411812614649534,
+              "max": 0.34100237488746643
+            },
+            "evidence": {
+              "count": 148,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0003294241614639759,
+              "q1": 0.045439645648002625,
+              "median": 0.15999087691307068,
+              "q3": 0.35187482833862305,
+              "max": 0.9339882135391235
+            },
+            "scale_1_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0025502252392470837,
+              "q1": 0.03512304276227951,
+              "median": 0.10411570966243744,
+              "q3": 0.17472175508737564,
+              "max": 0.972227156162262
+            },
+            "scale_2_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0006492066313512623,
+              "q1": 0.02360966894775629,
+              "median": 0.14245104789733887,
+              "q3": 0.8204975724220276,
+              "max": 0.8204975724220276
+            },
+            "stop_points": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0009818447288125753,
+              "q1": 0.007487168535590172,
+              "median": 0.011658401228487492,
+              "q3": 0.01703203283250332,
+              "max": 0.02248922549188137
+            },
+            "tp1_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.05309072509407997,
+              "q1": 0.25937584042549133,
+              "median": 0.44725704193115234,
+              "q3": 0.6238078474998474,
+              "max": 0.9530264139175415
+            },
+            "tp2_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00010927240509772673,
+              "q1": 0.002082603517919779,
+              "median": 0.011653580702841282,
+              "q3": 0.16430150344967842,
+              "max": 0.5517228245735168
+            }
+          },
+          "neighbor_coverage": {
+            "count": 148,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "profit_factor": {
+          "structural_robustness": {
+            "count": 148,
+            "missing": 0,
+            "min": 0,
+            "q1": 0.018945605028420687,
+            "median": 0.041210100054740906,
+            "q3": 0.09002109989523888,
+            "max": 0.33045685291290283
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.5540540540540541,
+            "fraction_below_0_10": 0.7702702702702703
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.004310943768359721,
+              "median": 0.013165824580937624,
+              "q3": 0.033517361618578434,
+              "max": 0.23059110343456268
+            },
+            "smoothness": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.0027470377390272915,
+              "median": 0.01699737086892128,
+              "q3": 0.05364336911588907,
+              "max": 0.3037431538105011
+            },
+            "tmStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0004178062663413584,
+              "q1": 0.008876776322722435,
+              "median": 0.05823897942900658,
+              "q3": 0.06634281575679779,
+              "max": 0.07930926978588104
+            },
+            "contextStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0007606841390952468,
+              "q1": 0.0463221725076437,
+              "median": 0.09472927078604698,
+              "q3": 0.1645691953599453,
+              "max": 0.5674378871917725
+            },
+            "directionalStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0005637540016323328,
+              "q1": 0.024734606500715017,
+              "median": 0.06430390849709511,
+              "q3": 0.10243397951126099,
+              "max": 0.20875532925128937
+            },
+            "breadth": {
+              "count": 148,
+              "missing": 0,
+              "min": 0,
+              "q1": 0.002710390428546816,
+              "median": 0.012251524720340967,
+              "q3": 0.037244923412799835,
+              "max": 0.27688974142074585
+            },
+            "evidence": {
+              "count": 148,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.000028925049264216796,
+              "q1": 0.016161871142685413,
+              "median": 0.17638173699378967,
+              "q3": 0.40305889397859573,
+              "max": 0.9392204284667969
+            },
+            "scale_1_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.000044994521886110306,
+              "q1": 0.017639458179473877,
+              "median": 0.0652717836201191,
+              "q3": 0.18522877991199493,
+              "max": 0.9948352575302124
+            },
+            "scale_2_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0008082943968474865,
+              "q1": 0.028385516721755266,
+              "median": 0.2801865041255951,
+              "q3": 0.8194916248321533,
+              "max": 0.8194916248321533
+            },
+            "stop_points": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0004178062663413584,
+              "q1": 0.008876776322722435,
+              "median": 0.05823897942900658,
+              "q3": 0.06634281575679779,
+              "max": 0.07930926978588104
+            },
+            "tp1_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.02518545091152191,
+              "q1": 0.17074859142303467,
+              "median": 0.31846562027931213,
+              "q3": 0.47987034916877747,
+              "max": 0.9345453977584839
+            },
+            "tp2_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00004178062590654008,
+              "q1": 0.0009360467229271308,
+              "median": 0.014173273928463459,
+              "q3": 0.1549193412065506,
+              "max": 0.576130747795105
+            }
+          },
+          "neighbor_coverage": {
+            "count": 148,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        },
+        "romad": {
+          "structural_robustness": {
+            "count": 148,
+            "missing": 0,
+            "min": 0.0042702932842075825,
+            "q1": 0.03969593532383442,
+            "median": 0.0786740630865097,
+            "q3": 0.13033867627382278,
+            "max": 0.3458179831504822
+          },
+          "score_concentration_descriptive_only": {
+            "fraction_below_0_05": 0.35135135135135137,
+            "fraction_below_0_10": 0.5945945945945946
+          },
+          "categories": {
+            "localSimilarity": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0009891969384625554,
+              "q1": 0.015357885975390673,
+              "median": 0.03907725214958191,
+              "q3": 0.07563137076795101,
+              "max": 0.23166470229625702
+            },
+            "smoothness": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00038378083263523877,
+              "q1": 0.015456965193152428,
+              "median": 0.04321821592748165,
+              "q3": 0.08911708556115627,
+              "max": 0.42606258392333984
+            },
+            "tmStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.006011589430272579,
+              "q1": 0.023363806307315826,
+              "median": 0.036288078874349594,
+              "q3": 0.05755602568387985,
+              "max": 0.07861828058958054
+            },
+            "contextStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.008163753896951675,
+              "q1": 0.07855510897934437,
+              "median": 0.11772989854216576,
+              "q3": 0.22379924356937408,
+              "max": 0.5905493497848511
+            },
+            "directionalStability": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.007005507592111826,
+              "q1": 0.0426908154040575,
+              "median": 0.07264495640993118,
+              "q3": 0.10017975978553295,
+              "max": 0.19651184976100922
+            },
+            "breadth": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00007862554775783792,
+              "q1": 0.009380924049764872,
+              "median": 0.025024396367371082,
+              "q3": 0.10230153240263462,
+              "max": 0.34838202595710754
+            },
+            "evidence": {
+              "count": 148,
+              "missing": 0,
+              "min": 1,
+              "q1": 1,
+              "median": 1,
+              "q3": 1,
+              "max": 1
+            }
+          },
+          "ordered_dimension_directional_stability": {
+            "length": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0028137643821537495,
+              "q1": 0.10014695301651955,
+              "median": 0.18163564801216125,
+              "q3": 0.43889543414115906,
+              "max": 0.9764630198478699
+            },
+            "scale_1_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.0010364808840677142,
+              "q1": 0.016900263726711273,
+              "median": 0.044702859595417976,
+              "q3": 0.3654177635908127,
+              "max": 0.7288453578948975
+            },
+            "scale_2_atr_ratio": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00836737360805273,
+              "q1": 0.05711732804775238,
+              "median": 0.46103474497795105,
+              "q3": 0.8202324509620667,
+              "max": 0.8202324509620667
+            },
+            "stop_points": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.006011589430272579,
+              "q1": 0.023363806307315826,
+              "median": 0.036288078874349594,
+              "q3": 0.05755602568387985,
+              "max": 0.07861828058958054
+            },
+            "tp1_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.05039386451244354,
+              "q1": 0.28302667289972305,
+              "median": 0.46234239637851715,
+              "q3": 0.5857975482940674,
+              "max": 0.9159085154533386
+            },
+            "tp2_band_width_pct": {
+              "count": 148,
+              "missing": 0,
+              "min": 0.00006427788321161643,
+              "q1": 0.007512879790738225,
+              "median": 0.01571674644947052,
+              "q3": 0.27129605412483215,
+              "max": 0.5514496564865112
+            }
+          },
+          "neighbor_coverage": {
+            "count": 148,
+            "missing": 0,
+            "min": 1,
+            "q1": 1,
+            "median": 1,
+            "q3": 1,
+            "max": 1
+          },
+          "normalization_identity": {
+            "semantic_analysis_version": "generic-semantic-analysis-v030",
+            "robust_scale_scope": "descriptor_hard_regime_over_full_cleaned_domain",
+            "normalized_component_scope": "full_cleaned_domain_midranks"
+          }
+        }
+      },
+      "fr": {
+        "average_mode": {
+          "evidence_status": "N/A",
+          "applicable_anchor_cells": 0,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "weighting_mode": {
+          "evidence_status": "UNSUPPORTED",
+          "applicable_anchor_cells": 148,
+          "anchor_cells_with_matched_peer": 0,
+          "expected_peer_relationships": 0,
+          "unique_matched_peers": 0,
+          "structural_replication": {
+            "r_per_trade": {
+              "similarity": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "profit_factor": {
+              "similarity": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            },
+            "romad": {
+              "similarity": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "peer_coverage": {
+                "count": 0,
+                "missing": 148,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          },
+          "economic_replication": {
+            "joint_p1_peer_cells": 0,
+            "absolute_metrics": {
+              "r_per_trade": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "profit_factor": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              },
+              "romad": {
+                "count": 0,
+                "missing": 0,
+                "min": null,
+                "q1": null,
+                "median": null,
+                "q3": null,
+                "max": null
+              }
+            }
+          }
+        }
+      },
+      "rr": {
+        "region_id": 1,
+        "cell_count": 148,
+        "regime_signature": {
+          "distance_scale_mode": [
+            3
+          ],
+          "additional_time_filter_ranges": [
+            "None"
+          ]
+        },
+        "facet_signature": {
+          "average_mode": [
+            0
+          ],
+          "weighting_mode": [
+            3
+          ]
+        },
+        "ordered_span": {
+          "length": {
+            "min_index": 0,
+            "max_index": 4,
+            "unique_values": 5
+          },
+          "scale_1_atr_ratio": {
+            "min_index": 7,
+            "max_index": 9,
+            "unique_values": 3
+          },
+          "scale_2_atr_ratio": {
+            "min_index": 7,
+            "max_index": 10,
+            "unique_values": 4
+          },
+          "stop_points": {
+            "min_index": 0,
+            "max_index": 0,
+            "unique_values": 1
+          },
+          "tp1_band_width_pct": {
+            "min_index": 2,
+            "max_index": 6,
+            "unique_values": 5
+          },
+          "tp2_band_width_pct": {
+            "min_index": 5,
+            "max_index": 7,
+            "unique_values": 3
+          }
+        },
+        "boundary_exposure": 0.5243722304283605,
+        "internal_half_edges": 644,
+        "boundary_half_edges": 710,
+        "mean_depth": 0,
+        "max_depth": 0,
+        "boundaryless": false,
+        "metrics": {
+          "r_per_trade": {
+            "interior_similarity": 0.7919254658385093,
+            "interior_mean_normalized_delta": 0.061220425774026886,
+            "interior_edges": 322,
+            "boundary_mean_normalized_drop": 0.2625015231337133,
+            "boundary_mean_raw_drop": 0.5158154929577452,
+            "boundary_worse_fraction": 1,
+            "boundary_edges": 710,
+            "similarity_tau": 0.1
+          },
+          "profit_factor": {
+            "interior_similarity": 0.7515527950310559,
+            "interior_mean_normalized_delta": 0.0804564495161057,
+            "interior_edges": 322,
+            "boundary_mean_normalized_drop": 0.28978054372748135,
+            "boundary_mean_raw_drop": 1.12145070422535,
+            "boundary_worse_fraction": 0.9929577464788732,
+            "boundary_edges": 710,
+            "similarity_tau": 0.1
+          },
+          "romad": {
+            "interior_similarity": 0.7888198757763976,
+            "interior_mean_normalized_delta": 0.0830054633457281,
+            "interior_edges": 322,
+            "boundary_mean_normalized_drop": 0.29418531254416075,
+            "boundary_mean_raw_drop": 4.398070422535216,
+            "boundary_worse_fraction": 0.9830985915492958,
+            "boundary_edges": 710,
+            "similarity_tau": 0.1
+          }
+        }
+      }
+    }
+  ]
+}

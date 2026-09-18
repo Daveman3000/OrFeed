@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "artifact_type": "step5_robustness_evidence_schema",
+  "policy_origin": "post_result_exploratory",
+  "authoritative_adjudication": false,
+  "purpose": "preserve separable robustness evidence before global bands or labels are calibrated",
+  "required_identity_bindings": [
+    "surface_id",
+    "storage_surface_id_when_distinct",
+    "package_sha256",
+    "descriptor_sha256",
+    "surface_policy_sha256",
+    "cleaned_domain_identity",
+    "step4_policy_sha256",
+    "topology_engine_version",
+    "anchor_artifact_sha256",
+    "anchor_membership_sha256"
+  ],
+  "lineage_context": {
+    "source": "frozen_step4_anchor_artifact",
+    "fields": ["performance_class", "rung_by_rung_supported_cell_counts", "split_history", "terminal_anchor_cells"],
+    "interpretation": "performance breadth and persistence only; not local robustness"
+  },
+  "sr": {
+    "scope": "per-cell evidence against unchanged full cleaned-domain semantic graph",
+    "by_metric": true,
+    "fields": [
+      "cell_score_distribution",
+      "descriptive_low_score_concentration",
+      "component_distributions",
+      "ordered_dimension_directional_distributions",
+      "neighbor_coverage_distribution",
+      "normalization_identity"
+    ],
+    "components": ["localSimilarity", "smoothness", "tmStability", "contextStability", "directionalStability", "breadth", "evidence"],
+    "subset_rule": "reuse unchanged cell-level values and recompute subset summaries only"
+  },
+  "fr": {
+    "scope": "per-cell similarity and coverage against full eligible facet-peer universe in unchanged cleaned domain",
+    "fields": ["evidence_status", "applicable_anchor_cells", "anchor_cells_with_matched_peer", "expected_peer_relationships", "unique_matched_peers", "similarity_distribution_by_metric", "peer_coverage_distribution_by_metric", "joint_p1_peer_cells", "peer_absolute_metric_distributions"],
+    "separate": ["availability", "structural_similarity", "peer_coverage", "peer_economic_viability"],
+    "subset_rule": "reuse cell-level similarity and coverage; recompute membership-specific peer counts and peer economics"
+  },
+  "rr": {
+    "scope": "exact frozen region membership with boundary evaluated against full cleaned domain",
+    "fields": ["ordered_span", "boundary_exposure", "internal_and_boundary_edges", "depth", "interior_similarity_by_metric", "boundary_drop_by_metric", "boundary_worse_fraction_by_metric"],
+    "subset_rule": "new membership requires new RR evaluation"
+  },
+  "forbidden_interpretations": [
+    "single_composite_robustness_score",
+    "robust_or_fragile_label",
+    "numeric_adjudication_threshold",
+    "unsupported_fr_treated_as_failed_fr",
+    "lineage_breadth_treated_as_local_support"
+  ]
+}

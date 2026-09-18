@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "artifact_type": "cleaned_domain_manifest",
+  "artifact_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "campaign_id": "volspike_20260911_step3clean_calibration",
+  "cleaned_surface_id": "volspike_20260911_step3clean_trades_v1",
+  "storage_surface": {
+    "surface_id": "volspike_20260911_trades_v1",
+    "package_sha256": "cb6b753dff4d4f2523f944e291c4b5418401d9d7d818fbc1bfddb7ab0c034c38",
+    "descriptor_sha256": "e2823eecf9b102a0a4b3b453ee2a9371925b5bcdb2950cbfedbec7d5ed9b680c",
+    "semantic_csv_sha256": "f8649bcd04d7ba8618fe489995e0cdcd304b7dabd2444926606bce6739686787",
+    "original_source_package_sha256": "58834e2326accb4a1a5af72c1da3f04624f22d0b5bc4c9fbdfdec282c81728d5",
+    "source_cells": 56000,
+    "representation_change": "trades declared as canonical typed Int32 sample support; semantic CSV bytes unchanged"
+  },
+  "surface_policy": {
+    "path": "surface-analyzer/policies/exploratory/volspike-surface-policy-v001.json",
+    "sha256_exact_file_bytes": "ea86fa795a6695b90879bd7913fa1fcaf1369b93731192630221cd9a16e71adc"
+  },
+  "cleaning_policy": {
+    "path": "surface-analyzer/policies/exploratory/domain-cleaning-step3-v001.json",
+    "sha256_exact_file_bytes": "f7229c728f5c893745d33a4faa427af7423c94ea26d83844e66b29abe5c44e71"
+  },
+  "prune_scopes": {
+    "path": "surface-analyzer/policies/exploratory/volspike-step3-prune-scopes-v001.json",
+    "sha256_exact_file_bytes": "03d8301aad8540670577158ef23f5d354810cbcd6c73d3e1e0ac844a6d7696aa",
+    "scope_count": 91,
+    "scope_list_sha256": "ab3565375414b05626b62245f0ef19db01cf35809e58f57b160f78fc80150e50"
+  },
+  "outcome_summary": {
+    "source_cells": 56000,
+    "removed_cells": 14805,
+    "retained_cells": 41195,
+    "known_35_cell_tail_removed": 0
+  },
+  "cleaned_domain_identity": {
+    "hash_method": "sha256_utf8_identity_preimage",
+    "retained_analysis_keys_hash_method": "sha256_utf8_lf_sorted_analysis_keys_with_final_lf",
+    "retained_analysis_keys_sha256": "03e404dcdc2454e4ac8d696139bac4836f90fb3a7cb833ac8ea507309e42080b",
+    "identity_preimage_lines": [
+      "cleaned_research_surface_identity_v1",
+      "cleaned_surface_id=volspike_20260911_step3clean_trades_v1",
+      "physical_surface_id=volspike_20260911_trades_v1",
+      "physical_package_sha256=cb6b753dff4d4f2523f944e291c4b5418401d9d7d818fbc1bfddb7ab0c034c38",
+      "descriptor_sha256=e2823eecf9b102a0a4b3b453ee2a9371925b5bcdb2950cbfedbec7d5ed9b680c",
+      "surface_policy_sha256=ea86fa795a6695b90879bd7913fa1fcaf1369b93731192630221cd9a16e71adc",
+      "cleaning_policy_sha256=f7229c728f5c893745d33a4faa427af7423c94ea26d83844e66b29abe5c44e71",
+      "scope_artifact_sha256=03d8301aad8540670577158ef23f5d354810cbcd6c73d3e1e0ac844a6d7696aa",
+      "scope_list_sha256=ab3565375414b05626b62245f0ef19db01cf35809e58f57b160f78fc80150e50",
+      "source_count=56000",
+      "excluded_count=14805",
+      "retained_count=41195",
+      "retained_analysis_keys_sha256=03e404dcdc2454e4ac8d696139bac4836f90fb3a7cb833ac8ea507309e42080b",
+      ""
+    ],
+    "cleaned_domain_sha256": "3702fce810703a9e885ea53c9b8b101c56fe6355b5dc46744698d612daf65228"
+  },
+  "graph_contract": {
+    "input": "filter physical package by exact retained analysis_key membership before topology construction",
+    "cells": 41195,
+    "topology_engine_version": "generic-semantic-analysis-v030",
+    "no_bridging_removed_intermediate_values": true
+  }
+}

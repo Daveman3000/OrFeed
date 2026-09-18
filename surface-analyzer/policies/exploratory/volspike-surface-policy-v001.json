@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "policy_type": "surface_policy-v001",
+  "policy_id": "volspike_interpretation",
+  "policy_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "descriptor_binding": {
+    "member": "surface_descriptor.json",
+    "hash_basis": "sha256_uncompressed_member_bytes",
+    "descriptor_sha256": "e2823eecf9b102a0a4b3b453ee2a9371925b5bcdb2950cbfedbec7d5ed9b680c",
+    "study_id": "volspike",
+    "descriptor_schema_version": 1
+  },
+  "descriptor_assertions": {
+    "london_range_mode": { "topology_role": "regime", "source": "outer", "active_when": "always" },
+    "trade_management_mode": { "topology_role": "regime", "source": "inner", "active_when": "always" },
+    "maximum_trades_per_day": { "topology_role": "ordered", "source": "inner", "active_when": "always" },
+    "reentry_after_stop": { "topology_role": "facet", "source": "inner", "active_when": { "op": "eq", "parameter": "maximum_trades_per_day", "value": 2 } },
+    "london_close_beyond_asia": { "topology_role": "facet", "source": "outer", "active_when": "always" },
+    "pm_close_mode": { "topology_role": "facet", "source": "outer", "active_when": "always" },
+    "entry_location": { "topology_role": "facet", "source": "outer", "active_when": "always" },
+    "fixed_target_exit_rule": { "topology_role": "facet", "source": "inner", "active_when": { "op": "in", "parameter": "trade_management_mode", "values": [0, 2] } },
+    "london_range_min_points": { "topology_role": "ordered", "source": "outer", "active_when": { "op": "eq", "parameter": "london_range_mode", "value": 0 } },
+    "london_range_min_atr_percent": { "topology_role": "ordered", "source": "outer", "active_when": { "op": "eq", "parameter": "london_range_mode", "value": 1 } },
+    "stop_london_range_percent": { "topology_role": "ordered", "source": "inner", "active_when": "always" },
+    "fixed_target_allocation_percent": { "topology_role": "ordered", "source": "inner", "active_when": { "op": "eq", "parameter": "trade_management_mode", "value": 2 } },
+    "fixed_target_london_range_multiple": { "topology_role": "ordered", "source": "inner", "active_when": { "op": "and", "clauses": [{ "op": "in", "parameter": "trade_management_mode", "values": [0, 2] }, { "op": "eq", "parameter": "fixed_target_exit_rule", "value": 1 }] } }
+  },
+  "parameter_meaning": {
+    "london_range_mode": { "interpretation": "hard_regime", "hypothesis_effect": "changes_context", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "trade_management_mode": { "interpretation": "hard_regime", "hypothesis_effect": "changes_context", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "maximum_trades_per_day": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "reentry_after_stop": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "london_close_beyond_asia": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "pm_close_mode": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "entry_location": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "fixed_target_exit_rule": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "london_range_min_points": { "interpretation": "local_tuning", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "london_range_min_atr_percent": { "interpretation": "local_tuning", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "stop_london_range_percent": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "fixed_target_allocation_percent": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "fixed_target_london_range_multiple": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" }
+  },
+  "regime_contexts": [
+    { "context_id": "points_tm0", "domain": { "london_range_mode": [0], "trade_management_mode": [0] } },
+    { "context_id": "points_tm1", "domain": { "london_range_mode": [0], "trade_management_mode": [1] } },
+    { "context_id": "points_tm2", "domain": { "london_range_mode": [0], "trade_management_mode": [2] } },
+    { "context_id": "atr_tm0", "domain": { "london_range_mode": [1], "trade_management_mode": [0] } },
+    { "context_id": "atr_tm1", "domain": { "london_range_mode": [1], "trade_management_mode": [1] } },
+    { "context_id": "atr_tm2", "domain": { "london_range_mode": [1], "trade_management_mode": [2] } }
+  ],
+  "analysis_scopes": {
+    "cross_facet_family": {
+      "domain_requirements": {
+        "exactly_one_regime_context": true,
+        "retain_at_least_two_values_each": ["london_close_beyond_asia", "pm_close_mode", "entry_location"],
+        "common_active_parameter_support": true
+      },
+      "allowed_analyses": ["performance", "structural_robustness", "facet_replication", "scan", "regional_robustness"],
+      "facet_replication_requirements": {
+        "facets": ["reentry_after_stop", "london_close_beyond_asia", "pm_close_mode", "entry_location", "fixed_target_exit_rule"],
+        "eligible_matched_peer_required": true,
+        "report_peer_coverage": true
+      }
+    },
+    "within_family": {
+      "domain_requirements": {
+        "exactly_one_regime_context": true,
+        "exactly_one_value_each": ["london_close_beyond_asia", "pm_close_mode", "entry_location"]
+      },
+      "allowed_analyses": ["performance", "structural_robustness", "scan", "regional_robustness"],
+      "facet_replication_requirements": null
+    }
+  },
+  "metric_roles": {
+    "performance": ["r_per_trade", "expectancy_per_contract", "profit_factor", "romad", "total_r"],
+    "risk": ["max_drawdown_r"],
+    "derived": ["structural_robustness", "facet_replication", "regional_robustness"]
+  },
+  "comparison_rules": {
+    "never_connect_across_regimes": true,
+    "facet_changes_are_not_ordered_edges": true,
+    "compare_families_on_common_active_parameter_support": true,
+    "regional_robustness_membership": "performance_criteria_only"
+  },
+  "run_requirements": {
+    "scope_selection_timing": "before_result_inspection",
+    "record_before_result_inspection": ["policy_sha256", "regime_context_id", "analysis_scope_id", "research_domain"],
+    "post_result_scope_change": "new_exploratory_run"
+  }
+}
