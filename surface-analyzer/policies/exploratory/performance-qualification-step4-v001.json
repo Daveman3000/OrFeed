@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "policy_type": "performance_qualification_step4",
+  "policy_id": "connected_performance_ladder",
+  "policy_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": true,
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "scope": {
+    "input": "frozen_cleaned_is_domain",
+    "analysis_scope_predeclared_before_result_inspection": true,
+    "contexts": "descriptor_defined_fixed_regime_and_facet_values_with_activation",
+    "graph": "descriptor_semantic_ordered_graph_filtered_to_cleaned_domain_without_bridging",
+    "connect_across_contexts": false,
+    "physically_reduce_cleaned_domain": false,
+    "step5_context": "entire_cleaned_domain_including_cells_outside_qualified_cores",
+    "near_p1_used": false
+  },
+  "cell_evaluability": {
+    "required_finite_metrics": ["r_per_trade", "profit_factor", "romad"],
+    "minimum_trades_per_configuration": 20,
+    "sum_trades_across_configurations": false,
+    "max_drawdown_r": "reporting_only_positive_magnitude",
+    "win_pct": "reporting_only",
+    "missing_reporting_metric": "report_unavailable_without_changing_qualification"
+  },
+  "qualification": {
+    "joint_metric_rule": "all_three_greater_than_or_equal",
+    "p1": {
+      "r_per_trade": 0.50,
+      "profit_factor": 1.50,
+      "romad": 2.00
+    },
+    "rung_formula_for_integer_k_from_1_to_20": {
+      "r_per_trade": "(50 + 25 * (k - 1)) / 100",
+      "profit_factor": "(150 + 25 * (k - 1)) / 100",
+      "romad": "2 + (k - 1)"
+    },
+    "maximum_rung": 20,
+    "p20": {
+      "r_per_trade": 5.25,
+      "profit_factor": 6.25,
+      "romad": 21.00
+    },
+    "adapt_thresholds_within_run": false
+  },
+  "component_support": {
+    "context_p1_cells": "number_of_evaluable_cells_jointly_passing_p1_in_the_fixed_context",
+    "minimum_connected_cells_formula": "max(16, min(32, ceil(0.005 * context_p1_cells)))",
+    "same_requirement_at_every_rung_and_for_diagnostic_components": true,
+    "cell_count_is_independent_trade_sample_size": false
+  },
+  "lineage": {
+    "start": "supported_p1_connected_components",
+    "next_rung_population": "cells_in_the_current_supported_parent_lineage_only",
+    "one_supported_child": "CONTINUES",
+    "multiple_supported_children": "SPLITS_parent_becomes_ancestry_only_each_child_continues",
+    "no_supported_child_with_some_3_of_3_cells": "SUPPORT_LOSS",
+    "no_3_of_3_cells": "EXTINCTION",
+    "candidate_nodes": "terminal_supported_branches_only",
+    "rr_anchor": "exact_cells_of_highest_supported_rung_of_each_terminal_branch",
+    "unsupported_or_residual_next_rung_moves_anchor": false,
+    "p20_supported": "MAX_RUNG_REACHED_right_censored_stop_without_extending_cap"
+  },
+  "two_of_three_diagnostics": {
+    "scope": "within_each_p_k_parent_lineage_at_transition_to_p_k_plus_1",
+    "exactly_two_passed_metrics_only": true,
+    "report": [
+      "3_of_3_supported_and_unsupported_components",
+      "exactly_2_of_3_union_connected_components",
+      "r_per_trade_only_blocker_connected_components",
+      "profit_factor_only_blocker_connected_components",
+      "romad_only_blocker_connected_components",
+      "multi_blocker_counts",
+      "lineage_outcome"
+    ],
+    "qualifies_or_changes_lineage_or_rr_anchor": false
+  },
+  "output_provenance": {
+    "required_bindings": [
+      "source_package_sha256",
+      "descriptor_sha256",
+      "surface_policy_exact_byte_sha256",
+      "cleaned_domain_identity",
+      "step4_policy_exact_byte_sha256",
+      "topology_engine_version"
+    ],
+    "cell_identity": "sorted_analysis_keys",
+    "each_anchor": "record_exact_membership_and_membership_sha256",
+    "exploratory_calibration_may_become_confirmatory_for_same_seen_data": false,
+    "fresh_confirmatory_validation_required": true
+  }
+}
