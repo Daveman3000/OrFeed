@@ -1,0 +1,1116 @@
+{
+  "schema_version": 1,
+  "artifact_type": "step4_terminal_frozen_anchors",
+  "policy_origin": "post_result_exploratory",
+  "campaign_id": "volume_bands_20260918_broad_is",
+  "bindings": {
+    "surface_id": "volbands_20260918_bandtp_shoulder_winpct_v1",
+    "package_sha256": "c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4",
+    "descriptor_sha256": "f3322fb51058b63be155247ad095bc2099a1acea3013c07b8173215336c30337",
+    "surface_policy_sha256": "92ee5dbdc245aa6f736d361c7c40570d9aaecfff8720a6e1f54145e16aa09e33",
+    "cleaned_domain_identity": "cbc46330f2492ab7ef4a6cedfd755b5e657001aec3e0c17205576125e48374c2",
+    "step4_policy_id": "connected_performance_ladder",
+    "step4_policy_version": "1",
+    "step4_policy_sha256": "f1d959ffc44d47683f06e4585cf2b761d849d13013c0ba735f20ccfcdc784e55",
+    "topology_engine_version": "generic-semantic-analysis-v030"
+  },
+  "anchor_hash_preimage": "UTF-8 sorted canonical analysis_keys joined by LF with final LF; no BOM",
+  "anchors": [
+    {
+      "region_id": "VB-b0bc1ae3ceb1d497",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=1|additional_time_filter_ranges=\"1400-1500\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "performance_class": "P16",
+      "highest_supported_rung": 16,
+      "rr_anchor_rung": 16,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 48,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "b0bc1ae3ceb1d4978d0a424cc29d10949ac5ba2d87dc00cb9c83ae91a49d07a3",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 71001,
+          "membership_sha256": "af13f072aff53a74f319b2a098766627b22f7f6ce70da497600006bb386cbada"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 65153,
+          "membership_sha256": "20d246a262da2424d86cb5c8c980831c6c3dca0afe8a08032e2410356846a4ec"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 55865,
+          "membership_sha256": "00f7fd4e98de1958b6f2df125bc73e3859906c93ae0821948ff4971c781b8632"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 45052,
+          "membership_sha256": "45f98367378f151f1708ded65a6268fb2b77ef9c9fcb955ec6ad0820d6299a90"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 34233,
+          "membership_sha256": "b503693ccc63bd99c299906512db8a0b3d69a8ce473b40627bf41c2c56959300"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 25079,
+          "membership_sha256": "833dbc525902a07b63cfb05ff3486c028d57d9f9219a80edf8524cd931ca2c8d"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 18068,
+          "membership_sha256": "02289cc9e4cc4bd9b6758b94d1913a8b943de4c602cca7a79a1cb8321fd4401e"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 12716,
+          "membership_sha256": "4a322a6de6a16e4e15e5cad739ec4e0d9c07bcfeedbb7879cab9283d54febc6a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 8835,
+          "membership_sha256": "f461d8603ff004f7ae79b2248dead8b7823680211f672eba67676aab824ac1a4"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 6097,
+          "membership_sha256": "bfea149dcc3443954d99809d4e20dec1533dfabdc772ff8cb17b07e8327e8ff0"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 4004,
+          "membership_sha256": "c0a68ff9788add1664b472fab8421842b8429a9c70df4889891bf57dacd590c1"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 2479,
+          "membership_sha256": "456b6862184d3cbbc252c9f4132e3d525090b23628cd9aafd3c7bf6a35e45bac"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 1502,
+          "membership_sha256": "29ac72a76a99a77a7c29c5ff952cc19e3edc610e4694f849dc58ed8b376e11b4"
+        },
+        {
+          "rung": "P14",
+          "cell_count": 719,
+          "membership_sha256": "78fc1fe7090984dd110e88da20121f7139a3356fe4faa9d5d5782f81e6148662"
+        },
+        {
+          "rung": "P15",
+          "cell_count": 357,
+          "membership_sha256": "95fbb9be50418dd5fc3d4ba4488e07a6df7675921899abb119c5dde093e2aaa8"
+        },
+        {
+          "rung": "P16",
+          "cell_count": 48,
+          "membership_sha256": "b0bc1ae3ceb1d4978d0a424cc29d10949ac5ba2d87dc00cb9c83ae91a49d07a3"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-b81107d62901368b",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=1|additional_time_filter_ranges=\"1400-1500\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "performance_class": "P14",
+      "highest_supported_rung": 14,
+      "rr_anchor_rung": 14,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 32,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "b81107d62901368ba69c8794ef9da2b4c158e3b3327b5332c89e84f6c85b1797",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=11|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.5|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.5|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 71001,
+          "membership_sha256": "af13f072aff53a74f319b2a098766627b22f7f6ce70da497600006bb386cbada"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 65153,
+          "membership_sha256": "20d246a262da2424d86cb5c8c980831c6c3dca0afe8a08032e2410356846a4ec"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 55865,
+          "membership_sha256": "00f7fd4e98de1958b6f2df125bc73e3859906c93ae0821948ff4971c781b8632"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 45052,
+          "membership_sha256": "45f98367378f151f1708ded65a6268fb2b77ef9c9fcb955ec6ad0820d6299a90"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 34233,
+          "membership_sha256": "b503693ccc63bd99c299906512db8a0b3d69a8ce473b40627bf41c2c56959300"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 25079,
+          "membership_sha256": "833dbc525902a07b63cfb05ff3486c028d57d9f9219a80edf8524cd931ca2c8d"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 18068,
+          "membership_sha256": "02289cc9e4cc4bd9b6758b94d1913a8b943de4c602cca7a79a1cb8321fd4401e"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 12716,
+          "membership_sha256": "4a322a6de6a16e4e15e5cad739ec4e0d9c07bcfeedbb7879cab9283d54febc6a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 8835,
+          "membership_sha256": "f461d8603ff004f7ae79b2248dead8b7823680211f672eba67676aab824ac1a4"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 6097,
+          "membership_sha256": "bfea149dcc3443954d99809d4e20dec1533dfabdc772ff8cb17b07e8327e8ff0"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 4004,
+          "membership_sha256": "c0a68ff9788add1664b472fab8421842b8429a9c70df4889891bf57dacd590c1"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 2479,
+          "membership_sha256": "456b6862184d3cbbc252c9f4132e3d525090b23628cd9aafd3c7bf6a35e45bac"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 1502,
+          "membership_sha256": "29ac72a76a99a77a7c29c5ff952cc19e3edc610e4694f849dc58ed8b376e11b4"
+        },
+        {
+          "rung": "P14",
+          "cell_count": 32,
+          "membership_sha256": "b81107d62901368ba69c8794ef9da2b4c158e3b3327b5332c89e84f6c85b1797"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-c8f1c209be790205",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=1|additional_time_filter_ranges=\"1400-1500\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "performance_class": "P16",
+      "highest_supported_rung": 16,
+      "rr_anchor_rung": 16,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 60,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "c8f1c209be7902057b3f8a4eaec19c5e7f139d122a0071180317206595c4a611",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 71001,
+          "membership_sha256": "af13f072aff53a74f319b2a098766627b22f7f6ce70da497600006bb386cbada"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 65153,
+          "membership_sha256": "20d246a262da2424d86cb5c8c980831c6c3dca0afe8a08032e2410356846a4ec"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 55865,
+          "membership_sha256": "00f7fd4e98de1958b6f2df125bc73e3859906c93ae0821948ff4971c781b8632"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 45052,
+          "membership_sha256": "45f98367378f151f1708ded65a6268fb2b77ef9c9fcb955ec6ad0820d6299a90"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 34233,
+          "membership_sha256": "b503693ccc63bd99c299906512db8a0b3d69a8ce473b40627bf41c2c56959300"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 25079,
+          "membership_sha256": "833dbc525902a07b63cfb05ff3486c028d57d9f9219a80edf8524cd931ca2c8d"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 18068,
+          "membership_sha256": "02289cc9e4cc4bd9b6758b94d1913a8b943de4c602cca7a79a1cb8321fd4401e"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 12716,
+          "membership_sha256": "4a322a6de6a16e4e15e5cad739ec4e0d9c07bcfeedbb7879cab9283d54febc6a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 8835,
+          "membership_sha256": "f461d8603ff004f7ae79b2248dead8b7823680211f672eba67676aab824ac1a4"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 6097,
+          "membership_sha256": "bfea149dcc3443954d99809d4e20dec1533dfabdc772ff8cb17b07e8327e8ff0"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 4004,
+          "membership_sha256": "c0a68ff9788add1664b472fab8421842b8429a9c70df4889891bf57dacd590c1"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 2479,
+          "membership_sha256": "456b6862184d3cbbc252c9f4132e3d525090b23628cd9aafd3c7bf6a35e45bac"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 1502,
+          "membership_sha256": "29ac72a76a99a77a7c29c5ff952cc19e3edc610e4694f849dc58ed8b376e11b4"
+        },
+        {
+          "rung": "P14",
+          "cell_count": 719,
+          "membership_sha256": "78fc1fe7090984dd110e88da20121f7139a3356fe4faa9d5d5782f81e6148662"
+        },
+        {
+          "rung": "P15",
+          "cell_count": 357,
+          "membership_sha256": "95fbb9be50418dd5fc3d4ba4488e07a6df7675921899abb119c5dde093e2aaa8"
+        },
+        {
+          "rung": "P16",
+          "cell_count": 60,
+          "membership_sha256": "c8f1c209be7902057b3f8a4eaec19c5e7f139d122a0071180317206595c4a611"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-f85d84baad1b100e",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=1|additional_time_filter_ranges=\"1400-1500\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "performance_class": "P14",
+      "highest_supported_rung": 14,
+      "rr_anchor_rung": 14,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 48,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "f85d84baad1b100e743d42d662ad3c103eb36c89992cd236fd39243dff794563",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=10|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=1400-1500"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 71001,
+          "membership_sha256": "af13f072aff53a74f319b2a098766627b22f7f6ce70da497600006bb386cbada"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 65153,
+          "membership_sha256": "20d246a262da2424d86cb5c8c980831c6c3dca0afe8a08032e2410356846a4ec"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 55865,
+          "membership_sha256": "00f7fd4e98de1958b6f2df125bc73e3859906c93ae0821948ff4971c781b8632"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 45052,
+          "membership_sha256": "45f98367378f151f1708ded65a6268fb2b77ef9c9fcb955ec6ad0820d6299a90"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 34233,
+          "membership_sha256": "b503693ccc63bd99c299906512db8a0b3d69a8ce473b40627bf41c2c56959300"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 25079,
+          "membership_sha256": "833dbc525902a07b63cfb05ff3486c028d57d9f9219a80edf8524cd931ca2c8d"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 18068,
+          "membership_sha256": "02289cc9e4cc4bd9b6758b94d1913a8b943de4c602cca7a79a1cb8321fd4401e"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 12716,
+          "membership_sha256": "4a322a6de6a16e4e15e5cad739ec4e0d9c07bcfeedbb7879cab9283d54febc6a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 8835,
+          "membership_sha256": "f461d8603ff004f7ae79b2248dead8b7823680211f672eba67676aab824ac1a4"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 6097,
+          "membership_sha256": "bfea149dcc3443954d99809d4e20dec1533dfabdc772ff8cb17b07e8327e8ff0"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 4004,
+          "membership_sha256": "c0a68ff9788add1664b472fab8421842b8429a9c70df4889891bf57dacd590c1"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 2479,
+          "membership_sha256": "456b6862184d3cbbc252c9f4132e3d525090b23628cd9aafd3c7bf6a35e45bac"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 1502,
+          "membership_sha256": "29ac72a76a99a77a7c29c5ff952cc19e3edc610e4694f849dc58ed8b376e11b4"
+        },
+        {
+          "rung": "P14",
+          "cell_count": 48,
+          "membership_sha256": "f85d84baad1b100e743d42d662ad3c103eb36c89992cd236fd39243dff794563"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-f65664cf610dac78",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=1|additional_time_filter_ranges=\"None\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "None"
+      },
+      "performance_class": "P13",
+      "highest_supported_rung": 13,
+      "rr_anchor_rung": 13,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 80,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "f65664cf610dac78bbad4492fa56cbaabe784c94ad83c7bd715943388423b709",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.8|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=0.9|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=0.9|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.2|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.3|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.4|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=180|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=1|length=13|scale_1_atr_ratio=1|scale_2_atr_ratio=1|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=200|additional_time_filter_ranges=None"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 72071,
+          "membership_sha256": "ba881cfc0c3b6f62d5debd70777ff410389dd6d61f303d4bed02ced0c8343f74"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 62316,
+          "membership_sha256": "44764f98f57d802d0c50d6adad64a2bb8bb0a7c1a56f6ff4efc10e236ccfdaa6"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 49052,
+          "membership_sha256": "03ab92269b9a5816e98ebc60e031993b029d3520432564d65f69210b5a3ad646"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 35126,
+          "membership_sha256": "aad9669e189920d85b0c095bb6c6b4b2754e83984d99ece5ce01d836197b8520"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 23969,
+          "membership_sha256": "52c7db5e1cfeb58c2a41e12e513776ea2f578316239d839ddfa1cf11833c98e7"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 15685,
+          "membership_sha256": "e1bc8236eb947ede853581846603ecffa3cff69b065ecfb9ba8b03612465208d"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 10138,
+          "membership_sha256": "7ba722151a8f35e6befcf87aa01d60d9a55bfc86c8dd82d0eb362de823ab6993"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 6243,
+          "membership_sha256": "04decf61b2409e97900234369b7e41f095f171c3f5ca612622a39facf1097de0"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 3616,
+          "membership_sha256": "71e9cf78218f2bcea4b7f9558a04821f06ba45efae2c09d7ec56204daa42eb70"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 1829,
+          "membership_sha256": "f549b39fd0c0c8eda31dcc358aa2fa8cf790a8c5fcbf43bcd4d4899a9c480d79"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 1021,
+          "membership_sha256": "0ff707eeca66a10dee6341ab4cda823d89609deb37d26f3193355c470bf2802b"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 427,
+          "membership_sha256": "e08946b357d25a7d233e27a59d0ae42d8b35982a8b122ee71c1023f789d96ce0"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 80,
+          "membership_sha256": "f65664cf610dac78bbad4492fa56cbaabe784c94ad83c7bd715943388423b709"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-98bb2a5ef2e2b20c",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=3|additional_time_filter_ranges=\"1400-1500\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 3,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "performance_class": "P13",
+      "highest_supported_rung": 13,
+      "rr_anchor_rung": 13,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 46,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "98bb2a5ef2e2b20ca651697e01d1a8cef4f6c9700db7002586ae1099e56d1bb4",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=1400-1500",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=1400-1500"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 57662,
+          "membership_sha256": "eba47d1315e5d541274dd9068d798c3d2761ee33ed42a7fc8f81af45732dd40f"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 43263,
+          "membership_sha256": "1ee2215a14c9db4751ee4d93684f3c264716edd0ab98a02b74b1f06d1b0e1103"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 30839,
+          "membership_sha256": "e3a563a8b81f411f3fcdf7487838a0f4479da99a14f60c1815ad43314afbd091"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 20183,
+          "membership_sha256": "31a7dff2eddfca2b7b38d1fe399eb1ae4c49a35e55129bbeb2a0009259be10d1"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 12425,
+          "membership_sha256": "7975b40465f063c05b4e6bbac76b395ceaf8df2275ef983a938b06905d7358da"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 7186,
+          "membership_sha256": "0b7db7134b7417848aa34851bdff80038fee6ffcae9a9e18c8d063df36f6bb4f"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 3998,
+          "membership_sha256": "654369a576b5eb230d9e720aeb8253c633c7c8a5a1ace85c54eae967268574a5"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 2188,
+          "membership_sha256": "074ede8cd7243226e51a8b072e5f8d92c7cc50d0d57f07c3ac3add601c87289a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 1203,
+          "membership_sha256": "a7f6f7e60abf8ea800723a159bed45116e9f7d516effebd977643c36493d6dea"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 659,
+          "membership_sha256": "4d992c2e8b4e3a71b5ee9d886af28272f2e6e4b5c7fd35b6cdd7d45a97ae0dbf"
+        },
+        {
+          "rung": "P11",
+          "cell_count": 358,
+          "membership_sha256": "955bb460286075ae5e332e6b5845cf50aa22dba5a305fb9b3462b1acd685cf1f"
+        },
+        {
+          "rung": "P12",
+          "cell_count": 180,
+          "membership_sha256": "a2a26e65db1ee916e3d491781b526d4cbcd4755617a5dec4fb161254f910b966"
+        },
+        {
+          "rung": "P13",
+          "cell_count": 46,
+          "membership_sha256": "98bb2a5ef2e2b20ca651697e01d1a8cef4f6c9700db7002586ae1099e56d1bb4"
+        }
+      ]
+    },
+    {
+      "region_id": "VB-a5162befb570e3f6",
+      "context_id": "distance_scale_mode=3|average_mode=0|weighting_mode=3|additional_time_filter_ranges=\"None\"",
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 3,
+        "additional_time_filter_ranges": "None"
+      },
+      "performance_class": "P10",
+      "highest_supported_rung": 10,
+      "rr_anchor_rung": 10,
+      "terminal_status": "NATURAL_TERMINAL",
+      "right_censored": false,
+      "cell_count": 148,
+      "minimum_component_support": 32,
+      "anchor_membership_sha256": "a5162befb570e3f6ebb86e54e7439abba2f5cde5c07b588fc508660238d2efac",
+      "analysis_keys": [
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=60|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=60|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=10|scale_1_atr_ratio=1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=11|scale_1_atr_ratio=1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=12|scale_1_atr_ratio=1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=13|scale_1_atr_ratio=1.2|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.5|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=60|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.6|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=60|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.7|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=100|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=120|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=120|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=140|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=140|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=60|tp2_band_width_pct=160|additional_time_filter_ranges=None",
+        "v1|distance_scale_mode=3|average_mode=0|weighting_mode=3|length=9|scale_1_atr_ratio=1.1|scale_2_atr_ratio=1.8|stop_points=4|tp1_band_width_pct=80|tp2_band_width_pct=160|additional_time_filter_ranges=None"
+      ],
+      "lineage_ancestry": [
+        {
+          "rung": "P1",
+          "cell_count": 54847,
+          "membership_sha256": "bceb576c627d607254dfb25867d214ffc89ede245ce7735487b209597c655c7e"
+        },
+        {
+          "rung": "P2",
+          "cell_count": 38956,
+          "membership_sha256": "839c9d4ef5654dc565673e6afe8c3a54bb0261071593de9f9c0c1d6a776cc472"
+        },
+        {
+          "rung": "P3",
+          "cell_count": 24599,
+          "membership_sha256": "6885653f5d35f8a35bcf9e642816dda512fd1654a388d47768774a7ac399dee7"
+        },
+        {
+          "rung": "P4",
+          "cell_count": 13876,
+          "membership_sha256": "48bfb124506fa974f62ca3a1bb0fd9cb1b140e78d973a4481970d67a63722423"
+        },
+        {
+          "rung": "P5",
+          "cell_count": 7249,
+          "membership_sha256": "a08349743e663ba0ec5bcb5c964db7745b1b0f323215d9a74aa2fe812d1c3100"
+        },
+        {
+          "rung": "P6",
+          "cell_count": 3586,
+          "membership_sha256": "e26fb5932288872063892cd448d9089de9051e113879c0fbb2d836bfdbd55ae0"
+        },
+        {
+          "rung": "P7",
+          "cell_count": 1668,
+          "membership_sha256": "7cc603661f4cb788cdfc00a21fa930b0a5b195154d35d64a5798f296e25dad62"
+        },
+        {
+          "rung": "P8",
+          "cell_count": 844,
+          "membership_sha256": "b5caf3a1c060cbaba055e7c1c847b790a22852d7c9928d4caa715069495f642a"
+        },
+        {
+          "rung": "P9",
+          "cell_count": 376,
+          "membership_sha256": "c212f7a1e92a2af1d6ed41a3ed1c84067d2ecfb6d1d338ef0f49151479cd6ae4"
+        },
+        {
+          "rung": "P10",
+          "cell_count": 148,
+          "membership_sha256": "a5162befb570e3f6ebb86e54e7439abba2f5cde5c07b588fc508660238d2efac"
+        }
+      ]
+    }
+  ]
+}

@@ -151,6 +151,18 @@
     for(const a0 of combos){const a=new Int16Array(a0),p={};for(let q=0;q<info.defs.length;q++)if(a[q]>=0)p[info.defs[q].id]=domain(info.defs[q])[a[q]];const tgtMask=info.defs.map(def=>activeWhen(def.active_when,p));let ok=true;for(let q=0;q<info.defs.length;q++){if(!tgtMask[q])a[q]=-1;else if(a[q]<0){ok=false;break;}if(q!==k&&srcMask[q]&&tgtMask[q]&&a[q]!==g.paramArrays[q][i]){ok=false;break;}}if(!ok||hardKey(info,a)!==hardKey(info,Array.from({length:info.defs.length},(_,q)=>g.paramArrays[q][i])))continue;const ck=tupleKey(a);if(canonical.has(ck))continue;canonical.add(ck);const j=g.keyMap.get(ck);if(j!==undefined&&!seen.has(j)){seen.add(j);peers.push(j);}}
     return {peers,expected:peers.length};
   }
+  function matchedFacetPeers(g,i,facetId){
+    if(!g||!Number.isInteger(i)||i<0||i>=g.N)throw new Error('Valid semantic graph and cell index are required');
+    const k=g.info.byId[facetId]?._i;
+    if(k===undefined||!g.info.facets.includes(k))throw new Error(`${facetId}: descriptor facet is required`);
+    if(g.paramArrays[k][i]<0)return {status:'N/A',alternatives:[]};
+    const current=g.paramArrays[k][i],alternatives=[];
+    for(const vi of g.present[k])if(vi!==current){
+      const target=facetTargetPeers(g,i,k,vi);
+      alternatives.push({value:domain(g.info.defs[k])[vi],peers:target.peers,expected:target.expected});
+    }
+    return {status:alternatives.length?'APPLICABLE':'N/A',alternatives};
+  }
   function computeFR(values,g){
     if(values.length!==g.N)throw new Error('Metric array length does not match semantic topology');const N=g.N,scales=robustScales(values,g),deviation={},coverage={},replication={},facetScore={};let missingExpectedPeers=0,expectedPeers=0,availablePeers=0,eligibleAlternativeCount=0;
     for(const k of g.info.facets){const id=g.info.defs[k].id;deviation[id]=new Float64Array(N);coverage[id]=new Float64Array(N);deviation[id].fill(NaN);coverage[id].fill(NaN);}
@@ -176,7 +188,7 @@
     return {passed:fakeGap&&ds<1e-7&&df<1e-7,tests:{filteredGapPreserved:fakeGap,srPermutationDiff:ds,frPermutationDiff:df},summary:{hardSurfaces:g.hardSurfaceCount,components:g.components,edges:g.undirectedEdgeCount}};
   }
 
-  const API={VERSION,TAU,DRIVER_METRICS,buildTopology,computeSR,computeFR,runSyntheticSuite:syntheticSuite};root.SurfaceSemanticAnalysisV030=API;if(typeof module!=='undefined'&&module.exports)module.exports=API;
+  const API={VERSION,TAU,DRIVER_METRICS,buildTopology,computeSR,computeFR,matchedFacetPeers,runSyntheticSuite:syntheticSuite};root.SurfaceSemanticAnalysisV030=API;if(typeof module!=='undefined'&&module.exports)module.exports=API;
 
   if(typeof window==='undefined')return;
   function installBrowser(){

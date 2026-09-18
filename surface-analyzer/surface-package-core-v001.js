@@ -174,5 +174,5 @@
     };
   }
 
-  return {VERSION,DEFAULT_REQUIRED_METRICS,active,validateDescriptor,buildSemanticSurface};
+  return {VERSION,DEFAULT_REQUIRED_METRICS,active,validateDescriptor,buildSemanticSurface,eachCsvRow};
 });

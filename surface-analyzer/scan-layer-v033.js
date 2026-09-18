@@ -115,8 +115,17 @@
     return {mean_depth:sum/cells.length,max_depth:max,boundaryless:false};
   }
 
-  function analyzeRegionalRobustness(surface,g,performanceMask,minCells,metricIds,invertResolver,tau=DEFAULT_TAU){
-    const regional=connectedRegions(performanceMask,g,minCells);
+  function analyzeRegionalRobustness(surface,g,performanceMask,minCells,metricIds,invertResolver,tau=DEFAULT_TAU,exactCells=null){
+    let regional;
+    if(exactCells){
+      if(!Array.isArray(exactCells)||!exactCells.length)throw new Error('Frozen anchor must contain at least one cell.');
+      const mask=new Uint8Array(g.N),regionId=new Int32Array(g.N);regionId.fill(-1);
+      for(const i of exactCells){
+        if(!Number.isInteger(i)||i<0||i>=g.N||mask[i])throw new Error('Frozen anchor contains an invalid or duplicate cell.');
+        mask[i]=1;regionId[i]=0;
+      }
+      regional={mask,regionId,regions:[exactCells]};
+    }else regional=connectedRegions(performanceMask,g,minCells);
     const uniqueMetrics=[...new Set(metricIds)].filter(k=>surface.metrics?.[k]);
     const scaleByMetric={};
     for(const metric of uniqueMetrics)scaleByMetric[metric]=robustScales(surface.metrics[metric],g);
@@ -171,13 +180,17 @@
       summaries.push({region_id:rid+1,...semanticRegionSummary(cells,g),...geometry,metrics});
     }
     return {
-      definition:'performance_criteria_only',
+      definition:exactCells?'frozen_anchor_membership':'performance_criteria_only',
       similarity_tau:tau,
       performance_metrics:uniqueMetrics,
       mask:regional.mask,
       regionId:regional.regionId,
       regions:summaries
     };
+  }
+
+  function analyzeFrozenAnchor(surface,g,anchorCells,metricIds,invertResolver,tau=DEFAULT_TAU){
+    return analyzeRegionalRobustness(surface,g,null,1,metricIds,invertResolver,tau,anchorCells);
   }
 
   async function evaluateScan(surface,config,g,seriesResolver){
@@ -209,7 +222,7 @@
     };
   }
 
-  const Engine={VERSION,SCHEMA_VERSION,midrankPercentile,connectedRegions,analyzeRegionalRobustness,evaluateScan};
+  const Engine={VERSION,SCHEMA_VERSION,midrankPercentile,connectedRegions,analyzeRegionalRobustness,analyzeFrozenAnchor,evaluateScan};
   root.SurfaceScanEngineV033=Engine;
   root.SurfaceScanEngineV034=Engine;
   root.SurfaceScanEngineV035=Engine;
