@@ -17,3 +17,15 @@
 - Before inspecting results, each run must fix and record its policy hash, regime context, analysis scope, and explicit research domain. A scope change after results are visible creates a separately identified exploratory run, not a reinterpretation of the original run.
 
 The schema validates document shape. A consumer must additionally check the descriptor hash and assertions, declared domain values, selected scope requirements, and eligible matched-peer coverage against the bound descriptor and actual research domain. No tuning or representative-selection behavior is specified here.
+
+## Exploratory successor bindings
+
+Descriptor-changing repackages receive immutable successor policy files even when interpretation semantics remain compatible. These exact-byte identities are frozen:
+
+| Policy | Descriptor binding | Exact-file SHA-256 |
+|---|---|---|
+| `policies/exploratory/volume-bands-surface-policy-v002.json` | `a42eaa80f7eb7a00934b9a5fe2f9a22869034915ee62e0541ea9b173006ddeab` | `82fb304f1f1a1e776690bc5b9914477bfd6cb9026dcccfbcb58f18769c9bfd5b` |
+| `policies/exploratory/volume-bands-surface-policy-v003.json` | `2367a68db624d87822a552e9465a64058705694f66ca50fa3072f9e80f529c2c` | `78675f077f827fe3c7908fa33a599593a8e6eda439447f5e3e847c3ba04a2c1b` |
+| `policies/exploratory/volume-bands-surface-policy-v004.json` | `f3322fb51058b63be155247ad095bc2099a1acea3013c07b8173215336c30337` | `92ee5dbdc245aa6f736d361c7c40570d9aaecfff8720a6e1f54145e16aa09e33` |
+
+Policy v003 records the descriptor's original empty-string no-filter token. Policy v004 binds the shoulder-expanded package after that value was normalized to the explicit `"None"` token. Do not edit or reformat these files in place.

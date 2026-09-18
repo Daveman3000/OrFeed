@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "artifact_type": "cleaned_domain_manifest",
+  "artifact_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "campaign_id": "volume_bands_20260918_broad_is",
+  "source_surface": {
+    "surface_id": "volbands_20260918_bandtp_shoulder_winpct_v1",
+    "package_sha256": "c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4",
+    "descriptor_sha256": "f3322fb51058b63be155247ad095bc2099a1acea3013c07b8173215336c30337",
+    "analysis_key_version": "v1",
+    "source_cells": 311150
+  },
+  "surface_policy": {
+    "path": "surface-analyzer/policies/exploratory/volume-bands-surface-policy-v004.json",
+    "sha256_exact_file_bytes": "92ee5dbdc245aa6f736d361c7c40570d9aaecfff8720a6e1f54145e16aa09e33"
+  },
+  "cleaning_policy": {
+    "path": "surface-analyzer/policies/exploratory/domain-cleaning-step3-v001.json",
+    "sha256_exact_file_bytes": "f7229c728f5c893745d33a4faa427af7423c94ea26d83844e66b29abe5c44e71"
+  },
+  "predeclared_candidate_set": {
+    "type": "fixed_regime_family_contexts",
+    "parameters": [
+      "distance_scale_mode",
+      "average_mode",
+      "weighting_mode",
+      "additional_time_filter_ranges"
+    ],
+    "candidate_count": 4,
+    "new_candidates_generated_during_evaluation": false
+  },
+  "candidate_outcomes": [
+    {
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "None"
+      },
+      "total_cells": 78400,
+      "usable_cells": 78400,
+      "median": { "r_per_trade": 1.174, "profit_factor": 3.33, "romad": 8.47 },
+      "q75": { "r_per_trade": 1.62, "profit_factor": 4.21, "romad": 12 },
+      "joint_below_near_p1_cells": 802,
+      "joint_near_p1_cells": 74533,
+      "outcome": "KEEP_NOT_WEAK"
+    },
+    {
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 1,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "total_cells": 78400,
+      "usable_cells": 78400,
+      "median": { "r_per_trade": 1.438, "profit_factor": 3.79, "romad": 8.87 },
+      "q75": { "r_per_trade": 1.991, "profit_factor": 4.82, "romad": 12.85 },
+      "joint_below_near_p1_cells": 724,
+      "joint_near_p1_cells": 75836,
+      "outcome": "KEEP_NOT_WEAK"
+    },
+    {
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 3,
+        "additional_time_filter_ranges": "None"
+      },
+      "total_cells": 77175,
+      "usable_cells": 77175,
+      "median": { "r_per_trade": 0.76, "profit_factor": 2.45, "romad": 5.26 },
+      "q75": { "r_per_trade": 1.111, "profit_factor": 3.16, "romad": 7.92 },
+      "joint_below_near_p1_cells": 5247,
+      "joint_near_p1_cells": 61582,
+      "outcome": "KEEP_NOT_WEAK"
+    },
+    {
+      "context": {
+        "distance_scale_mode": 3,
+        "average_mode": 0,
+        "weighting_mode": 3,
+        "additional_time_filter_ranges": "1400-1500"
+      },
+      "total_cells": 77175,
+      "usable_cells": 77175,
+      "median": { "r_per_trade": 0.863, "profit_factor": 2.59, "romad": 4.98 },
+      "q75": { "r_per_trade": 1.287, "profit_factor": 3.42, "romad": 7.74 },
+      "joint_below_near_p1_cells": 4165,
+      "joint_near_p1_cells": 64434,
+      "outcome": "KEEP_NOT_WEAK"
+    }
+  ],
+  "outcome_summary": {
+    "PROPOSED_PRUNE": 0,
+    "KEEP_NOT_WEAK": 4,
+    "KEEP_POCKET": 0,
+    "KEEP_PEER": 0,
+    "KEEP_TOPOLOGY": 0,
+    "KEEP_UNSUPPORTED": 0,
+    "removed_cells": 0,
+    "retained_cells": 311150
+  },
+  "cleaned_domain_identity": {
+    "hash_method": "sha256_utf8_identity_preimage",
+    "retained_analysis_keys_hash_method": "sha256_utf8_lf_sorted_analysis_keys_with_final_lf",
+    "retained_analysis_keys_sha256": "1d85c61364f706c4df253e9db4e0a26609b8a356627dc941826b698a64058f17",
+    "identity_preimage_lines": [
+      "cleaned_domain_identity_v1",
+      "source_package_sha256=c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4",
+      "descriptor_sha256=f3322fb51058b63be155247ad095bc2099a1acea3013c07b8173215336c30337",
+      "surface_policy_sha256=92ee5dbdc245aa6f736d361c7c40570d9aaecfff8720a6e1f54145e16aa09e33",
+      "cleaning_policy_sha256=f7229c728f5c893745d33a4faa427af7423c94ea26d83844e66b29abe5c44e71",
+      "analysis_key_version=v1",
+      "retained_count=311150",
+      "retained_analysis_keys_sha256=1d85c61364f706c4df253e9db4e0a26609b8a356627dc941826b698a64058f17",
+      ""
+    ],
+    "cleaned_domain_sha256": "cbc46330f2492ab7ef4a6cedfd755b5e657001aec3e0c17205576125e48374c2"
+  },
+  "volspike_calibration_reference": {
+    "package_sha256": "58834e2326accb4a1a5af72c1da3f04624f22d0b5bc4c9fbdfdec282c81728d5",
+    "fixed_candidates": 141,
+    "proposed_prune": 91,
+    "keep_pocket": 11,
+    "keep_not_weak": 5,
+    "keep_unsupported": 34,
+    "proposed_removed_cells": 14805,
+    "status": "calibration_evidence_not_materialized_cleaned_domain"
+  }
+}

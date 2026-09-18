@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "policy_type": "surface_policy-v001",
+  "policy_id": "volume_bands_interpretation",
+  "policy_version": "3",
+  "policy_origin": "post_result_exploratory",
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "descriptor_binding": {
+    "member": "surface_descriptor.json",
+    "hash_basis": "sha256_uncompressed_member_bytes",
+    "descriptor_sha256": "2367a68db624d87822a552e9465a64058705694f66ca50fa3072f9e80f529c2c",
+    "study_id": "volume_bands",
+    "descriptor_schema_version": 1
+  },
+  "descriptor_assertions": {
+    "distance_scale_mode": { "topology_role": "regime", "source": "outer", "active_when": "always" },
+    "average_mode": { "topology_role": "facet", "source": "outer", "active_when": "always" },
+    "weighting_mode": { "topology_role": "facet", "source": "outer", "active_when": "always" },
+    "length": { "topology_role": "ordered", "source": "outer", "active_when": "always" },
+    "scale_1_atr_ratio": {
+      "topology_role": "ordered",
+      "source": "outer",
+      "active_when": { "op": "eq", "parameter": "distance_scale_mode", "value": 3 }
+    },
+    "scale_2_atr_ratio": {
+      "topology_role": "ordered",
+      "source": "outer",
+      "active_when": { "op": "eq", "parameter": "distance_scale_mode", "value": 3 }
+    },
+    "stop_points": { "topology_role": "ordered", "source": "inner", "active_when": "always" },
+    "tp1_band_width_pct": { "topology_role": "ordered", "source": "outer", "active_when": "always" },
+    "tp2_band_width_pct": { "topology_role": "ordered", "source": "outer", "active_when": "always" },
+    "additional_time_filter_ranges": { "topology_role": "regime", "source": "inner", "active_when": "always" }
+  },
+  "parameter_meaning": {
+    "distance_scale_mode": { "interpretation": "hard_regime", "hypothesis_effect": "changes_context", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "average_mode": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "weighting_mode": { "interpretation": "model_family", "hypothesis_effect": "changes_family", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" },
+    "length": { "interpretation": "local_tuning", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "scale_1_atr_ratio": { "interpretation": "local_tuning", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "scale_2_atr_ratio": { "interpretation": "local_tuning", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "stop_points": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "tp1_band_width_pct": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "tp2_band_width_pct": { "interpretation": "trade_management", "hypothesis_effect": "tunes_within_context", "local_smoothness": "assess_within_context", "monotonicity": "not_assumed" },
+    "additional_time_filter_ranges": { "interpretation": "hard_regime", "hypothesis_effect": "changes_context", "local_smoothness": "not_assumed", "monotonicity": "not_assumed" }
+  },
+  "regime_contexts": [
+    { "context_id": "atr14_no_additional_filter", "domain": { "distance_scale_mode": [3], "additional_time_filter_ranges": [""] } },
+    { "context_id": "atr14_exclude_1400_1500", "domain": { "distance_scale_mode": [3], "additional_time_filter_ranges": ["1400-1500"] } }
+  ],
+  "analysis_scopes": {
+    "cross_weighting_family": {
+      "domain_requirements": {
+        "exactly_one_regime_context": true,
+        "retain_at_least_two_values_each": ["weighting_mode"],
+        "common_active_parameter_support": true
+      },
+      "allowed_analyses": ["performance", "structural_robustness", "facet_replication", "scan", "regional_robustness"],
+      "facet_replication_requirements": {
+        "facets": ["weighting_mode"],
+        "eligible_matched_peer_required": true,
+        "report_peer_coverage": true
+      }
+    },
+    "within_family": {
+      "domain_requirements": {
+        "exactly_one_regime_context": true,
+        "exactly_one_value_each": ["average_mode", "weighting_mode"]
+      },
+      "allowed_analyses": ["performance", "structural_robustness", "scan", "regional_robustness"],
+      "facet_replication_requirements": null
+    }
+  },
+  "metric_roles": {
+    "performance": ["r_per_trade", "expectancy_per_contract", "profit_factor", "win_pct", "romad", "total_r"],
+    "risk": ["max_drawdown_r"],
+    "derived": ["structural_robustness", "facet_replication", "regional_robustness"]
+  },
+  "comparison_rules": {
+    "never_connect_across_regimes": true,
+    "facet_changes_are_not_ordered_edges": true,
+    "compare_families_on_common_active_parameter_support": true,
+    "regional_robustness_membership": "performance_criteria_only"
+  },
+  "run_requirements": {
+    "scope_selection_timing": "before_result_inspection",
+    "record_before_result_inspection": ["policy_sha256", "regime_context_id", "analysis_scope_id", "research_domain"],
+    "post_result_scope_change": "new_exploratory_run"
+  }
+}

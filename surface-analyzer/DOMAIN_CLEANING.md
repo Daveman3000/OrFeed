@@ -1,6 +1,8 @@
 # Step 3: conservative domain cleaning
 
-Status: **conceptual contract only**. No collector, pruning action, executable threshold, or tuning behavior is authorized by this document. Quantitative calibration on the already-inspected Volume Bands and VolSpike IS surfaces is `post_result_exploratory`; thresholds established there are not confirmatory evidence.
+Status: **frozen post-result exploratory policy**. The executable decision constants are frozen in `policies/exploratory/domain-cleaning-step3-v001.json` (SHA-256 exact bytes `f7229c728f5c893745d33a4faa427af7423c94ea26d83844e66b29abe5c44e71`). They remain non-authoritative calibration evidence until validated unchanged in a fresh confirmatory campaign.
+
+The current Volume Bands application is recorded in `policies/exploratory/volume-bands-cleaned-domain-step3-v001.json` (SHA-256 exact bytes `70e79a8687d97ef53bdd3b2389f96ff9306606d11dec6e9e9dc550646e30e9d7`). It binds surface policy v004 to package `c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4`, retains all 311,150 cells, and has cleaned-domain identity `cbc46330f2492ab7ef4a6cedfd755b5e657001aec3e0c17205576125e48374c2`. The original surface remains unchanged.
 
 ## Purpose and boundary
 
@@ -38,7 +40,7 @@ For each proposed block, deletion requires **all** of the following:
 3. No meaningful connected neighborhood of **the same cells** jointly satisfies the near-P1 protection rule with valid metrics and adequate per-cell trade support. Build this protection mask in the full current cleaned-domain context, not only inside the proposed block: a qualifying neighborhood that crosses the block boundary also vetoes a deletion that would damage it.
 4. The post-deletion topology and facet-peer audit passes. Preserve ordered neighbors and boundary context needed for later SR/RR, and matched facet peers required for any planned FR comparison.
 
-The near-P1 protection predicate has this structure; its numerical requirements remain unfrozen:
+The near-P1 protection predicate has this structure; its frozen exploratory numerical requirements are owned by `domain-cleaning-step3-v001.json`:
 
 ```text
 protected cell =
@@ -48,7 +50,7 @@ AND finite, valid ROMAD   >= near-P1 ROMAD requirement
 AND per-cell trades       >= support requirement
 ```
 
-Only jointly passing cells form protection components under the descriptor's semantic graph. A connected supported component is a veto, not a reason to optimize within that block. Do not scale the veto solely as a percentage of the entire family: a locally meaningful neighborhood may occupy a small fraction of a large combinatorial context. The component-size, shape, finite-coverage, joint-weakness, near-P1/P1 prevalence, trade-support, and ROMAD-validity rules require exploratory calibration before execution.
+Only jointly passing cells form protection components under the descriptor's semantic graph. A connected supported component is a veto, not a reason to optimize within that block. Do not scale the veto solely as a percentage of the entire family: a locally meaningful neighborhood may occupy a small fraction of a large combinatorial context. The frozen exploratory rule requires at least eight connected cells spanning at least two ordered dimensions with at least two tested values per spanned dimension. For a boundary-crossing component, deletion is vetoed when the candidate-contained portion qualifies or deletion would leave no qualifying remainder.
 
 ## Support accounting and outcome
 
@@ -56,4 +58,4 @@ Report **geometric support** (cells, connectedness, ordered extent) separately f
 
 For every proposed block, record `KEEP` (protection veto, topology/peer veto, insufficient evidence, or uncertainty) or `PRUNE` with its exact broad-weakness evidence and resulting domain change. After each pass, audit retained topology, FR peer coverage where applicable, moderate-performance alternatives, and whether another allowed pass would remove obvious junk rather than useful context. Stop early when another pass would mainly narrow plausible neighborhoods.
 
-The output is a recorded filter over the existing IS surface: **cleaned domain = analysis universe**. Step 4 may then create performance-qualified core masks within that intact cleaned domain; the cleaning filter itself is not a performance-core mask. No actual Volume Bands pruning decision or numeric cutoff is frozen here.
+The output is a recorded filter over the existing IS surface: **cleaned domain = analysis universe**. Step 4 may then create performance-qualified core masks within that intact cleaned domain; the cleaning filter itself is not a performance-core mask. The current Volume Bands decision is to retain the complete surface because none of its four predeclared fixed regime/family contexts is broadly weak under the frozen exploratory policy.
