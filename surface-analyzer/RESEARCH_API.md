@@ -109,6 +109,8 @@ Scan output includes passing cells / total cells / passing fraction, criteria, p
 
 ## Reserved next operations
 
+The exploratory broad-box review sequence, rerun budget, and Volume Bands decision record are documented in [SHOULDER_REVIEW.md](SHOULDER_REVIEW.md). They do not add an API operation or tuning behavior.
+
 The following are intentionally deferred until their semantics and payload sizes are regression-tested:
 
 - `compare_domains`

@@ -1,0 +1,22 @@
+# Exploratory broad-box shoulder review
+
+This is a research-process record, not a classifier or tuning-engine contract. The existing shoulder-evidence tool reports family-local observations; a reviewer makes and records the coarse `CLEAR_EDGE_TRUNCATION`, `NO_CLEAR_EDGE_TRUNCATION`, or `AMBIGUOUS` judgment. Do not infer a numerical materiality threshold from this note.
+
+## Default sequence and stop rule
+
+1. Fix the surface, descriptor/policy binding, regime and family contexts, and analysis scope before inspecting the results. Inspect both ends of every descriptor-defined ordered parameter within each fixed context. Use R/trade and profit factor as primary evidence, with win rate, max drawdown R, trades, and total R as context.
+2. Record one coarse classification per fixed regime × family context, with the relevant parameter-edge observations nested beneath it. A family is `CLEAR_EDGE_TRUNCATION` only when useful performance is convincingly cut off; suspicious but non-clear evidence is `AMBIGUOUS`. Ambiguity alone does not authorize a rerun.
+3. If a broad rerun is justified, derive only the minimal adjacent extensions from the clear edge observations. Before execution, print old/new outer counts, inner count, total configurations, per-family counts, exact domains, and a parent-to-proposal diff. Abort if an unrelated domain or execution setting changes. Record any deliberate representation-only correction separately.
+4. After the rerun, verify the package and row count, compare overlapping configurations against the parent, repeat the same family-local review, and write down the classifications, evidence, rerun count, and next-step decision. A package and execution manifest establish what ran; they do not record why the next research step was chosen.
+5. **At most two broad shoulder-driven N×M reruns per campaign**, counted in total across all families and dimensions, not two per edge. The initial broad surface is not a rerun. A new surface ID, descriptor binding, or compatible successor policy does not reset the count. No automatic third broad rerun: if clear truncation remains at the cap, stop and request human review rather than claiming the box is adequate. Any later robustness-supported *targeted local* expansion is a separately justified stage, not a way to relabel another broad pass.
+
+The cap is a safety rail, not a target. Stop broad expansion earlier when the evidence becomes mixed, tapers, rolls over, or reveals a meaningful trade-off. If the box is adequate enough to investigate robust regions, proceed to robustness; do not seek a mathematical interior optimum before doing so. No broad rerun, new policy, or N×M job is authorized by an evidence report alone.
+
+## Volume Bands exploratory decision — 2026-09-18
+
+- Parent: `volbands_20260917_bandtp_winpct_v1`, package SHA-256 `dccbcf8bf9f35f595b0825e5058ade16e4c95ef503fa3b4e9fde522ab08a4cf4`; 22,200 outer × 10 inner = 222,000 configurations.
+- Broad shoulder-driven rerun **1 of 2**: `volbands_20260918_bandtp_shoulder_winpct_v1`, package SHA-256 `c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4`; 31,115 outer × 10 inner = 311,150 configurations.
+- Guarded changes only: TP1 band-width percent gained `120, 140` in both weighting families; Inverse Distance S1 ATR ratio gained `0.9, 1.0`. The no-filter value was represented as literal `"None"` instead of `""`. All 222,000 overlapping configurations matched the parent on R/trade, PF, win rate, max drawdown R, trades, and total R.
+- Review scope: four fixed contexts (ATR distance mode × MA average mode × two weighting families × two time-filter regimes). Result: **0 CLEAR, 0 NO_CLEAR, 4 AMBIGUOUS**. TP1 improved through `140` in all four contexts on matched TP2 support, but the `120 → 140` gain tapered relative to `100 → 120`; win rate and median drawdown were broadly stable. Inverse Distance S1 was flat/mixed at `0.9` and improved at `1.0`, not a clean three-level edge trend. No other ordered edge showed compelling broad-box truncation.
+- Decision: **do not run another broad N×M pass now; proceed to robustness**. This does not prove the shoulders are resolved. Revisit TP1 `140` or Inverse Distance S1 `1.0` only if a robustness-supported candidate region later reaches that edge, using a separately justified targeted local expansion.
+- Provenance: `post_result_exploratory_non_authoritative`. These judgments are descriptive, not frozen confirmatory thresholds or automated tuning decisions.
