@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=005/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v005/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=006/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v006/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -19,6 +19,9 @@ assert.match(bridge,/regionAnalyzerIdentity/,'package bridge must expose Region 
 assert.match(bridge,/packageSha256/,'package bridge must expose exact package SHA-256');
 assert.match(bridge,/descriptorSha256/,'package bridge must expose exact descriptor SHA-256');
 assert.match(viewer,/physicalIndexByVisual/,'viewer must use the exact canonical physical-index map');
+assert.match(viewer,/function exactPhysicalMap\(cur,src\)/,'viewer must derive visible mask indices from the canonical source map');
+assert.match(viewer,/Canonical physical-index map is not a permutation/,'viewer must reject invalid canonical physical maps');
+assert.match(viewer,/Visible cell is outside the canonical package/,'filtered cells must bind exactly to canonical source coordinates');
 assert.match(viewer,/snap\?\.sourceSurface/,'viewer must verify masks against the canonical source surface when the visible surface is filtered');
 assert.match(viewer,/id=\"raEnabled\"/,'viewer menu must expose a Region Analyzer on/off control');
 assert.match(viewer,/if\(!active\|\|!manifest/,'Region Analyzer off must suppress mask rendering without discarding state');
