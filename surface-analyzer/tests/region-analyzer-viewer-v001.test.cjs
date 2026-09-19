@@ -10,6 +10,7 @@ const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'u
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
 assert.match(staging,/region-analyzer-viewer-v001\.js\?v=004/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v004/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
