@@ -26,8 +26,14 @@
     return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(ds)).arrayBuffer());
   }
 
+  async function sha256Hex(bytes){
+    if(!root.crypto?.subtle)fail('WebCrypto SHA-256 is unavailable.');
+    const digest=new Uint8Array(await root.crypto.subtle.digest('SHA-256',bytes));
+    return [...digest].map(v=>v.toString(16).padStart(2,'0')).join('');
+  }
+
   async function unzipSelected(file,wanted){
-    const bytes=new Uint8Array(await file.arrayBuffer()),v=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength),e=findEocd(bytes),entries=readU16(v,e+10),central=readU32(v,e+16),out=new Map();
+    const bytes=new Uint8Array(await file.arrayBuffer()),packageSha256=await sha256Hex(bytes),v=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength),e=findEocd(bytes),entries=readU16(v,e+10),central=readU32(v,e+16),out=new Map();
     let p=central;
     for(let n=0;n<entries;n++){
       if(readU32(v,p)!==0x02014b50)fail(`Invalid ZIP central-directory entry ${n+1}`);
@@ -46,6 +52,7 @@
       p+=46+nl+el+cl;
     }
     for(const name of wanted)if(!out.has(name))fail(`ZIP is missing ${name}`);
+    out.packageSha256=packageSha256;
     return out;
   }
 
@@ -53,9 +60,12 @@
     const core=root.SurfacePackageCoreV001;
     if(!core?.buildSemanticSurface)fail('Canonical Surface Package core is unavailable.');
     const z=await unzipSelected(file,new Set([CSV_NAME,DESCRIPTOR_NAME]));
-    const descriptor=JSON.parse(utf8.decode(z.get(DESCRIPTOR_NAME)));
+    const descriptorBytes=z.get(DESCRIPTOR_NAME);
+    const descriptor=JSON.parse(utf8.decode(descriptorBytes));
     const text=utf8.decode(z.get(CSV_NAME));
-    return core.buildSemanticSurface(text,descriptor,file);
+    const surface=core.buildSemanticSurface(text,descriptor,file);
+    surface.regionAnalyzerIdentity={packageSha256:z.packageSha256,descriptorSha256:await sha256Hex(descriptorBytes)};
+    return surface;
   }
 
   function install(){

@@ -54,7 +54,7 @@
     for(let r=0;r<yAxis.length;r++)if(passEntry(yAxis[r],axes.y,defs,filterSpec))keepY.push(r);
     if(!keepX.length||!keepY.length)throw new Error('Filter removes every configuration. Keep at least one value on each axis.');
 
-    const oldCols=source.cols,cols=keepX.length,rows=keepY.length,n=rows*cols,metrics={},supportFields={},params={};
+    const oldCols=source.cols,cols=keepX.length,rows=keepY.length,n=rows*cols,metrics={},supportFields={},params={},physicalIndexByVisual=source.physicalIndexByVisual?new Int32Array(n):null;
     for(const [k] of Object.entries(source.metrics||{}))metrics[k]=new Float64Array(n);
     for(const [k] of Object.entries(source.supportFields||{}))supportFields[k]=new Int32Array(n);
     for(const [k] of Object.entries(source.semanticParameterIndices||{})){const a=new Int16Array(n);a.fill(-1);params[k]=a;}
@@ -65,12 +65,13 @@
       for(const [k,a] of Object.entries(source.metrics||{}))metrics[k][p]=a[old];
       for(const [k,a] of Object.entries(source.supportFields||{}))supportFields[k][p]=a[old];
       for(const [k,a] of Object.entries(source.semanticParameterIndices||{}))params[k][p]=a[old];
+      if(physicalIndexByVisual)physicalIndexByVisual[p]=source.physicalIndexByVisual[old];
       p++;
     }
 
     return {
       ...source,
-      rows,cols,metrics,supportFields,semanticParameterIndices:params,
+      rows,cols,metrics,supportFields,semanticParameterIndices:params,physicalIndexByVisual:physicalIndexByVisual||source.physicalIndexByVisual,
       semanticAxis:{x:keepX.map(i=>xAxis[i]),y:keepY.map(i=>yAxis[i])},
       surfaceFilter:{active:true,sourceConfigs:source.rows*source.cols,visibleConfigs:n}
     };

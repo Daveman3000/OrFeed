@@ -95,7 +95,7 @@
   };
   const loadAutoFormat=()=>{
     const f=document.createElement('script');
-    f.src='auto-format-v026.js?v=029';
+    f.src='auto-format-v026.js?v=030';
     f.async=false;
     f.onload=loadFilter;
     document.head.appendChild(f);

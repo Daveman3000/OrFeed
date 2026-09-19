@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "artifact_type": "region_analyzer_version_catalog",
+  "surfaces": {
+    "volbands_20260918_bandtp_shoulder_winpct_v1": {
+      "versions": [
+        {
+          "version_id": "volbands_20260918_bandtp_shoulder_winpct_v1-region-analyzer-v001",
+          "content_sha256": "53fba86a6c4be0c8c079652554e9f9e63e2bdd6d3179bc485991276c46580aeb",
+          "label": "Volume Bands shoulder-expanded Region Analyzer calibration v001",
+          "created_at": "2026-09-19T01:56:11.285Z",
+          "status": "active",
+          "manifest_path": "versions/53fba86a6c4be0c8c079652554e9f9e63e2bdd6d3179bc485991276c46580aeb.manifest.json",
+          "mask_bundle_path": "bundles/43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28.masks.bin",
+          "mask_bundle_sha256": "43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28"
+        }
+      ]
+    }
+  }
+}
