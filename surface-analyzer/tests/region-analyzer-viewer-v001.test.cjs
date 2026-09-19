@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=014/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v014/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=015/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v015/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -38,7 +38,9 @@ assert.match(viewer,/id="raMode"/,'Stage 6 menu must expose Performance and Stab
 assert.match(viewer,/id="raTolerance"/,'Stage 6 menu must expose the tolerance selector');
 assert.match(viewer,/\[\['strict','Low'\],\['center','Mid'\],\['loose','High'\]\]/,'Tolerance must map Low\/Mid\/High to strict\/center\/loose stopping grids');
 assert.match(viewer,/\[\['all','All'\],\['top','Top 3'\]\]/,'Stage 6 menu must expose All and Top 3 views');
-assert.match(viewer,/center\?\.weight_id\|\|'Center'/,'weight selector must expose the actual center weighting id');
+assert.match(viewer,/function weightLabel\(run\)/,'weight selector must format stored Performance/Stability weights for humans');
+assert.match(viewer,/'P '\+p\+'% \/ S '\+s\+'%'/,'weight selector must display P x% / S y% labels');
+assert.match(viewer,/weightLabel\(center\)/,'center weighting must use the readable Performance/Stability label');
 assert.match(viewer,/\.ra-pop'\)\.addEventListener\('click',e=>e\.stopPropagation\(\)\)/,'Region Analyzer menu controls must not trigger click-away closure');
 assert.match(viewer,/initRegionColors\(manifest\);refresh\(\);render\(\);/,'manifest color table must be initialized before rendering regions');
 assert.match(viewer,/color:regionColor\(id\)/,'rendered regions must carry their identity-derived color');
