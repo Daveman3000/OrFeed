@@ -1,0 +1,92 @@
+{
+  "schema_version": 3,
+  "policy_type": "step6_three_axis_stopping_calibration",
+  "policy_id": "step6_three_axis_stopping",
+  "policy_version": "3-calibration",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": false,
+  "v002_preserved_unchanged": true,
+  "source_binding": {
+    "trajectory_artifact_sha256": "5787f702f4730d5a4c43e398207f9ce354ee0b51620d0f9ae6e3e9aec7166ec9",
+    "context_span_artifact_sha256": "fc44a6332f30bd329dfd9a776abe5aeaa59b146c498a82bb16f242379ca0e900",
+    "performance_distribution_companion_sha256": "2ce6572604b023f65a773c84407309de929c57a10cc705b5c15400bc5a0c0587",
+    "performance_distribution_companion_payload_sha256": "0a5183eeda5544ed5501bb5c71430d6abd891eccbf5fbdfaa3394d336d7a518f",
+    "v002_result_sha256": "f738c38279874694d9d217e3bbaae2cd8c54313ae342f0acd47bd8288e62c537",
+    "volume_bands_anchor_sha256": "08581b3f083166e7ca1542622c19f85cc91b1aead632c679765425f243b3ed4f",
+    "volspike_anchor_v2_sha256": "9f6761613a3076d15ac2c835ea151b949567eb4a1fe8c2194ebce90ea5749401",
+    "required_unique_envelopes": 228,
+    "required_terminal_lineages": 78
+  },
+  "axes": {
+    "performance": {
+      "metrics": ["r_per_trade", "profit_factor", "romad"],
+      "p1": { "r_per_trade": 0.5, "profit_factor": 1.5, "romad": 2.0 },
+      "rung_step": { "r_per_trade": 0.25, "profit_factor": 0.25, "romad": 1.0 },
+      "maximum_rung": 20,
+      "rung_weight": 0.7,
+      "regional_depth_weight": 0.3,
+      "regional_depth_quantile_weights": { "q1": 0.5, "median": 0.5 }
+    },
+    "breadth": {
+      "ordered_span_weight": 0.4,
+      "two_core_weight": 0.3,
+      "p1_retention_weight": 0.2,
+      "size_support_weight": 0.1
+    },
+    "stability": {
+      "sr_mapping": { "STRONG": 1.0, "MODERATE": 0.6, "SENSITIVE": 0.25 },
+      "rr_mapping": { "STRONG": 1.0, "MODERATE": 0.6, "WEAK": 0.2 },
+      "fixed_quality_weights": { "sr": 0.4, "rr": 0.4, "fr_quality": 0.2 },
+      "supported_fr_facet_quality": "0.5 * structural_similarity + 0.5 * peer_economics",
+      "unsupported_fr_is_not_zero": true,
+      "all_facets_na_is_neutral": true
+    }
+  },
+  "stopping_grids": [
+    { "id": "loose", "min_ordinary_child_retention": 0.1, "min_split_collective_retention": 0.3, "max_breadth_loss": 0.2, "max_stability_loss": 0.2, "absolute_breadth_floor": 0.25, "absolute_stability_floor": 0.35 },
+    { "id": "center", "min_ordinary_child_retention": 0.2, "min_split_collective_retention": 0.4, "max_breadth_loss": 0.15, "max_stability_loss": 0.15, "absolute_breadth_floor": 0.3, "absolute_stability_floor": 0.45 },
+    { "id": "strict", "min_ordinary_child_retention": 0.3, "min_split_collective_retention": 0.5, "max_breadth_loss": 0.1, "max_stability_loss": 0.1, "absolute_breadth_floor": 0.35, "absolute_stability_floor": 0.55 }
+  ],
+  "stability_led": {
+    "minimum_rung": 3,
+    "minimum_sr_band": "MODERATE",
+    "minimum_rr_band": "MODERATE",
+    "supported_economically_weak_fr_is_veto": true,
+    "unsupported_or_na_fr_is_not_veto": true
+  },
+  "candidate_generation": {
+    "per_terminal_lineage_first": true,
+    "exact_membership_consolidation_only": true,
+    "scores_cannot_affect_eligibility_stopping_or_membership": true,
+    "fixed_cell_count_ceiling": null,
+    "tractability_status": "UNASSESSED"
+  },
+  "ranking_weights": {
+    "performance_led": [
+      { "id": "P70_B20_S10", "performance": 0.7, "breadth": 0.2, "stability": 0.1 },
+      { "id": "P65_B20_S15", "performance": 0.65, "breadth": 0.2, "stability": 0.15 },
+      { "id": "P60_B20_S20", "performance": 0.6, "breadth": 0.2, "stability": 0.2 }
+    ],
+    "stability_led": [
+      { "id": "P40_B25_S35", "performance": 0.4, "breadth": 0.25, "stability": 0.35 },
+      { "id": "P35_B25_S40", "performance": 0.35, "breadth": 0.25, "stability": 0.4 },
+      { "id": "P30_B25_S45", "performance": 0.3, "breadth": 0.25, "stability": 0.45 }
+    ]
+  },
+  "stability_tiers": {
+    "STABLE": "SR >= MODERATE; RR >= MODERATE; no economically weak supported FR",
+    "STRONG": "SR >= MODERATE; RR STRONG; supported FR economically viable",
+    "VERY_STRONG": "SR STRONG; RR STRONG; supported FR only STRONG or ADEQUATE",
+    "decision_authority": false
+  },
+  "output": {
+    "ranking_shortlist_target": 3,
+    "numeric_tie_tolerance": 1e-12,
+    "full_transition_diagnostics": true,
+    "cross_grid_selection_frequency": true,
+    "v002_comparison": true,
+    "v003_policy_frozen": false,
+    "step7_handoff_frozen": false
+  }
+}

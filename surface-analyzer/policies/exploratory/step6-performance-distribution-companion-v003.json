@@ -1,0 +1,975 @@
+{
+  "schema_version": 1,
+  "artifact_type": "step6_v003_performance_distribution_companion",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "scope": "v003_missing_performance_distributions_only",
+  "payload_sha256": "0a5183eeda5544ed5501bb5c71430d6abd891eccbf5fbdfaa3394d336d7a518f",
+  "calibration_case": "volspike",
+  "cleaned_domain_identity": "3702fce810703a9e885ea53c9b8b101c56fe6355b5dc46744698d612daf65228",
+  "descriptor_sha256": "e2823eecf9b102a0a4b3b453ee2a9371925b5bcdb2950cbfedbec7d5ed9b680c",
+  "topology_engine_version": "generic-semantic-analysis-v030",
+  "topology_sha256": "b974ff5c095d4c0282fcf90f3220457f5ba2ac430b00d1d42ebc6ea42bc53799",
+  "source_trajectory_sha256": "5787f702f4730d5a4c43e398207f9ce354ee0b51620d0f9ae6e3e9aec7166ec9",
+  "source_anchor_v2_sha256": "9f6761613a3076d15ac2c835ea151b949567eb4a1fe8c2194ebce90ea5749401",
+  "source_membership_bundle_sha256": "df41fe4059da58d8523cd0520270739f13a2ed8513a4b9b2a2db61a90aab2ae8",
+  "quantile_definition": "linear interpolation on sorted finite values at index (n-1)q; q25=0.25; median=0.50",
+  "metrics": [
+    "r_per_trade",
+    "profit_factor",
+    "romad"
+  ],
+  "envelope_count": 50,
+  "envelopes": {
+    "036ae263c2fd82118726282e140189e2bd079aafc9db306c535c1d195b399d87": {
+      "membership_sha256": "036ae263c2fd82118726282e140189e2bd079aafc9db306c535c1d195b399d87",
+      "rung": "P1",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.6585000000000001,
+          "median": 0.861
+        },
+        "profit_factor": {
+          "q25": 2.27,
+          "median": 2.47
+        },
+        "romad": {
+          "q25": 4.925,
+          "median": 7.03
+        }
+      }
+    },
+    "06d3a18a3d15d4069406f72a9fd0b06df8e755c373c20f681cc9d4b44cc84126": {
+      "membership_sha256": "06d3a18a3d15d4069406f72a9fd0b06df8e755c373c20f681cc9d4b44cc84126",
+      "rung": "P4",
+      "cell_count": 17,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.325,
+          "median": 1.37
+        },
+        "profit_factor": {
+          "q25": 2.55,
+          "median": 2.59
+        },
+        "romad": {
+          "q25": 7.22,
+          "median": 11.42
+        }
+      }
+    },
+    "0a64e8e76684fedfe3f2a54a4eeace6b36825cda62ca885df800600d1b6c84da": {
+      "membership_sha256": "0a64e8e76684fedfe3f2a54a4eeace6b36825cda62ca885df800600d1b6c84da",
+      "rung": "P1",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.7002499999999999,
+          "median": 0.8445
+        },
+        "profit_factor": {
+          "q25": 1.99,
+          "median": 2.135
+        },
+        "romad": {
+          "q25": 5.2475000000000005,
+          "median": 7.720000000000001
+        }
+      }
+    },
+    "123177ae0d79a80ee679e2d2f6c455156d5ee45562c1d1a77e8d1304dd2c6099": {
+      "membership_sha256": "123177ae0d79a80ee679e2d2f6c455156d5ee45562c1d1a77e8d1304dd2c6099",
+      "rung": "P3",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.1324999999999998,
+          "median": 1.169
+        },
+        "profit_factor": {
+          "q25": 2.5425,
+          "median": 2.61
+        },
+        "romad": {
+          "q25": 8.5475,
+          "median": 9.24
+        }
+      }
+    },
+    "179c52571873adf28f7b49d6c2ea6088885afd3c895c5835e34003d46e675ae7": {
+      "membership_sha256": "179c52571873adf28f7b49d6c2ea6088885afd3c895c5835e34003d46e675ae7",
+      "rung": "P1",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.819,
+          "median": 1.33
+        },
+        "profit_factor": {
+          "q25": 1.62,
+          "median": 1.7650000000000001
+        },
+        "romad": {
+          "q25": 3.0175,
+          "median": 3.71
+        }
+      }
+    },
+    "182ad7a018244fb9fc5a9ec1ced6767b0cb44f4f8291bfb6d0f0e5a425070c30": {
+      "membership_sha256": "182ad7a018244fb9fc5a9ec1ced6767b0cb44f4f8291bfb6d0f0e5a425070c30",
+      "rung": "P3",
+      "cell_count": 23,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.2120000000000002,
+          "median": 1.762
+        },
+        "profit_factor": {
+          "q25": 3.42,
+          "median": 3.77
+        },
+        "romad": {
+          "q25": 6.07,
+          "median": 6.68
+        }
+      }
+    },
+    "193d9407e57456f548b0aaa01bacc07408154c2bfbdc62ede88904cdb453fbae": {
+      "membership_sha256": "193d9407e57456f548b0aaa01bacc07408154c2bfbdc62ede88904cdb453fbae",
+      "rung": "P2",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.99825,
+          "median": 1.261
+        },
+        "profit_factor": {
+          "q25": 2.4225,
+          "median": 2.7199999999999998
+        },
+        "romad": {
+          "q25": 4.025,
+          "median": 5.375
+        }
+      }
+    },
+    "2170e859a49737d48a0346c8e73a56fdac1eb2bd30308a569bc677d9dd06f167": {
+      "membership_sha256": "2170e859a49737d48a0346c8e73a56fdac1eb2bd30308a569bc677d9dd06f167",
+      "rung": "P2",
+      "cell_count": 17,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.962,
+          "median": 1.038
+        },
+        "profit_factor": {
+          "q25": 2.49,
+          "median": 2.66
+        },
+        "romad": {
+          "q25": 4.03,
+          "median": 5.73
+        }
+      }
+    },
+    "2d29d62da2a94481115958f2e73cbf7b709063dd4a28740533bf31957b7c9f6e": {
+      "membership_sha256": "2d29d62da2a94481115958f2e73cbf7b709063dd4a28740533bf31957b7c9f6e",
+      "rung": "P2",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.968,
+          "median": 1.143
+        },
+        "profit_factor": {
+          "q25": 3.0425,
+          "median": 3.23
+        },
+        "romad": {
+          "q25": 5.05,
+          "median": 7.41
+        }
+      }
+    },
+    "2e8b0de5f75e4e6b5bfbf6a7c55481ce2e0891a22b7f301b15dc5b9d530c2460": {
+      "membership_sha256": "2e8b0de5f75e4e6b5bfbf6a7c55481ce2e0891a22b7f301b15dc5b9d530c2460",
+      "rung": "P5",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.63975,
+          "median": 1.744
+        },
+        "profit_factor": {
+          "q25": 2.9475000000000002,
+          "median": 3.13
+        },
+        "romad": {
+          "q25": 14.735,
+          "median": 15.99
+        }
+      }
+    },
+    "3acecd81950e743248ed68818525faefd117a1168b6f506007dd39d98493c4ae": {
+      "membership_sha256": "3acecd81950e743248ed68818525faefd117a1168b6f506007dd39d98493c4ae",
+      "rung": "P4",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.81225,
+          "median": 2.0455
+        },
+        "profit_factor": {
+          "q25": 3.8425,
+          "median": 4.24
+        },
+        "romad": {
+          "q25": 6.7575,
+          "median": 7.140000000000001
+        }
+      }
+    },
+    "3f61dc1de6eaef422687fce55ade3b6f488c5d97b4649bee13ada7663414d4e4": {
+      "membership_sha256": "3f61dc1de6eaef422687fce55ade3b6f488c5d97b4649bee13ada7663414d4e4",
+      "rung": "P2",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.9127500000000001,
+          "median": 1.181
+        },
+        "profit_factor": {
+          "q25": 2.4575,
+          "median": 2.615
+        },
+        "romad": {
+          "q25": 3.2875,
+          "median": 3.51
+        }
+      }
+    },
+    "41b65858516db1701491dd26c31a30b69403a591c6f9db3246067ffdcff760d1": {
+      "membership_sha256": "41b65858516db1701491dd26c31a30b69403a591c6f9db3246067ffdcff760d1",
+      "rung": "P4",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.8595,
+          "median": 2.1685
+        },
+        "profit_factor": {
+          "q25": 3.145,
+          "median": 3.4699999999999998
+        },
+        "romad": {
+          "q25": 10.4025,
+          "median": 11.925
+        }
+      }
+    },
+    "420559364d882a613b7a935e4173b9081256ff71a5175b8d2004dc5dd3e4fcca": {
+      "membership_sha256": "420559364d882a613b7a935e4173b9081256ff71a5175b8d2004dc5dd3e4fcca",
+      "rung": "P5",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.6412499999999999,
+          "median": 1.879
+        },
+        "profit_factor": {
+          "q25": 4.0525,
+          "median": 4.34
+        },
+        "romad": {
+          "q25": 8.1,
+          "median": 9.395
+        }
+      }
+    },
+    "4d5940fe13d556aa5556fb5a99b6d7109123fa9f99845aee667824be99b56962": {
+      "membership_sha256": "4d5940fe13d556aa5556fb5a99b6d7109123fa9f99845aee667824be99b56962",
+      "rung": "P2",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.9615,
+          "median": 1.0335
+        },
+        "profit_factor": {
+          "q25": 2.2325,
+          "median": 2.385
+        },
+        "romad": {
+          "q25": 6.0875,
+          "median": 7.965
+        }
+      }
+    },
+    "51dfe0a67f7a49ae129a09e7d4b5db6890a1299688cad0075a7a6753bd50b801": {
+      "membership_sha256": "51dfe0a67f7a49ae129a09e7d4b5db6890a1299688cad0075a7a6753bd50b801",
+      "rung": "P1",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.72575,
+          "median": 1.096
+        },
+        "profit_factor": {
+          "q25": 1.6300000000000001,
+          "median": 1.7850000000000001
+        },
+        "romad": {
+          "q25": 3.6725000000000003,
+          "median": 4.09
+        }
+      }
+    },
+    "550d4fa93541aca303e71c526d61bf10d42077145e89afd6df50dcc76b3df785": {
+      "membership_sha256": "550d4fa93541aca303e71c526d61bf10d42077145e89afd6df50dcc76b3df785",
+      "rung": "P2",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.22325,
+          "median": 1.44
+        },
+        "profit_factor": {
+          "q25": 1.855,
+          "median": 1.98
+        },
+        "romad": {
+          "q25": 6.7075,
+          "median": 7.45
+        }
+      }
+    },
+    "5f6e70e769bd7ac745db1fd719aa99c9ffc159efc44dc7d7c6ba0d0f8924d799": {
+      "membership_sha256": "5f6e70e769bd7ac745db1fd719aa99c9ffc159efc44dc7d7c6ba0d0f8924d799",
+      "rung": "P1",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.702,
+          "median": 0.964
+        },
+        "profit_factor": {
+          "q25": 2.6575,
+          "median": 3.08
+        },
+        "romad": {
+          "q25": 4.025,
+          "median": 4.835
+        }
+      }
+    },
+    "642851abecdc5eab61251b00bd75ccb05778075e7a2fb03f183edf609c35d084": {
+      "membership_sha256": "642851abecdc5eab61251b00bd75ccb05778075e7a2fb03f183edf609c35d084",
+      "rung": "P1",
+      "cell_count": 17,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.608,
+          "median": 0.738
+        },
+        "profit_factor": {
+          "q25": 2.39,
+          "median": 2.43
+        },
+        "romad": {
+          "q25": 5.11,
+          "median": 7.49
+        }
+      }
+    },
+    "6964c3bef413072c72bb1e2fbc57f31f39098e08e32f4b638e4ae18d9cd500c4": {
+      "membership_sha256": "6964c3bef413072c72bb1e2fbc57f31f39098e08e32f4b638e4ae18d9cd500c4",
+      "rung": "P1",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.7215,
+          "median": 1.003
+        },
+        "profit_factor": {
+          "q25": 1.87,
+          "median": 2.17
+        },
+        "romad": {
+          "q25": 2.5650000000000004,
+          "median": 3.49
+        }
+      }
+    },
+    "6b45c4d737b334cc426011d5ad5455d40124921b74f4513fb2470583cf78fbf9": {
+      "membership_sha256": "6b45c4d737b334cc426011d5ad5455d40124921b74f4513fb2470583cf78fbf9",
+      "rung": "P1",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.545,
+          "median": 0.628
+        },
+        "profit_factor": {
+          "q25": 2.085,
+          "median": 2.16
+        },
+        "romad": {
+          "q25": 2.5475000000000003,
+          "median": 2.745
+        }
+      }
+    },
+    "7668b64ad8f6df7f70b56e06acc3e462265741194e80496956837d29ab137825": {
+      "membership_sha256": "7668b64ad8f6df7f70b56e06acc3e462265741194e80496956837d29ab137825",
+      "rung": "P1",
+      "cell_count": 21,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.66,
+          "median": 1.061
+        },
+        "profit_factor": {
+          "q25": 2.76,
+          "median": 3.29
+        },
+        "romad": {
+          "q25": 4.34,
+          "median": 6.27
+        }
+      }
+    },
+    "771ff5d43d8aca0bf4b2ebe89ff70b11caf8ae32f2a4e0ad9772facbbcaa30f5": {
+      "membership_sha256": "771ff5d43d8aca0bf4b2ebe89ff70b11caf8ae32f2a4e0ad9772facbbcaa30f5",
+      "rung": "P1",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.905,
+          "median": 1.1045
+        },
+        "profit_factor": {
+          "q25": 1.67,
+          "median": 1.7850000000000001
+        },
+        "romad": {
+          "q25": 3.815,
+          "median": 4.52
+        }
+      }
+    },
+    "7dca53cda06300cb5e057e416a42d33b7a84b59a39d5f066f1eec6732f7a4af5": {
+      "membership_sha256": "7dca53cda06300cb5e057e416a42d33b7a84b59a39d5f066f1eec6732f7a4af5",
+      "rung": "P1",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.5397500000000001,
+          "median": 0.5555000000000001
+        },
+        "profit_factor": {
+          "q25": 2.3850000000000002,
+          "median": 2.575
+        },
+        "romad": {
+          "q25": 7.890000000000001,
+          "median": 8.34
+        }
+      }
+    },
+    "7ee249e928b937e5f8d848e251e0f023d59f804a9becb3cf11ad6acf05d0c88e": {
+      "membership_sha256": "7ee249e928b937e5f8d848e251e0f023d59f804a9becb3cf11ad6acf05d0c88e",
+      "rung": "P1",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.55425,
+          "median": 0.5754999999999999
+        },
+        "profit_factor": {
+          "q25": 2.37,
+          "median": 2.55
+        },
+        "romad": {
+          "q25": 7.265,
+          "median": 7.835
+        }
+      }
+    },
+    "7f5a22d9b389eea4b1dde4ec89f33365f41285e185bf3f351c41bb0fb2dc35a2": {
+      "membership_sha256": "7f5a22d9b389eea4b1dde4ec89f33365f41285e185bf3f351c41bb0fb2dc35a2",
+      "rung": "P2",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.902,
+          "median": 1.1724999999999999
+        },
+        "profit_factor": {
+          "q25": 2.5025,
+          "median": 2.84
+        },
+        "romad": {
+          "q25": 4.6425,
+          "median": 6.93
+        }
+      }
+    },
+    "9290eed51217e61906703992f7d9376cdee1bfe3c2b49a90c8327b0d17e99325": {
+      "membership_sha256": "9290eed51217e61906703992f7d9376cdee1bfe3c2b49a90c8327b0d17e99325",
+      "rung": "P1",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.794,
+          "median": 1.008
+        },
+        "profit_factor": {
+          "q25": 2.22,
+          "median": 2.5
+        },
+        "romad": {
+          "q25": 2.9225,
+          "median": 3.825
+        }
+      }
+    },
+    "9379b3336da0f79ba7f0af2fe3b99becc0f2bde2ae0a6961ba58f5fb2b30d2b9": {
+      "membership_sha256": "9379b3336da0f79ba7f0af2fe3b99becc0f2bde2ae0a6961ba58f5fb2b30d2b9",
+      "rung": "P1",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.5822499999999999,
+          "median": 1.1084999999999998
+        },
+        "profit_factor": {
+          "q25": 1.9675,
+          "median": 2.515
+        },
+        "romad": {
+          "q25": 3.455,
+          "median": 4.125
+        }
+      }
+    },
+    "95932e1ff289c1295414ba48f3a7a2a52e4a8b5d08dbf067b11fe889d70df80c": {
+      "membership_sha256": "95932e1ff289c1295414ba48f3a7a2a52e4a8b5d08dbf067b11fe889d70df80c",
+      "rung": "P6",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.8575000000000002,
+          "median": 2.026
+        },
+        "profit_factor": {
+          "q25": 4.1625,
+          "median": 4.275
+        },
+        "romad": {
+          "q25": 10.76,
+          "median": 13.504999999999999
+        }
+      }
+    },
+    "9bd4e41cba434d2c1375aa55dda539e4901de7cdbd47d10110073fff6cbf84df": {
+      "membership_sha256": "9bd4e41cba434d2c1375aa55dda539e4901de7cdbd47d10110073fff6cbf84df",
+      "rung": "P1",
+      "cell_count": 21,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.991,
+          "median": 1.166
+        },
+        "profit_factor": {
+          "q25": 2.2,
+          "median": 2.6
+        },
+        "romad": {
+          "q25": 2.75,
+          "median": 5.09
+        }
+      }
+    },
+    "a337b96380369edff6b113ea834cd941b6261a83ddd1a02109d8a790a0a8aa07": {
+      "membership_sha256": "a337b96380369edff6b113ea834cd941b6261a83ddd1a02109d8a790a0a8aa07",
+      "rung": "P4",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.8439999999999999,
+          "median": 1.987
+        },
+        "profit_factor": {
+          "q25": 3.09,
+          "median": 3.245
+        },
+        "romad": {
+          "q25": 8.6175,
+          "median": 10.28
+        }
+      }
+    },
+    "ae35c33755ee7fb7fb3771fc39b08ecfe65b071aabd9dd7892d22fea6f3f625a": {
+      "membership_sha256": "ae35c33755ee7fb7fb3771fc39b08ecfe65b071aabd9dd7892d22fea6f3f625a",
+      "rung": "P4",
+      "cell_count": 21,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.45,
+          "median": 1.568
+        },
+        "profit_factor": {
+          "q25": 2.99,
+          "median": 3.15
+        },
+        "romad": {
+          "q25": 5.92,
+          "median": 6.44
+        }
+      }
+    },
+    "b2f9aee60d9f30f6f45ec1505bf1d3f1fd24bfe669ed16de773280de3066a622": {
+      "membership_sha256": "b2f9aee60d9f30f6f45ec1505bf1d3f1fd24bfe669ed16de773280de3066a622",
+      "rung": "P2",
+      "cell_count": 22,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.064,
+          "median": 1.2570000000000001
+        },
+        "profit_factor": {
+          "q25": 2.4450000000000003,
+          "median": 2.775
+        },
+        "romad": {
+          "q25": 6.525,
+          "median": 9.335
+        }
+      }
+    },
+    "ba1c71b490e5f1b73141efdc3d881f899db3bfcd176b0022baf7a07b2208adda": {
+      "membership_sha256": "ba1c71b490e5f1b73141efdc3d881f899db3bfcd176b0022baf7a07b2208adda",
+      "rung": "P1",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.856,
+          "median": 1.105
+        },
+        "profit_factor": {
+          "q25": 2.13,
+          "median": 2.58
+        },
+        "romad": {
+          "q25": 5.404999999999999,
+          "median": 5.71
+        }
+      }
+    },
+    "bc58b9638eb8bbdcf97b424eb4d8a01c9e971e2b3a64459cb572db2332268780": {
+      "membership_sha256": "bc58b9638eb8bbdcf97b424eb4d8a01c9e971e2b3a64459cb572db2332268780",
+      "rung": "P2",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.1065,
+          "median": 1.149
+        },
+        "profit_factor": {
+          "q25": 2.495,
+          "median": 2.605
+        },
+        "romad": {
+          "q25": 8.602500000000001,
+          "median": 9.24
+        }
+      }
+    },
+    "bfca3e6f4ef2327706115026e8d498aa9a3c94ff87d4eb374185f4cd5c51feda": {
+      "membership_sha256": "bfca3e6f4ef2327706115026e8d498aa9a3c94ff87d4eb374185f4cd5c51feda",
+      "rung": "P1",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.63925,
+          "median": 0.7945
+        },
+        "profit_factor": {
+          "q25": 1.81,
+          "median": 2.145
+        },
+        "romad": {
+          "q25": 3.13,
+          "median": 3.685
+        }
+      }
+    },
+    "c4975df9e0d805869f70da0a5750796034b9ab585dd6ccd81a3682e40a35d266": {
+      "membership_sha256": "c4975df9e0d805869f70da0a5750796034b9ab585dd6ccd81a3682e40a35d266",
+      "rung": "P2",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.9025000000000001,
+          "median": 1.0855
+        },
+        "profit_factor": {
+          "q25": 2.26,
+          "median": 2.455
+        },
+        "romad": {
+          "q25": 5.15,
+          "median": 6.555
+        }
+      }
+    },
+    "c7fa2791426051e93eae8d78da8c9dc664ac2522ce0ede59f80b91d3aca055bf": {
+      "membership_sha256": "c7fa2791426051e93eae8d78da8c9dc664ac2522ce0ede59f80b91d3aca055bf",
+      "rung": "P2",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.04025,
+          "median": 1.2534999999999998
+        },
+        "profit_factor": {
+          "q25": 2.645,
+          "median": 3.03
+        },
+        "romad": {
+          "q25": 4.365,
+          "median": 6.025
+        }
+      }
+    },
+    "d023f045a1506179aa6d5ef69da1a218add1661df2c8034815b4254ceaaf58d5": {
+      "membership_sha256": "d023f045a1506179aa6d5ef69da1a218add1661df2c8034815b4254ceaaf58d5",
+      "rung": "P1",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.533,
+          "median": 0.712
+        },
+        "profit_factor": {
+          "q25": 1.85,
+          "median": 1.97
+        },
+        "romad": {
+          "q25": 3.2750000000000004,
+          "median": 4.94
+        }
+      }
+    },
+    "d5185e646b19ff7a776b15d39524de7f002967be1fd80392fb4fa5b249a26b32": {
+      "membership_sha256": "d5185e646b19ff7a776b15d39524de7f002967be1fd80392fb4fa5b249a26b32",
+      "rung": "P3",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.10575,
+          "median": 1.3145
+        },
+        "profit_factor": {
+          "q25": 2.63,
+          "median": 2.87
+        },
+        "romad": {
+          "q25": 6.8,
+          "median": 9.625
+        }
+      }
+    },
+    "d72bedca11a89c00de375ae71e4e3717ffff7f7f5c0f2784e97ce30eb4aa8193": {
+      "membership_sha256": "d72bedca11a89c00de375ae71e4e3717ffff7f7f5c0f2784e97ce30eb4aa8193",
+      "rung": "P2",
+      "cell_count": 18,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.017,
+          "median": 1.2105000000000001
+        },
+        "profit_factor": {
+          "q25": 2.8825000000000003,
+          "median": 3.165
+        },
+        "romad": {
+          "q25": 5.535,
+          "median": 7.135
+        }
+      }
+    },
+    "e077f75846962824680c9a3e54eca6644e3f65bc1ae3cd591d6ac913a557bdcd": {
+      "membership_sha256": "e077f75846962824680c9a3e54eca6644e3f65bc1ae3cd591d6ac913a557bdcd",
+      "rung": "P1",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.5642499999999999,
+          "median": 0.6265000000000001
+        },
+        "profit_factor": {
+          "q25": 2.07,
+          "median": 2.4000000000000004
+        },
+        "romad": {
+          "q25": 3.9475000000000002,
+          "median": 6.005
+        }
+      }
+    },
+    "e45e96d8cf38129ba1336d8edebc1534dc6506d6a28fbb8145c546ea5285e85a": {
+      "membership_sha256": "e45e96d8cf38129ba1336d8edebc1534dc6506d6a28fbb8145c546ea5285e85a",
+      "rung": "P2",
+      "cell_count": 21,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.969,
+          "median": 1.168
+        },
+        "profit_factor": {
+          "q25": 2.66,
+          "median": 2.98
+        },
+        "romad": {
+          "q25": 5.73,
+          "median": 6.49
+        }
+      }
+    },
+    "e9219e3594fd86ba2d0d12a2467c5c4e890d8a0f475091ff74b9775d3d4fc485": {
+      "membership_sha256": "e9219e3594fd86ba2d0d12a2467c5c4e890d8a0f475091ff74b9775d3d4fc485",
+      "rung": "P4",
+      "cell_count": 21,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.42,
+          "median": 1.458
+        },
+        "profit_factor": {
+          "q25": 3.71,
+          "median": 3.84
+        },
+        "romad": {
+          "q25": 6.56,
+          "median": 7.29
+        }
+      }
+    },
+    "ef9008c1c65ea049990c76d2f7bfc2ef040e08c8c77dfa9f409b850d9fdc8ca6": {
+      "membership_sha256": "ef9008c1c65ea049990c76d2f7bfc2ef040e08c8c77dfa9f409b850d9fdc8ca6",
+      "rung": "P1",
+      "cell_count": 16,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.74025,
+          "median": 0.9575
+        },
+        "profit_factor": {
+          "q25": 2.3725,
+          "median": 2.4050000000000002
+        },
+        "romad": {
+          "q25": 2.415,
+          "median": 3.23
+        }
+      }
+    },
+    "f117cdfdde335e67cfdee6a376d3b463722d4e35fb8a1a691662c343600407b4": {
+      "membership_sha256": "f117cdfdde335e67cfdee6a376d3b463722d4e35fb8a1a691662c343600407b4",
+      "rung": "P2",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.851,
+          "median": 1.054
+        },
+        "profit_factor": {
+          "q25": 2.355,
+          "median": 2.57
+        },
+        "romad": {
+          "q25": 6.43,
+          "median": 8.54
+        }
+      }
+    },
+    "f2a33b9422d91601d154ee32b770e158d1f825f672b747df9731514a496a8164": {
+      "membership_sha256": "f2a33b9422d91601d154ee32b770e158d1f825f672b747df9731514a496a8164",
+      "rung": "P1",
+      "cell_count": 19,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.563,
+          "median": 0.714
+        },
+        "profit_factor": {
+          "q25": 2.355,
+          "median": 2.59
+        },
+        "romad": {
+          "q25": 4.295,
+          "median": 7.18
+        }
+      }
+    },
+    "f5ccedcdb6de9cb262f24ed87b56ac703172d8fa50acdc309fa54ed7fa62ad65": {
+      "membership_sha256": "f5ccedcdb6de9cb262f24ed87b56ac703172d8fa50acdc309fa54ed7fa62ad65",
+      "rung": "P5",
+      "cell_count": 17,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 1.718,
+          "median": 1.802
+        },
+        "profit_factor": {
+          "q25": 3.55,
+          "median": 3.85
+        },
+        "romad": {
+          "q25": 13.98,
+          "median": 16.36
+        }
+      }
+    },
+    "f6c5e5a24d5107eec4ac380c86a657ec44fd98657868ced056b4337ace4c9b83": {
+      "membership_sha256": "f6c5e5a24d5107eec4ac380c86a657ec44fd98657868ced056b4337ace4c9b83",
+      "rung": "P1",
+      "cell_count": 17,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.753,
+          "median": 0.844
+        },
+        "profit_factor": {
+          "q25": 2.54,
+          "median": 2.77
+        },
+        "romad": {
+          "q25": 6.6,
+          "median": 9.68
+        }
+      }
+    },
+    "f73888446fc738c573bd6c701defc4642123807997462edd3b7f93e8d1def60f": {
+      "membership_sha256": "f73888446fc738c573bd6c701defc4642123807997462edd3b7f93e8d1def60f",
+      "rung": "P2",
+      "cell_count": 20,
+      "metrics": {
+        "r_per_trade": {
+          "q25": 0.85825,
+          "median": 0.956
+        },
+        "profit_factor": {
+          "q25": 2.4975,
+          "median": 2.625
+        },
+        "romad": {
+          "q25": 5.195,
+          "median": 6.16
+        }
+      }
+    }
+  }
+}
