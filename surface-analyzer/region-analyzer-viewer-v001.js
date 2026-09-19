@@ -8,7 +8,7 @@ const q=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 function hidden(){try{return new Set(JSON.parse(localStorage.getItem(HIDE)||'[]'));}catch{return new Set();}}
 function saveHidden(s){localStorage.setItem(HIDE,JSON.stringify([...s].sort()));}
 function sess(){return root.SurfaceAnalyzerBrowserSessionV001?.getSession?.()||null;}
-function source(){return sess()?.getSourceSurface?.()||((typeof activeSurface!=='undefined')?activeSurface:null);}
+function source(){const s=sess(),snap=s?.getAnalysisSnapshot?.()||root.SurfaceAnalyzerBrowserSessionV001?.getAnalysisSnapshot?.();return s?.getSourceSurface?.()||snap?.sourceSurface||((typeof activeSurface!=='undefined')?activeSurface:null);}
 function current(){return (typeof activeSurface!=='undefined')?activeSurface:null;}
 function pkg(s){return s?.regionAnalyzerIdentity?.packageSha256||'';}
 function desc(s){return s?.regionAnalyzerIdentity?.descriptorSha256||'';}
