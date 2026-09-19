@@ -14,7 +14,7 @@ for (const forbidden of [/require\(['"]fflate/, /require\(['"].*surface-package-
 assert.ok(!publisherSource.includes('deep-materialize'), 'normal publisher must not expose deep materialization');
 const catalog = JSON.parse(fs.readFileSync(CATALOG, 'utf8'));
 const surfaceId = 'volbands_20260918_bandtp_shoulder_winpct_v1';
-const version = catalog.surfaces[surfaceId].versions.find(item => item.version_id === `${surfaceId}-region-analyzer-v001`);
+const version = catalog.surfaces[surfaceId].versions.find(item => item.version_id === `${surfaceId}-region-analyzer-v002`);
 assert.ok(version, 'published Region Analyzer catalog entry is missing');
 
 const manifestPath = path.join(ROOT, 'region-analyzer', version.manifest_path);
@@ -50,16 +50,23 @@ for (const annotation of Object.values(manifest.stages.stage5.annotations_by_reg
 }
 
 assert.equal(manifest.stages.stage6.ranking_status, 'calibration');
+assert.equal(manifest.stages.stage6.stopping_status, 'calibration');
+assert.equal(manifest.stages.stage6.tolerance_policy_frozen, false);
 assert.equal(manifest.stages.stage6.center_weights_frozen, false);
 assert.equal(manifest.stages.stage6.shortlist_frozen, false);
-assert.deepEqual(manifest.stages.stage6.collections.frozen_shortlist, []);
-assert.equal(manifest.stages.stage6.collections.all.length, 5);
-assert.equal(manifest.stages.stage6.collections.performance.length, 5);
-assert.equal(manifest.stages.stage6.collections.stability.length, 0);
-assert.equal(manifest.stages.stage6.calibration.performance.runs.length, 3);
-assert.equal(manifest.stages.stage6.calibration.stability.runs.length, 3);
-assert.equal(manifest.stages.stage6.collections.top_performance.length, 3);
-assert.equal(manifest.stages.stage6.collections.top_stability.length, 0);
+assert.equal(manifest.stages.stage6.default_tolerance, 'center');
+assert.deepEqual(manifest.stages.stage6.tolerance_order, ['strict', 'center', 'loose']);
+assert.deepEqual(['strict', 'center', 'loose'].map(id => [id, manifest.stages.stage6.tolerances[id].modes.performance.candidate_count, manifest.stages.stage6.tolerances[id].modes.stability.candidate_count]), [['strict', 4, 4], ['center', 4, 4], ['loose', 6, 4]]);
+for (const tolerance of Object.values(manifest.stages.stage6.tolerances)) for (const mode of Object.values(tolerance.modes)) {
+  assert.equal(mode.runs.length, 3);
+  for (const run of mode.runs) {
+    assert.equal(typeof run.performance_weight, 'number');
+    assert.equal(typeof run.stability_weight, 'number');
+    assert.ok(Math.abs(run.performance_weight + run.stability_weight - 1) <= 1e-12);
+  }
+}
+assert.equal(manifest.policies.step6_v4.id, 'step6_performance_stability_ranking');
+assert.equal(manifest.policies.step6_v4.version, '4-calibration');
 
 const domain = Buffer.from([0b00001111, 0]);
 assert.equal(Publisher.assertBitsetSubset(Buffer.from([0b00000101, 0]), domain), true);

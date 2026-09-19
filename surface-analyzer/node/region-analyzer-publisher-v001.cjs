@@ -10,7 +10,7 @@ const VERSION_ROOT = path.join(ASSET_ROOT, 'versions');
 const BUNDLE_ROOT = path.join(ASSET_ROOT, 'bundles');
 const CATALOG_PATH = path.join(ASSET_ROOT, 'catalog.json');
 const TARGET_SURFACE_ID = 'volbands_20260918_bandtp_shoulder_winpct_v1';
-const VERSION_ID = `${TARGET_SURFACE_ID}-region-analyzer-v001`;
+const VERSION_ID = `${TARGET_SURFACE_ID}-region-analyzer-v002`;
 const PHYSICAL_CELLS = 311150;
 const BYTES_PER_MASK = Math.ceil(PHYSICAL_CELLS / 8);
 const PREMATERIALIZED_BUNDLE_SHA256 = '43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28';
@@ -28,7 +28,11 @@ const SOURCES = {
   step6_v1_result: path.join(ROOT, 'policies', 'exploratory', 'step6-envelope-selection-result-v001.json'),
   step6_v2_policy: path.join(ROOT, 'policies', 'exploratory', 'step6-envelope-ranking-v002.json'),
   step6_v2_result: path.join(ROOT, 'policies', 'exploratory', 'step6-envelope-ranking-result-v002.json'),
-  step6_context_spans: path.join(ROOT, 'policies', 'exploratory', 'step6-context-spans-v002.json')
+  step6_context_spans: path.join(ROOT, 'policies', 'exploratory', 'step6-context-spans-v002.json'),
+  step6_v3_policy: path.join(ROOT, 'policies', 'exploratory', 'step6-envelope-calibration-v003.json'),
+  step6_v3_result: path.join(ROOT, 'policies', 'exploratory', 'step6-envelope-calibration-result-v003.json'),
+  step6_v4_policy: path.join(ROOT, 'policies', 'exploratory', 'step6-ranking-calibration-v004.json'),
+  step6_v4_result: path.join(ROOT, 'policies', 'exploratory', 'step6-ranking-calibration-result-v004.json')
 };
 
 const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
@@ -112,39 +116,74 @@ function stage5Annotations(trajectoryCase, dedicated, joint, sourceHashes) {
 }
 
 function rankingRun(run) {
-  return { weight_id: run.id, performance_weight: run.performance, robustness_weight: run.robustness, ranking: run.ranking.map(item => ({ region_id: regionId(item.membership_sha256), rank: item.rank, score: item.score })) };
+  const weights = run.ranking[0]?.components?.weights || {};
+  return {
+    weight_id: run.weight_id,
+    performance_weight: weights.performance ?? null,
+    stability_weight: weights.stability ?? null,
+    ranking: run.ranking.map(item => ({ region_id: regionId(item.membership_sha256), rank: item.rank, score: item.score }))
+  };
 }
 
-function stage6Data(v1Case, v2Case) {
-  const candidateByHash = new Map(v2Case.candidates.map(candidate => [candidate.membership_sha256, candidate]));
-  const all = v1Case.exact_membership_candidates.map(candidate => regionId(candidate.membership_sha256)).sort(compareText);
-  const performance = v2Case.candidates.filter(candidate => candidate.role_eligibility.performance_led).map(candidate => regionId(candidate.membership_sha256)).sort(compareText);
-  const stability = v2Case.candidates.filter(candidate => candidate.role_eligibility.stability_led).map(candidate => regionId(candidate.membership_sha256)).sort(compareText);
-  const roleData = role => {
-    const ranking = v2Case.rankings[role];
-    return {
-      runs: ranking.runs.map(rankingRun),
-      stable_intersection: ranking.top_three_stability.intersection_membership_sha256.map(regionId),
-      union: ranking.top_three_stability.union_membership_sha256.map(regionId),
-      identical_across_weights: ranking.top_three_stability.identical_across_weights,
-      pairwise_jaccard: ranking.top_three_stability.pairwise_jaccard,
-      candidate_sensitivity: ranking.candidate_sensitivity.map(item => ({ region_id: regionId(item.membership_sha256), median_rank: item.median_rank, rank_range: item.rank_range, top_three_frequency: item.top_three_frequency, rank_by_weight: item.rank_by_weight }))
-    };
-  };
-  const candidateAnnotations = Object.fromEntries([...candidateByHash.entries()].sort(([a], [b]) => compareText(a, b)).map(([hash, candidate]) => [regionId(hash), {
-    region_id: regionId(hash), membership_hash: hash, role_eligibility: candidate.role_eligibility,
-    performance_score: candidate.performance_score, robustness_score: candidate.robustness_score,
-    components: candidate.components, v001_roles: candidate.v001_roles, descendant_terminal_regions: candidate.descendant_terminal_regions
-  }]));
+function topThreeSummary(runs) {
+  const sets = runs.map(run => new Set(run.ranking.filter(item => item.rank <= 3).map(item => item.region_id)));
+  const union = [...new Set(sets.flatMap(set => [...set]))].sort(compareText);
+  const stableIntersection = sets.length ? [...sets[0]].filter(id => sets.every(set => set.has(id))).sort(compareText) : [];
   return {
-    ranking_status: 'calibration', center_weights_frozen: false, shortlist_frozen: false,
-    collections: {
-      all, performance, stability,
-      top_performance: v2Case.rankings.performance_led.top_three_stability.intersection_membership_sha256.map(regionId),
-      top_stability: v2Case.rankings.stability_led.top_three_stability.intersection_membership_sha256.map(regionId),
-      frozen_shortlist: []
-    },
-    calibration: { performance: roleData('performance_led'), stability: roleData('stability_led') },
+    stable_intersection: stableIntersection,
+    union,
+    identical_across_weights: sets.every(set => set.size === sets[0].size && [...set].every(id => sets[0].has(id)))
+  };
+}
+
+function stage6Data(v3Case, v4Case) {
+  const labels = { strict: 'Low', center: 'Mid', loose: 'High' };
+  const order = ['strict', 'center', 'loose'];
+  const candidateAnnotations = {};
+  const tolerances = {};
+  for (const gridId of order) {
+    const v3Grid = v3Case.grids.find(item => item.grid_id === gridId);
+    const v4Grid = v4Case.grids.find(item => item.grid_id === gridId);
+    if (!v3Grid || !v4Grid) fail(`Stage-6 ${gridId} grid is missing.`);
+    const modes = {};
+    for (const [mode, role] of [['performance', 'performance_led'], ['stability', 'stability_led']]) {
+      const v3Hashes = v3Grid.roles[role].exact_membership_candidates.map(item => item.membership_sha256);
+      const source = v4Grid.roles[role];
+      if (JSON.stringify(v3Hashes) !== JSON.stringify(source.candidate_membership_sha256_in_v003_order)) fail(`Stage-6 ${gridId}/${role} v003/v004 candidate identity mismatch.`);
+      const runs = source.ranking_runs.map(rankingRun);
+      const componentsByHash = new Map((source.ranking_runs[0]?.ranking || []).map(item => [item.membership_sha256, item.components]));
+      for (const membership of v3Hashes) {
+        const id = regionId(membership), components = componentsByHash.get(membership) || {};
+        if (!candidateAnnotations[id]) candidateAnnotations[id] = {
+          region_id: id,
+          membership_hash: membership,
+          performance_score: components.performance_score ?? null,
+          breadth_score: components.breadth_score_diagnostic_only ?? null,
+          stability_score: components.stability_score ?? null,
+          tractability_status: 'UNASSESSED',
+          selected_in: []
+        };
+        candidateAnnotations[id].selected_in.push({ grid_id: gridId, tolerance: labels[gridId], mode });
+      }
+      modes[mode] = {
+        candidate_count: v3Hashes.length,
+        candidates: v3Hashes.map(regionId),
+        runs,
+        ...topThreeSummary(runs)
+      };
+    }
+    tolerances[gridId] = { grid_id: gridId, label: labels[gridId], modes };
+  }
+  return {
+    ranking_status: 'calibration',
+    stopping_status: 'calibration',
+    tolerance_policy_frozen: false,
+    center_weights_frozen: false,
+    shortlist_frozen: false,
+    default_tolerance: 'center',
+    default_mode: 'performance',
+    tolerance_order: order,
+    tolerances,
     candidate_annotations: candidateAnnotations
   };
 }
@@ -170,10 +209,10 @@ function buildPublication() {
   if (maskBundleSha !== PREMATERIALIZED_BUNDLE_SHA256) fail('Pre-materialized mask bundle hash mismatch.');
   if (maskBundle.length !== regionHashes.length * BYTES_PER_MASK) fail('Pre-materialized mask bundle length mismatch.');
   const relations = relationMap(trajectoryCase);
-  const v1Case = source.step6_v1_result.value.cases.find(item => item.calibration_case === 'volume_bands');
-  const v2Case = source.step6_v2_result.value.cases.find(item => item.calibration_case === 'volume_bands');
-  if (!v1Case || !v2Case) fail('Volume Bands Step-6 publication sources are missing.');
-  const stage6 = stage6Data(v1Case, v2Case);
+  const v3Case = source.step6_v3_result.value.cases.find(item => item.calibration_case === 'volume_bands');
+  const v4Case = source.step6_v4_result.value.cases.find(item => item.calibration_case === 'volume_bands');
+  if (!v3Case || !v4Case) fail('Volume Bands Step-6 v003/v004 publication sources are missing.');
+  const stage6 = stage6Data(v3Case, v4Case);
   const regions = Object.fromEntries(regionHashes.map((membership, index) => {
     const envelope = trajectoryCase.envelopes[membership], relation = relations.relations.get(membership);
     const offset = index * BYTES_PER_MASK, bytes = maskBundle.subarray(offset, offset + BYTES_PER_MASK);
@@ -187,11 +226,8 @@ function buildPublication() {
       child_region_ids: [...relation.children].sort(compareText).map(regionId),
       descendant_terminal_region_ids: [...relation.descendants].sort(compareText),
       mask: { offset_bytes: offset, length_bytes: BYTES_PER_MASK, encoding: 'physical_canonical_fixed_bitset_lsb0', cell_count: envelope.cell_count },
-      roles: stage6Annotation ? Object.entries(stage6Annotation.role_eligibility).filter(([, enabled]) => enabled).map(([role]) => role) : [],
-      ranks: stage6Annotation ? {
-        performance: stage6.calibration.performance.runs.map(run => ({ weight_id: run.weight_id, rank: run.ranking.find(item => item.region_id === regionId(membership))?.rank ?? null })),
-        stability: stage6.calibration.stability.runs.map(run => ({ weight_id: run.weight_id, rank: run.ranking.find(item => item.region_id === regionId(membership))?.rank ?? null }))
-      } : null
+      roles: stage6Annotation ? [...new Set(stage6Annotation.selected_in.map(item => item.mode))] : [],
+      ranks: stage6Annotation ? Object.fromEntries(Object.entries(stage6.tolerances).map(([gridId, grid]) => [gridId, Object.fromEntries(['performance', 'stability'].map(mode => [mode, grid.modes[mode].runs.map(run => ({ weight_id: run.weight_id, rank: run.ranking.find(item => item.region_id === regionId(membership))?.rank ?? null }))]))])) : null
     }];
   }));
   const contextCase = source.step6_context_spans.value.cases.find(item => item.calibration_case === 'volume_bands');
@@ -218,7 +254,9 @@ function buildPublication() {
       step4: { id: anchors.bindings.step4_policy_id, version: anchors.bindings.step4_policy_version, sha256: anchors.bindings.step4_policy_sha256 },
       step5: { id: source.step5_policy.value.policy_id, version: source.step5_policy.value.policy_version, sha256: source.step5_policy.sha256 },
       step6_v1: { id: source.step6_v1_policy.value.policy_id, version: source.step6_v1_policy.value.policy_version, sha256: source.step6_v1_policy.sha256 },
-      step6_v2: { id: source.step6_v2_policy.value.policy_id, version: source.step6_v2_policy.value.policy_version, sha256: source.step6_v2_policy.sha256 }
+      step6_v2: { id: source.step6_v2_policy.value.policy_id, version: source.step6_v2_policy.value.policy_version, sha256: source.step6_v2_policy.sha256 },
+      step6_v3: { id: source.step6_v3_policy.value.policy_id, version: source.step6_v3_policy.value.policy_version, sha256: source.step6_v3_policy.sha256 },
+      step6_v4: { id: source.step6_v4_policy.value.policy_id, version: source.step6_v4_policy.value.policy_version, sha256: source.step6_v4_policy.sha256 }
     },
     region_dictionary: regions,
     stages: { stage4: { all_unique_lineage_envelopes: regionHashes.map(regionId), lineages: relations.lineages }, stage5: { annotations_by_region_id: stage5 }, stage6 },
@@ -243,8 +281,11 @@ function validatePublication(publication) {
   }
   const stage4 = new Set(manifest.stages.stage4.all_unique_lineage_envelopes);
   if (stage4.size !== 55 || Object.keys(manifest.stages.stage5.annotations_by_region_id).some(id => !stage4.has(id))) fail('Stage-5 reference integrity failed.');
-  for (const id of manifest.stages.stage6.collections.all) if (!stage4.has(id)) fail('Stage-6 candidate is outside Stage 4.');
-  if (manifest.stages.stage6.ranking_status !== 'calibration' || manifest.stages.stage6.center_weights_frozen || manifest.stages.stage6.shortlist_frozen || manifest.stages.stage6.collections.frozen_shortlist.length) fail('Step-6 calibration status mismatch.');
+  for (const tolerance of Object.values(manifest.stages.stage6.tolerances)) for (const mode of Object.values(tolerance.modes)) for (const id of mode.candidates) if (!stage4.has(id)) fail('Stage-6 candidate is outside Stage 4.');
+  if (manifest.stages.stage6.ranking_status !== 'calibration' || manifest.stages.stage6.stopping_status !== 'calibration' || manifest.stages.stage6.tolerance_policy_frozen || manifest.stages.stage6.center_weights_frozen || manifest.stages.stage6.shortlist_frozen) fail('Step-6 calibration status mismatch.');
+  for (const tolerance of Object.values(manifest.stages.stage6.tolerances)) for (const mode of Object.values(tolerance.modes)) for (const run of mode.runs) {
+    if (run.performance_weight == null || run.stability_weight == null || Math.abs(run.performance_weight + run.stability_weight - 1) > 1e-12) fail('Stage-6 v004 ranking weights are invalid.');
+  }
   return publication;
 }
 
@@ -268,7 +309,7 @@ function publish() {
   const versions = catalog.surfaces[TARGET_SURFACE_ID].versions, existing = versions.find(item => item.version_id === VERSION_ID);
   const entry = {
     version_id: VERSION_ID, content_sha256: publication.manifestSha,
-    label: 'Volume Bands shoulder-expanded Region Analyzer calibration v001', created_at: existing?.created_at || new Date().toISOString(), status: 'active',
+    label: 'Volume Bands shoulder-expanded Region Analyzer calibration v002', created_at: existing?.created_at || new Date().toISOString(), status: 'active',
     manifest_path: `versions/${manifestName}`, mask_bundle_path: `bundles/${bundleName}`, mask_bundle_sha256: publication.maskBundleSha
   };
   if (existing && (existing.content_sha256 !== entry.content_sha256 || existing.mask_bundle_sha256 !== entry.mask_bundle_sha256)) fail('Version ID collision requires a new immutable version ID.');
