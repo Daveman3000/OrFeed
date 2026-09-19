@@ -12,6 +12,7 @@ const { createFilesystemRegistry } = require('./surface-registry-v001.cjs');
 const ROOT = path.join(__dirname, '..');
 const POLICY_PATH = path.join(ROOT, 'policies', 'exploratory', 'performance-qualification-step4-v001.json');
 const CLEANED_PATH = path.join(ROOT, 'policies', 'exploratory', 'volume-bands-cleaned-domain-step3-v001.json');
+const REGION_BUNDLE_ROOT = path.join(ROOT, 'region-analyzer', 'bundles');
 const METRICS = ['r_per_trade', 'profit_factor', 'romad'];
 const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const compareKeys = (a, b) => Buffer.compare(Buffer.from(a, 'utf8'), Buffer.from(b, 'utf8'));
@@ -28,6 +29,24 @@ function membershipPreimage(keys) {
 
 function membershipHash(keys) { return sha256(membershipPreimage(keys)); }
 function sortedKeys(keys) { return [...keys].sort(compareKeys); }
+function canonicalPhysicalOrderHash(keys) {
+  const hash = crypto.createHash('sha256');
+  hash.update('physical_canonical_analysis_key_order_v1\n', 'utf8');
+  for (const key of keys) {
+    if (typeof key !== 'string' || !key || /[\r\n]/.test(key)) fail('Invalid canonical physical analysis_key.');
+    hash.update(`${key}\n`, 'utf8');
+  }
+  return hash.digest('hex');
+}
+function physicalBitset(cells, physicalCellCount, physicalIndexByCell) {
+  const bytes = Buffer.alloc(Math.ceil(physicalCellCount / 8));
+  for (const cell of cells) {
+    const physical = physicalIndexByCell[cell];
+    if (!Number.isInteger(physical) || physical < 0 || physical >= physicalCellCount) fail('Cleaned cell cannot be mapped into the physical package index space.');
+    bytes[physical >> 3] |= 1 << (physical & 7);
+  }
+  return bytes;
+}
 function contextFor(surface, cell, fixed) {
   return Object.fromEntries(fixed.map(p => {
     const i = surface.semanticParameterIndices[p.id][cell];
@@ -93,6 +112,9 @@ function loadVolumeBands(registryRoot) {
   const fixed = params.filter(p => p.topology_role === 'regime' || p.topology_role === 'facet');
   return {
     manifest, policy, surface, graph, fixed, keysByIndex, keyToIndex,
+    physicalCellCount: graph.N,
+    physicalIndexByCell: Int32Array.from({ length: graph.N }, (_, index) => index),
+    physicalKeysByIndex: keysByIndex,
     bindings: {
       surface_id: surfaceId,
       package_sha256: record.sha256,
@@ -135,8 +157,22 @@ function nodeRecord(cells, rung, keysByIndex) {
   return { rung: `P${rung}`, cell_count: cells.length, membership_sha256: membershipHash(keys) };
 }
 
-function materializeAnchors(bundle, { regionPrefix = 'VB' } = {}) {
+function materializeAnchors(bundle, { regionPrefix = 'VB', bundleRoot = REGION_BUNDLE_ROOT } = {}) {
   const { surface, graph, fixed, keysByIndex, bindings } = bundle;
+  const physicalCellCount = bundle.physicalCellCount;
+  const physicalIndexByCell = bundle.physicalIndexByCell;
+  const physicalKeysByIndex = bundle.physicalKeysByIndex;
+  if (!Number.isInteger(physicalCellCount) || physicalCellCount < graph.N) fail('Step 4 requires the physical package cell count.');
+  if (!(physicalIndexByCell instanceof Int32Array) || physicalIndexByCell.length !== graph.N) fail('Step 4 requires a physical index for every cleaned-domain cell.');
+  if (!Array.isArray(physicalKeysByIndex) || physicalKeysByIndex.length !== physicalCellCount) fail('Step 4 requires canonical physical analysis_key order.');
+  if (new Set(physicalKeysByIndex).size !== physicalCellCount) fail('Canonical physical analysis_key order contains duplicates.');
+  const seenPhysical = new Uint8Array(physicalCellCount);
+  for (let cell = 0; cell < graph.N; cell++) {
+    const physical = physicalIndexByCell[cell];
+    if (!Number.isInteger(physical) || physical < 0 || physical >= physicalCellCount || seenPhysical[physical]) fail('Step 4 physical-index mapping is invalid or duplicated.');
+    if (physicalKeysByIndex[physical] !== keysByIndex[cell]) fail('Step 4 physical-index mapping does not preserve analysis_key identity.');
+    seenPhysical[physical] = 1;
+  }
   const trades = surface.supportFields.trades;
   if (!(trades instanceof Int32Array)) fail('Canonical integer trades support is required.');
   const groups = new Map();
@@ -145,13 +181,19 @@ function materializeAnchors(bundle, { regionPrefix = 'VB' } = {}) {
     if (!groups.has(id)) groups.set(id, { context_id: id, context, cells: [] });
     groups.get(id).cells.push(i);
   }
-  const anchors = [];
+  const anchors = [], memberships = new Map();
+  const recordNode = (cells, rung) => {
+    const record = nodeRecord(cells, rung, keysByIndex), existing = memberships.get(record.membership_sha256);
+    if (existing && (existing.rung !== record.rung || existing.cell_count !== record.cell_count)) fail('Conflicting Step-4 membership identity.');
+    if (!existing) memberships.set(record.membership_sha256, { ...record, bytes: physicalBitset(cells, physicalCellCount, physicalIndexByCell) });
+    return record;
+  };
   for (const group of [...groups.values()].sort((a, b) => compareKeys(a.context_id, b.context_id))) {
     const eligible = group.cells.filter(i => trades[i] >= 20 && METRICS.every(metric => Number.isFinite(surface.metrics[metric][i])));
     const p1 = eligible.filter(i => passes(surface, i, 1));
     const minimum = Math.max(16, Math.min(32, Math.ceil(0.005 * p1.length)));
     let active = components(p1, graph).filter(cells => cells.length >= minimum)
-      .map(cells => ({ cells, rung: 1, ancestry: [nodeRecord(cells, 1, keysByIndex)] }));
+      .map(cells => ({ cells, rung: 1, ancestry: [recordNode(cells, 1)] }));
     while (active.length) {
       const next = [];
       for (const node of active) {
@@ -159,7 +201,7 @@ function materializeAnchors(bundle, { regionPrefix = 'VB' } = {}) {
           ? components(node.cells.filter(i => passes(surface, i, node.rung + 1)), graph).filter(cells => cells.length >= minimum)
           : [];
         if (children.length) {
-          for (const cells of children) next.push({ cells, rung: node.rung + 1, ancestry: [...node.ancestry, nodeRecord(cells, node.rung + 1, keysByIndex)] });
+          for (const cells of children) next.push({ cells, rung: node.rung + 1, ancestry: [...node.ancestry, recordNode(cells, node.rung + 1)] });
           continue;
         }
         const analysisKeys = sortedKeys(node.cells.map(i => keysByIndex[i]));
@@ -184,7 +226,56 @@ function materializeAnchors(bundle, { regionPrefix = 'VB' } = {}) {
     }
   }
   anchors.sort((a, b) => compareKeys(a.context_id, b.context_id) || compareKeys(a.region_id, b.region_id));
-  return { schema_version: 1, artifact_type: 'step4_terminal_frozen_anchors', policy_origin: 'post_result_exploratory', campaign_id: bundle.manifest.campaign_id, bindings, anchor_hash_preimage: 'UTF-8 sorted canonical analysis_keys joined by LF with final LF; no BOM', anchors };
+  const bytesPerMask = Math.ceil(physicalCellCount / 8), regionOrder = [...memberships.keys()].sort(compareKeys);
+  const cleanedIsPhysical = graph.N === physicalCellCount && physicalIndexByCell.every((value, index) => value === index);
+  const chunks = [], regions = [];
+  let offset = 0, cleanedDomainMask;
+  if (cleanedIsPhysical) cleanedDomainMask = { kind: 'ALL_PHYSICAL_CELLS', physical_cells: physicalCellCount };
+  else {
+    const bytes = physicalBitset(Array.from({ length: graph.N }, (_, index) => index), physicalCellCount, physicalIndexByCell);
+    chunks.push(bytes);
+    cleanedDomainMask = { kind: 'BUNDLE_BITSET', offset_bytes: offset, length_bytes: bytes.length, cell_count: graph.N };
+    offset += bytes.length;
+  }
+  for (const membership of regionOrder) {
+    const node = memberships.get(membership);
+    chunks.push(node.bytes);
+    regions.push({ membership_sha256: membership, rung: node.rung, cell_count: node.cell_count, offset_bytes: offset, length_bytes: node.bytes.length });
+    offset += node.bytes.length;
+  }
+  const maskBundle = Buffer.concat(chunks), maskBundleSha256 = sha256(maskBundle);
+  fs.mkdirSync(bundleRoot, { recursive: true });
+  const maskBundlePath = path.join(bundleRoot, `${maskBundleSha256}.masks.bin`);
+  if (fs.existsSync(maskBundlePath)) {
+    if (!fs.readFileSync(maskBundlePath).equals(maskBundle)) fail('Step-4 mask bundle immutable-content collision.');
+  } else fs.writeFileSync(maskBundlePath, maskBundle);
+  return {
+    schema_version: 2,
+    artifact_version: '2',
+    artifact_type: 'step4_terminal_frozen_anchors',
+    policy_origin: 'post_result_exploratory',
+    campaign_id: bundle.manifest.campaign_id,
+    bindings,
+    anchor_hash_preimage: 'UTF-8 sorted canonical analysis_keys joined by LF with final LF; no BOM',
+    membership_bundle: {
+      path: path.posix.join('surface-analyzer', 'region-analyzer', 'bundles', `${maskBundleSha256}.masks.bin`),
+      sha256: maskBundleSha256,
+      bytes: maskBundle.length,
+      physical_cells: physicalCellCount,
+      bytes_per_mask: bytesPerMask,
+      encoding: 'physical_canonical_fixed_bitset_lsb0',
+      bit_order: 'LSB_FIRST_WITHIN_BYTE',
+      final_byte_padding: 'ZERO',
+      region_order: 'MEMBERSHIP_HASH_LEXICOGRAPHIC',
+      cleaned_domain_mask: cleanedDomainMask,
+      canonical_physical_cell_order: {
+        identity: 'sha256_utf8_header_then_analysis_keys_in_physical_canonical_index_order_each_with_lf',
+        sha256: canonicalPhysicalOrderHash(physicalKeysByIndex)
+      },
+      regions
+    },
+    anchors
+  };
 }
 
 function verifyAnchor(bundle, artifact, anchor) {
@@ -285,4 +376,4 @@ function evaluateAnchor(bundle, artifact, anchor, caches = { sr: new Map(), fr: 
   return { region_id: anchor.region_id, anchor_membership_sha256: anchor.anchor_membership_sha256, performance_class: anchor.performance_class, sr, sr_decomposition, fr, rr: rr.regions[0] };
 }
 
-module.exports = { POLICY_PATH, CLEANED_PATH, METRICS, membershipPreimage, membershipHash, sortedKeys, contextFor, contextId, components, threshold, loadVolumeBands, materializeAnchors, verifyAnchor, evaluateAnchor };
+module.exports = { POLICY_PATH, CLEANED_PATH, REGION_BUNDLE_ROOT, METRICS, membershipPreimage, membershipHash, sortedKeys, canonicalPhysicalOrderHash, physicalBitset, contextFor, contextId, components, threshold, loadVolumeBands, materializeAnchors, verifyAnchor, evaluateAnchor };

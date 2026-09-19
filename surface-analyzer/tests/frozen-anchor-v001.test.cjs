@@ -3,6 +3,7 @@
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const Semantic = require('../semantic-analysis-v030.js');
 const Scan = require('../scan-layer-v033.js');
@@ -55,7 +56,46 @@ function fixture(order = rows) {
     cell_count: 1, analysis_keys: ['a1'], anchor_membership_sha256: Frozen.membershipHash(['a1'])
   };
   const artifact = { policy_origin: 'post_result_exploratory', bindings, anchors: [anchor] };
-  return { surface, graph, fixed, keyToIndex, bindings, anchor, artifact };
+  return {
+    surface, graph, fixed, keyToIndex, bindings, anchor, artifact,
+    manifest: { campaign_id: 'synthetic-step4' },
+    keysByIndex: order.map(row => row.key),
+    physicalCellCount: n,
+    physicalIndexByCell: Int32Array.from({ length: n }, (_, index) => index),
+    physicalKeysByIndex: order.map(row => row.key)
+  };
+}
+
+function materializationFixture({ sparse = false } = {}) {
+  const count = 20, keysByIndex = Array.from({ length: count }, (_, index) => `m${String(index).padStart(2, '0')}`);
+  const materializationDescriptor = {
+    parameters: [
+      { id: 'regime', topology_role: 'regime', source: 'outer', values: [0], active_when: 'always' },
+      { id: 'mode', topology_role: 'facet', source: 'outer', values: [0], active_when: 'always' },
+      { id: 'x', topology_role: 'ordered', source: 'outer', values: Array.from({ length: count }, (_, index) => index), active_when: 'always' }
+    ]
+  };
+  const surface = {
+    rows: count, cols: 1,
+    semanticDescriptor: materializationDescriptor,
+    semanticParameterIndices: { regime: new Int16Array(count), mode: new Int16Array(count), x: Int16Array.from({ length: count }, (_, index) => index) },
+    supportFields: { trades: Int32Array.from({ length: count }, () => 30) },
+    metrics: {
+      r_per_trade: Float64Array.from({ length: count }, () => 0.6),
+      profit_factor: Float64Array.from({ length: count }, () => 1.6),
+      romad: Float64Array.from({ length: count }, () => 2.5)
+    }
+  };
+  const graph = Semantic.buildTopology(surface), fixed = materializationDescriptor.parameters.filter(parameter => ['regime', 'facet'].includes(parameter.topology_role));
+  const physicalCellCount = sparse ? count + 2 : count;
+  return {
+    surface, graph, fixed, keysByIndex, keyToIndex: new Map(keysByIndex.map((key, index) => [key, index])),
+    bindings: { descriptor_sha256: 'materialization-synthetic', cleaned_domain_identity: sparse ? 'sparse' : 'rectangular', topology_engine_version: graph.version },
+    manifest: { campaign_id: 'synthetic-step4' },
+    physicalCellCount,
+    physicalIndexByCell: Int32Array.from({ length: count }, (_, index) => sparse ? index + 1 : index),
+    physicalKeysByIndex: sparse ? ['excluded-left', ...keysByIndex, 'excluded-right'] : keysByIndex
+  };
 }
 
 assert.equal(Frozen.membershipPreimage(['a0', 'a1']).toString('hex'), Buffer.from('a0\na1\n').toString('hex'));
@@ -63,6 +103,27 @@ assert.throws(() => Frozen.membershipHash(['a1', 'a1']), /sorted and unique/);
 assert.throws(() => Frozen.membershipHash(['a1', 'a0']), /sorted and unique/);
 const f = fixture();
 assert.deepEqual(Frozen.verifyAnchor(f, f.artifact, f.anchor), [1]);
+const bundleRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'step4-membership-bundle-'));
+const materializationSource = materializationFixture();
+const materialized = Frozen.materializeAnchors(materializationSource, { regionPrefix: 'TEST', bundleRoot });
+assert.equal(materialized.schema_version, 2);
+assert.equal(materialized.artifact_version, '2');
+assert.equal(materialized.membership_bundle.cleaned_domain_mask.kind, 'ALL_PHYSICAL_CELLS');
+assert.equal(materialized.membership_bundle.region_order, 'MEMBERSHIP_HASH_LEXICOGRAPHIC');
+assert.equal(materialized.membership_bundle.canonical_physical_cell_order.sha256, Frozen.canonicalPhysicalOrderHash(materializationSource.physicalKeysByIndex));
+assert.deepEqual(materialized.membership_bundle.regions.map(region => region.membership_sha256), [...materialized.membership_bundle.regions.map(region => region.membership_sha256)].sort());
+const materializedBytes = fs.readFileSync(path.join(bundleRoot, `${materialized.membership_bundle.sha256}.masks.bin`));
+assert.equal(crypto.createHash('sha256').update(materializedBytes).digest('hex'), materialized.membership_bundle.sha256);
+for (const region of materialized.membership_bundle.regions) {
+  const bytes = materializedBytes.subarray(region.offset_bytes, region.offset_bytes + region.length_bytes);
+  assert.equal([...bytes].reduce((sum, byte) => sum + byte.toString(2).replaceAll('0', '').length, 0), region.cell_count);
+}
+const sparse = materializationFixture({ sparse: true });
+const sparseMaterialized = Frozen.materializeAnchors(sparse, { regionPrefix: 'TEST-SPARSE', bundleRoot });
+assert.equal(sparseMaterialized.membership_bundle.cleaned_domain_mask.kind, 'BUNDLE_BITSET');
+assert.equal(sparseMaterialized.membership_bundle.cleaned_domain_mask.cell_count, sparse.graph.N);
+assert.equal(sparseMaterialized.membership_bundle.regions[0].offset_bytes, sparseMaterialized.membership_bundle.bytes_per_mask);
+fs.rmSync(bundleRoot, { recursive: true, force: true });
 const exact = Scan.analyzeFrozenAnchor(f.surface, f.graph, [1], ['r_per_trade'], () => false);
 assert.equal(exact.definition, 'frozen_anchor_membership');
 assert.equal(exact.regions[0].cell_count, 1);

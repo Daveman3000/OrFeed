@@ -165,6 +165,9 @@ function deriveCleanedBundle(registryRoot) {
   if (step4Policy.frozen !== true || step4Policy.authoritative !== false) fail('Frozen exploratory Step-4 policy is required.');
   return {
     source, surface, graph, fixed, keysByIndex, keyToIndex, removed, retained, tail,
+    physicalCellCount: 56000,
+    physicalIndexByCell: Int32Array.from(retained),
+    physicalKeysByIndex: sourceKeys,
     packageData, surfacePolicy, cleaningPolicy, cleaningPolicyBytes, scopesArtifact, scopesBytes,
     cleanedDomainIdentity, retainedKeysSha256, identityLines,
     manifest: { campaign_id: 'volspike_20260911_step3clean_calibration' },
