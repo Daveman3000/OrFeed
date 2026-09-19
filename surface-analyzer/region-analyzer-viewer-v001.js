@@ -20,7 +20,7 @@ function current(){return (typeof activeSurface!=='undefined')?activeSurface:nul
 function pkg(s){return s?.regionAnalyzerIdentity?.packageSha256||'';}
 function desc(s){return s?.regionAnalyzerIdentity?.descriptorSha256||'';}
 function csvsha(s){return s?.regionAnalyzerIdentity?.semanticCsvSha256||'';}
-function identityCompatible(m,s){const x=m?.surface||{},p=pkg(s),d=desc(s),c=csvsha(s);if(x.package_sha256===p)return true;if(!x.semantic_csv_sha256||x.semantic_csv_sha256!==c)return false;const accepted=x.compatible_descriptor_sha256||[x.descriptor_sha256];return !d||accepted.includes(d);}
+function identityCompatible(m,s){const x=m?.surface||{},p=pkg(s),d=desc(s),c=csvsha(s),packages=x.known_package_sha256||[x.package_sha256];if(packages.includes(p))return true;if(!x.semantic_csv_sha256||x.semantic_csv_sha256!==c)return false;const accepted=x.compatible_descriptor_sha256||[x.descriptor_sha256];return !d||accepted.includes(d);}
 async function sha(data){const b=typeof data==='string'?new TextEncoder().encode(data):data;if(!root.crypto?.subtle)throw new Error('WebCrypto SHA-256 unavailable');const d=new Uint8Array(await root.crypto.subtle.digest('SHA-256',b));return [...d].map(x=>x.toString(16).padStart(2,'0')).join('');}
 async function text(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status+' '+url);return r.text();}
 async function manifestFor(entry){const url=new URL('region-analyzer/'+entry.manifest_path,location.href).href,t=await text(url);if(entry.content_sha256&&await sha(t)!==entry.content_sha256)throw new Error('manifest hash mismatch');return {url,m:JSON.parse(t)};}
