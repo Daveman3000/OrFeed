@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "policy_id": "shoulder_calibration",
+  "policy_version": 1,
+  "status": "post_result_exploratory_frozen",
+  "classification_unit": "regime_x_family_context_x_ordered_parameter_x_boundary",
+  "primary_metrics": [
+    "r_per_trade",
+    "profit_factor"
+  ],
+  "diagnostic_metrics": [
+    "win_pct",
+    "max_drawdown_r",
+    "trades",
+    "total_r"
+  ],
+  "observation_window": {
+    "three_or_more_levels": "max(3, ceil(0.25 * tested_level_count))",
+    "two_levels": "direct_boundary_vs_other_comparison",
+    "two_level_authority": "corroboration_only"
+  },
+  "normalization": {
+    "x": "position_relative_to_original_starting_parameter_span",
+    "y": "fixed_context_finite_r7_iqr",
+    "iqr_epsilon": {
+      "absolute": 1e-12,
+      "relative_multiplier": 1e-9,
+      "formula": "max(1e-12, 1e-9 * max(1, abs(context_metric_median)))"
+    },
+    "unsupported_rule": "IQR <= iqr_epsilon"
+  },
+  "support": {
+    "minimum_level_cells": "max(3, ceil(0.005 * context_evaluable_cells))",
+    "minimum_level_median_trades": 20,
+    "insufficient_evidence_classification": "AMBIGUOUS"
+  },
+  "thresholds": {
+    "non_adverse": -0.10,
+    "flat": 0.10,
+    "material_overall_gradient": 0.35,
+    "persistent_preceding_slope": 0.10,
+    "persistent_final_slope": 0.25,
+    "win_pct_tradeoff_veto": -0.25,
+    "max_drawdown_r_tradeoff_veto": 0.25
+  },
+  "classification": {
+    "labels": [
+      "ADEQUATE",
+      "CLIPPED",
+      "AMBIGUOUS"
+    ],
+    "clipped": "At least one supported primary metric clears all material/persistence thresholds; every other supported primary metric is non-adverse; both primary metrics are supported; support passes; no available trade-off diagnostic vetoes.",
+    "adequate": "Primary evidence is flat/adverse, rolls over, clearly flattens into the flat band, or exposes a supported trade-off veto.",
+    "ambiguous": "Evidence is insufficient, unsupported, weak, noisy, conflicting, tapering-positive, or only two-level positive."
+  },
+  "rollup": {
+    "minimum_supported_three_plus_observations": 2,
+    "clipped_fraction": 0.6666666666666666,
+    "denominator": "supported_three_plus_observations_only",
+    "remaining_observations_must_be": "AMBIGUOUS",
+    "adequate_observation_vetoes_authorization": true,
+    "two_level_observations": "reported_as_corroboration_only"
+  },
+  "continuation_strength": {
+    "observation_value": "max(overall_r_gradient, overall_pf_gradient) among primary metrics that individually satisfy qualifying persistence conditions",
+    "ownership_group_value": "finite_r7_median_across_clipped_observations",
+    "tiers": [
+      {
+        "id": "MILD",
+        "minimum": 0.35,
+        "maximum_exclusive": 0.65,
+        "extension_fraction_of_original_span": 0.25
+      },
+      {
+        "id": "MODERATE",
+        "minimum": 0.65,
+        "maximum_exclusive": 3.0,
+        "extension_fraction_of_original_span": 0.50
+      },
+      {
+        "id": "STEEP",
+        "minimum": 3.0,
+        "maximum_exclusive": null,
+        "extension_fraction_of_original_span": 0.75
+      }
+    ]
+  },
+  "rescope": {
+    "rounding": "outward_to_next_legal_generated_value",
+    "retry_baseline": "original_starting_span",
+    "maximum_automatic_successor_attempts": 2,
+    "maximum_cumulative_extension_per_boundary_direction": 1.0,
+    "combined_corrections_are_atomic": true,
+    "budget_failure": "FAILED_BUDGET",
+    "budget_failure_behavior": "preserve_full_proposed_rescope_without_partial_correction",
+    "pass_3": "assessment_only_SHOULDER_OK_or_SHOULDER_UNRESOLVED"
+  },
+  "provenance": {
+    "calibration_surfaces": [
+      "Volume Bands historical broad, parent, and shoulder-expanded surfaces",
+      "VolSpike historical surface"
+    ],
+    "false_positive_priority": "avoid_unjustified_automatic_rescope",
+    "notes": "Frozen after balanced historical replay. No surface-specific exceptions."
+  }
+}
