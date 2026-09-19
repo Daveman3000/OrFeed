@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=021/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v021/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=022/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v022/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -76,3 +76,7 @@ assert.doesNotMatch(viewer,/>Rank</,'Stage 6 table must not display redundant ra
 assert.match(viewer,/>Score</,'Stage 6 table must label the weighted 6C value simply as Score');
 
 assert.match(viewer,/\.ra-s6-head \.ra-num,\.ra-s6-item \.ra-num\{text-align:right\}/,'Stage 6 headers and values must share the same numeric alignment');
+
+assert.match(viewer,/class="ra-id">ID<\/span>/,'Stage 6 ID header must use identifier alignment');
+assert.match(viewer,/<span class="ra-id">'\+regionNumber\(id\)\+'<\/span>/,'Stage 6 ID values must not be bold');
+assert.match(viewer,/\.ra-s6-head \.ra-id,\.ra-s6-item \.ra-id\{text-align:left\}/,'Stage 6 ID header and values must be left-aligned within their column');
