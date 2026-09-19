@@ -1,0 +1,89 @@
+{
+  "schema_version": 2,
+  "policy_type": "step6_envelope_role_ranking",
+  "policy_id": "step6_role_specific_ranking",
+  "policy_version": "2-calibration",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": false,
+  "supersedes_only": "step6-v001 final cross-lineage frontier and handoff; v001 eligibility and transition stopping remain immutable",
+  "source_binding": {
+    "trajectory_artifact_sha256": "5787f702f4730d5a4c43e398207f9ce354ee0b51620d0f9ae6e3e9aec7166ec9",
+    "v001_policy_sha256": "d18e0b682aec89d01dcca54eee52a6d7aba5103d9355ddad012f331327334884",
+    "v001_result_sha256": "c5560e90e150f459e275d0492757005c6f4c9639c5ce215b7635a6bb0f7fa7cb",
+    "context_span_artifact_sha256": "fc44a6332f30bd329dfd9a776abe5aeaa59b146c498a82bb16f242379ca0e900",
+    "context_span_payload_sha256": "84e22a052fe16b70e5c06c15772b879fde20e823d11c2fe79dc15888c638b2f6",
+    "required_unique_envelopes": 228,
+    "required_terminal_structures": 78,
+    "required_v001_pre_frontier_candidates": {
+      "volume_bands": 5,
+      "volspike": 51
+    }
+  },
+  "scope": {
+    "v001_eligibility_is_immutable": true,
+    "ranking_cannot_change_membership_or_eligibility": true,
+    "candidate_set": "v001 exact_membership_candidates before global frontier",
+    "exact_membership_consolidation_only": true,
+    "candidate_set_minmax_normalization": false,
+    "lineage_ancestry_score_weight": 0,
+    "step5_profile_score_weight": 0,
+    "final_step7_shortlist_frozen": false
+  },
+  "role_eligibility": {
+    "performance_led": "every v001 eligible exact-membership candidate",
+    "stability_led": {
+      "minimum_rung": "P3",
+      "allowed_sr_bands": ["MODERATE", "STRONG"],
+      "allowed_rr_bands": ["MODERATE", "STRONG"],
+      "allowed_fr_bands": ["MIXED", "DIVERGENT_VIABLE", "ADEQUATE", "STRONG", "N/A"],
+      "independent_of_historical_v001_role_label": true
+    }
+  },
+  "normalization": {
+    "range": [0, 1],
+    "clamp_inputs": true,
+    "performance_score": "rung_index / 20",
+    "sr": { "STRONG": 1.0, "MODERATE": 0.6, "SENSITIVE": 0.25 },
+    "rr": { "STRONG": 1.0, "MODERATE": 0.6, "WEAK": 0.2 },
+    "fr_supported_facet_quality": "0.5 * structural_similarity + 0.5 * peer_economic_success",
+    "fr_quality": "mean supported applicable facet quality",
+    "fr_availability": "supported applicable facets / applicable facets; N/A excluded",
+    "fr_combined": "0.8 * FR_quality + 0.2 * FR_availability",
+    "size_score": "log(cell_count / 24) / log(2000 / 24), clipped to [0,1]",
+    "ordered_span_breadth": "mean observed_index_span / full_cleaned_context_index_span across applicable non-singleton dimensions",
+    "two_core_breadth": "two_core.fraction",
+    "breadth": "0.40 * TwoCoreBreadth + 0.40 * OrderedSpanBreadth + 0.20 * SizeScore"
+  },
+  "robustness": {
+    "normal_supported_fr": { "sr": 0.30, "rr": 0.30, "fr_combined": 0.20, "breadth": 0.20 },
+    "applicable_zero_supported_fr": { "sr": 0.36, "rr": 0.36, "breadth": 0.24, "fr_availability": 0.04 },
+    "all_facets_na": { "sr": 0.375, "rr": 0.375, "breadth": 0.25 },
+    "unsupported_is_not_failed_replication": true
+  },
+  "weight_sensitivity": {
+    "performance_led": [
+      { "id": "P75_R25", "performance": 0.75, "robustness": 0.25 },
+      { "id": "P70_R30_CENTER", "performance": 0.70, "robustness": 0.30 },
+      { "id": "P65_R35", "performance": 0.65, "robustness": 0.35 }
+    ],
+    "stability_led": [
+      { "id": "P40_R60", "performance": 0.40, "robustness": 0.60 },
+      { "id": "P35_R65_CENTER", "performance": 0.35, "robustness": 0.65 },
+      { "id": "P30_R70", "performance": 0.30, "robustness": 0.70 }
+    ]
+  },
+  "ranking": {
+    "shortlist_target": 3,
+    "numeric_tie_tolerance": 1e-12,
+    "rank_method": "descending score with competition ranks; exact ties within tolerance share rank; membership SHA-256 is presentation-order tie-break only",
+    "sensitivity_outputs": ["rank_by_weight", "median_rank", "rank_range", "top_three_frequency"],
+    "shortlist_boundary_ties_reported": true,
+    "calibration_does_not_freeze_center_weights_or_final_shortlist": true
+  },
+  "storage": {
+    "full_precision": true,
+    "rounding_is_presentation_only": true,
+    "all_components_are_emitted": true
+  }
+}

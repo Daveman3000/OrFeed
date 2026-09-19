@@ -105,3 +105,22 @@ The two Volume Bands splits remain explicit. The P13 split produces children of 
 On VolSpike, 22 of 71 lineages never produce a transition-safe envelope with at least 24 cells and remain `TARGETED_RESCAN_REQUIRED`; they are not passed to Step 7. The other lineages yield 51 exact workable candidates after shared-membership consolidation. The non-compensating frontier selects nine distinct zones: seven performance-led and two stability-led, containing 26–115 cells. This compresses the surface to a low-teens handoff without a surface-specific exception or weighted optimization.
 
 Across both calibration surfaces, Step 6 therefore hands Step 7 ten distinct zones: one Volume Bands zone and nine VolSpike zones. The result is a zone-selection artifact only. It does not select exact cells, execute a targeted rescan, or choose live parameters.
+
+## v002 role-ranking calibration
+
+The v001 transition stopping and eligibility decisions remain immutable. The v002 calibration supersedes only the final global frontier as a proposed Step-7 handoff mechanism. It ranks all v001 pre-frontier exact-membership candidates after eligibility has already been decided; scoring cannot rescue a failed region or change membership.
+
+`step6-context-spans-v002.json` supplies the only metadata absent from the frozen 228-envelope artifact: full cleaned-context ordered spans. It is derived by a cheap cleaned-domain scan and is bound to each cleaned-domain identity, descriptor hash, topology-engine version, deterministic topology hash, and the source trajectory-artifact hash. It does not reconstruct envelopes or calculate SR, FR, or RR.
+
+The calibration emits fixed-anchor PerformanceScore, SR, RR, FR, size, ordered-span, two-core, Breadth, and Robustness components at full precision. Unsupported applicable FR preserves only its 4% evidence-availability contribution and redistributes the unavailable quality weight; all-N/A FR is omitted without penalty. Lineage ancestry and the Step-5 profile label contribute zero points.
+
+Two role-specific weight neighborhoods are evaluated without freezing a final shortlist:
+
+- performance-led: 75/25, 70/30, and 65/35 performance/robustness;
+- stability-led: 40/60, 35/65, and 30/70 performance/robustness.
+
+Volume Bands has five eligible consolidated candidates. Its performance top three is identical under all three weights: P15/357 cells, P13/1,502 cells, and P12/427 cells. No Volume Bands candidate meets the independent stability-role floors, so no stability list is manufactured.
+
+VolSpike has 51 eligible consolidated candidates and five stability-role candidates. Its stability top three is identical under all three weights. Its performance ranking is not stable enough to freeze: only two regions remain in the top three throughout, five regions appear in the top-three union, and every pair of weight runs has top-three Jaccard overlap 0.50.
+
+The v002 result is therefore calibration evidence only. The center weights and final Step-7 shortlists remain unfrozen pending review of the VolSpike performance ambiguity.
