@@ -37,6 +37,16 @@
           "manifest_path": "versions/4c541e11ff4a66183a5cf63ff15fb934d58b0951a4af7a24d0401e784814b27e.manifest.json",
           "mask_bundle_path": "bundles/df41fe4059da58d8523cd0520270739f13a2ed8513a4b9b2a2db61a90aab2ae8.masks.bin",
           "mask_bundle_sha256": "df41fe4059da58d8523cd0520270739f13a2ed8513a4b9b2a2db61a90aab2ae8"
+        },
+        {
+          "version_id": "volspike_20260911_step3clean_trades_v1-region-analyzer-v002",
+          "content_sha256": "3498e376bc10b3f436671d60f101d40fcd5e8049d806428049504334a392169c",
+          "label": "VolSpike frozen Region Analyzer calibration v002",
+          "created_at": "2026-09-19T16:58:00Z",
+          "status": "active",
+          "manifest_path": "versions/3498e376bc10b3f436671d60f101d40fcd5e8049d806428049504334a392169c.manifest.json",
+          "mask_bundle_path": "bundles/df41fe4059da58d8523cd0520270739f13a2ed8513a4b9b2a2db61a90aab2ae8.masks.bin",
+          "mask_bundle_sha256": "df41fe4059da58d8523cd0520270739f13a2ed8513a4b9b2a2db61a90aab2ae8"
         }
       ]
     }
