@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "policy_type": "step6_envelope_selection",
+  "policy_id": "lineage_transition_stopping_rule",
+  "policy_version": "1",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": true,
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "source_binding": {
+    "artifact_type": "step6_parallel_trajectory_diagnostic",
+    "artifact_sha256": "5787f702f4730d5a4c43e398207f9ce354ee0b51620d0f9ae6e3e9aec7166ec9",
+    "required_terminal_structures": 78,
+    "required_unique_envelopes": 228
+  },
+  "scope": {
+    "existing_lineage_envelopes_only": true,
+    "surface_specific_exceptions": false,
+    "composite_score": false,
+    "new_evidence_generation": false,
+    "maximum_selected_envelopes_per_lineage": 2,
+    "shared_membership_is_consolidated": true,
+    "surface_local_non_compensating_frontier": true
+  },
+  "handoff_size": {
+    "minimum_cells": 24,
+    "maximum_cells": 2000,
+    "breadth_tiers": [
+      { "id": "MINIMUM", "minimum_cells": 24, "maximum_cells": 47, "rank": 0 },
+      { "id": "TRACTABLE", "minimum_cells": 48, "maximum_cells": 199, "rank": 1 },
+      { "id": "HEALTHY", "minimum_cells": 200, "maximum_cells": 2000, "rank": 2 }
+    ],
+    "calibration_note": "24 preserves the existing distributed-sample question; 2000 retains the meaningful 1502-cell Volume Bands envelope while excluding oversized predecessors that would leave localization to Step 7."
+  },
+  "performance_led": {
+    "direction": "P1_toward_terminal",
+    "selection": "last_envelope_before_first_veto_or_terminal_if_no_veto",
+    "crossing_a_veto_is_forbidden": true,
+    "transition_vetoes": {
+      "minimum_retained_cell_fraction": 0.20,
+      "minimum_handoff_cells": 24,
+      "maximum_lost_multi_value_ordered_dimensions": 1,
+      "maximum_two_core_fraction_decrease": 0.15,
+      "maximum_minimum_metric_sr_median_decrease": 0.10,
+      "maximum_minimum_rr_interior_similarity_decrease": 0.15,
+      "maximum_minimum_rr_boundary_worse_fraction_decrease": 0.15,
+      "fr_material_deterioration": [
+        "any_non_INSUFFICIENT_to_INSUFFICIENT",
+        "any_non_ECONOMICALLY_WEAK_or_INSUFFICIENT_to_ECONOMICALLY_WEAK",
+        "STRONG_or_ADEQUATE_or_DIVERGENT_VIABLE_or_N/A_to_MIXED"
+      ]
+    }
+  },
+  "stability_led": {
+    "direction": "selected_performance_envelope_toward_broader_predecessors",
+    "selection": "nearest_predecessor_meeting_all_floors_and_at_least_one_material_improvement",
+    "maximize_stability": false,
+    "minimum_performance_rung": "P3",
+    "candidate_size_range": [24, 2000],
+    "candidate_floors": {
+      "sr_bands": ["MODERATE", "STRONG"],
+      "rr_bands": ["MODERATE", "STRONG"],
+      "fr_bands": ["MIXED", "DIVERGENT_VIABLE", "ADEQUATE", "STRONG", "N/A"]
+    },
+    "material_improvement": {
+      "sr": "band_improves_or_minimum_metric_median_increases_by_at_least_0.10",
+      "rr": "band_improves_or_minimum_interior_or_boundary_measure_increases_by_at_least_0.15",
+      "fr": "credibility_state_improves",
+      "topology": "multi_value_ordered_dimensions_increase_by_at_least_2_or_two_core_fraction_increases_by_at_least_0.15"
+    }
+  },
+  "cross_lineage_consolidation": {
+    "scope": "within_each_calibration_surface",
+    "exact_membership_duplicates_are_merged_first": true,
+    "method": "non_compensating_pareto_frontier",
+    "axes": [
+      "performance_rung",
+      "sr_band",
+      "rr_band",
+      "fr_band",
+      "breadth_tier"
+    ],
+    "dominance_rule": "A candidate dominates B only when A is no worse on every axis and strictly better on at least one axis.",
+    "no_weighted_score": true,
+    "equal_evidence_profiles_remain_distinct_unless_membership_is_identical": true,
+    "preserves_good_smooth_and_great_jagged_tradeoffs": true
+  },
+  "split_handling": {
+    "evaluate_each_child_against_exact_parent": true,
+    "report_collective_sibling_retention": true,
+    "collective_retention_does_not_override_individual_child_veto": true
+  },
+  "rescan_flag": {
+    "TARGETED_RESCAN_REQUIRED": "no transition-safe envelope in the lineage can supply the existing deterministic 24-cell distributed sample",
+    "NOT_REQUIRED": "selected envelope can supply the existing deterministic 24-cell distributed sample",
+    "adds_step6_5_logic": false
+  },
+  "output_semantics": {
+    "selection_is_not_exact_cell_selection": true,
+    "selection_is_not_live_parameter_selection": true,
+    "lineage_roles": ["PERFORMANCE_LED", "STABILITY_LED"],
+    "same_membership_for_both_roles_is_emitted_once": true
+  }
+}
