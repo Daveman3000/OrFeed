@@ -11,6 +11,8 @@ assert.doesNotMatch(staging,/boot-sync-v030\.js/,'v1 staging must not load legac
 assert.doesNotMatch(staging,/scan-layer-v033\.js/,'v1 staging must not load legacy Scan execution');
 assert.doesNotMatch(staging,/rr-presentation-v036\.js|rr-fragment-labels-v037\.js/,'v1 staging must not load legacy RR polling scripts directly');
 assert.doesNotMatch(staging,/src="session-v001\.js/,'v1 browser must not load the duplicate root session implementation');
+assert.match(staging,/accept="\.surface\.zip,\.zip,\.csv,text\/csv,application\/zip"/,'v1 staging must allow semantic surface package uploads');
+assert.match(staging,/>Upload Surface<\/button>/,'v1 staging upload control must describe package-capable input');
 
 const expected=[
   'core/surface-analyzer-session-v001.js?v=001',
