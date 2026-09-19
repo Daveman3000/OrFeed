@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=019/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v019/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=020/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v020/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -53,10 +53,10 @@ assert.match(viewer,/cleaned-domain mask popcount mismatch/,'viewer must reject 
 assert.match(viewer,/regionNumbers=new Map/,'Region Analyzer must keep stable numeric region identities separate from rank');
 assert.match(viewer,/membership_hash\|\|a\[0\]/,'numeric region identity must derive from immutable membership order, not display order');
 assert.match(viewer,/id=\"raSort\"/,'Stage 6 must expose a sort selector');
-assert.match(viewer,/\[\['rank','Rank'\],\['id','ID'\],\['size','Size'\],\['p','P score'\],\['s','S score'\],\['score','6C score'\]\]/,'Stage 6 sort options must cover rank, identity, size, and all three scores');
+assert.match(viewer,/\[\['score','Score'\],\['id','ID'\],\['size','Size'\],\['p','Perf'\],\['s','Stability'\]\]/,'Stage 6 sort options must cover Score, identity, size, Performance, and Stability');
 assert.match(viewer,/title=\"Performance score\"/,'Stage 6 rows must expose Performance score separately');
 assert.match(viewer,/title=\"Stability score\"/,'Stage 6 rows must expose Stability score separately');
-assert.match(viewer,/title=\"Selected 6C score\"/,'Stage 6 rows must expose selected 6C score separately');
+assert.match(viewer,/title=\"Selected Stage 6C score\"/,'Stage 6 rows must expose selected Score separately');
 assert.match(viewer,/function score6Of\(id,role=mode6\)/,'6C score must come from the selected stored ranking run');
 assert.match(viewer,/\.ra-pop'\)\.addEventListener\('click',e=>e\.stopPropagation\(\)\)/,'Region Analyzer menu controls must not trigger click-away closure');
 assert.match(viewer,/initRegionColors\(manifest\);refresh\(\);render\(\);/,'manifest color table must be initialized before rendering regions');
@@ -68,3 +68,9 @@ assert.match(viewer,/#raOverlay\{[^}]*background:transparent!important/,'Region 
 assert.doesNotMatch(viewer,/function mapping\(|mapping\(cur,src\)/,'viewer must not best-effort remap masks from semantic parameters');
 
 console.log('PASS  Region Analyzer viewer is a static verifier/renderer with lightweight package identity binding');
+
+assert.match(viewer,/sort6='score'/,'Stage 6 must default to Score descending');
+assert.match(viewer,/Math\.round\(Number\(v\)\*100\)/,'Stage 6 normalized scores must display on a clean 0-100 scale');
+assert.match(viewer,/>P Level</,'Stage 6 table must expose Performance Level separately from Performance score');
+assert.doesNotMatch(viewer,/>Rank</,'Stage 6 table must not display redundant rank');
+assert.match(viewer,/>Score</,'Stage 6 table must label the weighted 6C value simply as Score');
