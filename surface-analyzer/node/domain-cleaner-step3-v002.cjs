@@ -34,11 +34,43 @@ function definition(surface,id){
   return result;
 }
 function fixedContextKey(context){return JSON.stringify(canonical(context||{}));}
+function sameValue(a,b){
+  if(a==null||a==='')return b==null||b==='';
+  return typeof b==='number'?Number(a)===b:String(a)===String(b);
+}
+function activationReferences(rule,out=new Set()){
+  if(!rule||rule==='always')return out;
+  if(rule.op==='eq'||rule.op==='in'){
+    if(rule.parameter)out.add(rule.parameter);
+    return out;
+  }
+  if(rule.op==='and'){
+    for(const clause of rule.clauses||[])activationReferences(clause,out);
+    return out;
+  }
+  fail(`Unsupported active_when op ${rule.op}.`);
+}
+function activeWhen(rule,params){
+  if(!rule||rule==='always')return true;
+  if(rule.op==='eq')return sameValue(params[rule.parameter],rule.value);
+  if(rule.op==='in')return (rule.values||[]).some(value=>sameValue(params[rule.parameter],value));
+  if(rule.op==='and')return (rule.clauses||[]).every(clause=>activeWhen(clause,params));
+  fail(`Unsupported active_when op ${rule.op}.`);
+}
 function validateContext(surface,context){
   if(!context||typeof context!=='object'||Array.isArray(context))fail('fixed_context must be an object of descriptor value indices.');
+  const params={};
   for(const [id,index] of Object.entries(context)){
     const def=definition(surface,id),values=def.values||def.ordered_values||[];
-    if(!Number.isInteger(index)||index<0||index>=values.length)fail(`${id}: fixed_context index is outside the descriptor domain.`);
+    if(!Number.isInteger(index)||index< -1||index>=values.length)fail(`${id}: fixed_context index is outside the descriptor domain.`);
+    if(index>=0)params[id]=values[index];
+  }
+  for(const [id,index] of Object.entries(context))if(index===-1){
+    const def=definition(surface,id),rule=def.active_when;
+    if(!rule||rule==='always')fail(`${id}: -1 is invalid for an always-active parameter.`);
+    const missing=[...activationReferences(rule)].filter(reference=>!Object.hasOwn(params,reference));
+    if(missing.length)fail(`${id}: inactivity cannot be established because fixed_context omits active_when dependencies: ${missing.join(', ')}.`);
+    if(activeWhen(rule,params))fail(`${id}: -1 is invalid because the parameter is active in this fixed_context.`);
   }
 }
 function cellsMatchingContext(surface,context,N){
@@ -286,4 +318,4 @@ function cleanDomain({surface,analysisKeys,candidateSpecs,bindings,requiredFacet
   return {artifact,stage4Input};
 }
 
-module.exports={DEFAULT_POLICY_PATH,canonical,canonicalBytes,quantile,loadPolicy,materializeCandidateSet,weaknessEvidence,cleanDomain};
+module.exports={DEFAULT_POLICY_PATH,canonical,canonicalBytes,quantile,loadPolicy,activeWhen,validateContext,materializeCandidateSet,weaknessEvidence,cleanDomain};

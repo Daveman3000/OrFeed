@@ -24,6 +24,18 @@ assert.equal(v2.candidate_governance.ordered_2d.shape,'exact_membership_intersec
 assert.equal(v2.candidate_governance.ordered_1d.interior_intervals_allowed,false);
 assert.ok(v2.candidate_governance.prohibited.includes('post_result_candidate_invention'));
 
+const activationSurface={semanticDescriptor:{parameters:[
+  {id:'mode',topology_role:'facet',values:[0,1],active_when:'always'},
+  {id:'conditional',topology_role:'ordered',values:[10,20],active_when:{op:'eq',parameter:'mode',value:1}},
+  {id:'always',topology_role:'ordered',values:[0,1],active_when:'always'}
+]}};
+assert.doesNotThrow(()=>Cleaner.validateContext(activationSurface,{mode:0,conditional:-1}));
+assert.throws(()=>Cleaner.validateContext(activationSurface,{mode:1,conditional:-1}),/parameter is active/);
+assert.throws(()=>Cleaner.validateContext(activationSurface,{mode:0,always:-1}),/always-active/);
+assert.doesNotThrow(()=>Cleaner.validateContext(activationSurface,{mode:1,conditional:0}));
+assert.throws(()=>Cleaner.validateContext(activationSurface,{mode:0,conditional:-2}),/outside the descriptor domain/);
+assert.throws(()=>Cleaner.validateContext(activationSurface,{conditional:-1}),/inactivity cannot be established/);
+
 function makeSurface({side=5,pocket=false,permutation=null}={}){
   const descriptor={descriptor_schema_version:1,study_id:'step3-v002-synthetic',parameters:[
     {id:'reg',type:'enum',topology_role:'regime',source:'outer',values:[0],active_when:'always'},
