@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=006/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v006/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=007/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v007/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -23,6 +23,9 @@ assert.match(viewer,/function exactPhysicalMap\(cur,src\)/,'viewer must derive v
 assert.match(viewer,/Canonical physical-index map is not a permutation/,'viewer must reject invalid canonical physical maps');
 assert.match(viewer,/Visible cell is outside the canonical package/,'filtered cells must bind exactly to canonical source coordinates');
 assert.match(viewer,/snap\?\.sourceSurface/,'viewer must verify masks against the canonical source surface when the visible surface is filtered');
+assert.match(viewer,/function regionColor\(id\)\{return COLORS\[colorIndex\(id\)\];\}/,'region color must derive from stable region identity');
+assert.match(viewer,/color:regionColor\(id\)/,'rendered regions must carry their identity-derived color');
+assert.doesNotMatch(viewer,/COLORS\[i%COLORS\.length\]/,'region colors must not depend on visible list position');
 assert.match(viewer,/id=\"raEnabled\"/,'viewer menu must expose a Region Analyzer on/off control');
 assert.match(viewer,/if\(!active\|\|!manifest/,'Region Analyzer off must suppress mask rendering without discarding state');
 assert.match(viewer,/#raOverlay\{[^}]*background:transparent!important/,'Region Analyzer overlay must stay transparent over the base heatmap');
