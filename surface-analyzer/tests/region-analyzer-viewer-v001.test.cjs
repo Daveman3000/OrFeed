@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=016/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v016/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=017/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v017/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -42,6 +42,17 @@ assert.match(viewer,/function weightLabel\(run\)/,'weight selector must format s
 assert.match(viewer,/'P '\+p\+'% \/ S '\+s\+'%'/,'weight selector must display P x% / S y% labels');
 assert.doesNotMatch(viewer,/· Center/,'weight selector must not label the middle preset as Center');
 assert.match(viewer,/runs\.map\(x=>'<option value="'\+esc\(\/CENTER\/i\.test\(x\.weight_id\)\?'center':x\.weight_id\)/,'weight selector must preserve stored run order while keeping the middle preset as the internal default');
+assert.match(viewer,/kind!==\'ALL_PHYSICAL_CELLS\'&&kind!==\'BUNDLE_BITSET\'/,'viewer must accept frozen bundle-backed cleaned domains');
+assert.match(viewer,/function verifyDomainBundle\(m,b\)/,'viewer must verify stored cleaned-domain bitsets after bundle load');
+assert.match(viewer,/cleaned-domain mask popcount mismatch/,'viewer must reject a corrupted cleaned-domain bitset');
+assert.match(viewer,/regionNumbers=new Map/,'Region Analyzer must keep stable numeric region identities separate from rank');
+assert.match(viewer,/membership_hash\|\|a\[0\]/,'numeric region identity must derive from immutable membership order, not display order');
+assert.match(viewer,/id=\"raSort\"/,'Stage 6 must expose a sort selector');
+assert.match(viewer,/\[\['rank','Rank'\],\['id','ID'\],\['size','Size'\],\['p','P score'\],\['s','S score'\],\['score','6C score'\]\]/,'Stage 6 sort options must cover rank, identity, size, and all three scores');
+assert.match(viewer,/title=\"Performance score\"/,'Stage 6 rows must expose Performance score separately');
+assert.match(viewer,/title=\"Stability score\"/,'Stage 6 rows must expose Stability score separately');
+assert.match(viewer,/title=\"Selected 6C score\"/,'Stage 6 rows must expose selected 6C score separately');
+assert.match(viewer,/function score6Of\(id,role=mode6\)/,'6C score must come from the selected stored ranking run');
 assert.match(viewer,/\.ra-pop'\)\.addEventListener\('click',e=>e\.stopPropagation\(\)\)/,'Region Analyzer menu controls must not trigger click-away closure');
 assert.match(viewer,/initRegionColors\(manifest\);refresh\(\);render\(\);/,'manifest color table must be initialized before rendering regions');
 assert.match(viewer,/color:regionColor\(id\)/,'rendered regions must carry their identity-derived color');
