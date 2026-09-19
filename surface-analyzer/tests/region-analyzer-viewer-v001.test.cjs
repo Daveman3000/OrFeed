@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=017/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v017/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=018/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v018/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -18,6 +18,10 @@ for(const forbidden of ['computeStructuralRobustness','computeFacetReplication',
 assert.match(bridge,/regionAnalyzerIdentity/,'package bridge must expose Region Analyzer package identity');
 assert.match(bridge,/packageSha256/,'package bridge must expose exact package SHA-256');
 assert.match(bridge,/descriptorSha256/,'package bridge must expose exact descriptor SHA-256');
+assert.match(bridge,/semanticCsvSha256/,'package bridge must expose exact semantic CSV SHA-256');
+assert.match(viewer,/function identityCompatible\(m,s\)/,'viewer must support exact semantic-content identity for canonicalized package variants');
+assert.match(viewer,/x\.semantic_csv_sha256!==c/,'semantic CSV identity must match exactly before a package variant is accepted');
+assert.match(viewer,/accepted\.includes\(d\)/,'semantic-content compatibility must also require an approved descriptor identity');
 assert.match(viewer,/physicalIndexByVisual/,'viewer must use the exact canonical physical-index map');
 assert.match(viewer,/function exactPhysicalMap\(cur,src\)/,'viewer must derive visible mask indices from the canonical source map');
 assert.match(viewer,/Canonical physical-index map is not a permutation/,'viewer must reject invalid canonical physical maps');
