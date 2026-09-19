@@ -12,8 +12,8 @@ assert.match(bridge,/document\.addEventListener\('change',[\s\S]*\},true\)/,'bri
 assert.match(bridge,/e\.stopImmediatePropagation\(\)/,'canonical package upload must suppress the duplicate legacy parser path');
 assert.doesNotMatch(bridge,/function buildSemanticSurface/,'browser bridge must not duplicate semantic package construction');
 
-const corePos=staging.indexOf('surface-package-core-v001.js?v=001');
-const bridgePos=staging.indexOf('session-package-bridge-v001.js?v=001');
-const filterPos=staging.indexOf('surface-filter-core-v001.js?v=001');
+const corePos=staging.indexOf('surface-package-core-v001.js?v=002');
+const bridgePos=staging.indexOf('session-package-bridge-v001.js?v=002');
+const filterPos=staging.indexOf('surface-filter-core-v001.js?v=002');
 assert.ok(corePos>=0&&bridgePos>corePos&&filterPos>bridgePos,'staging must load package core and browser bridge before downstream research bridges');
 console.log('PASS  staging package uploads construct surfaces through the canonical package core');
