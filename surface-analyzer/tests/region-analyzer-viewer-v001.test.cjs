@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=013/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v013/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=014/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v014/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -30,9 +30,14 @@ assert.match(viewer,/im\.data\[px\+3\]=156/,'region fill opacity must be uniform
 assert.doesNotMatch(viewer,/bound\?235:78|left=c\?lab\[i-1\]|right=c<cur\.cols-1\?lab\[i\+1\]/,'Region Analyzer must not add boundary or edge emphasis');
 assert.match(viewer,/Object\.entries\(m\?\.region_dictionary\|\|\{\}\)\.map\(\(\[id,r\]\)=>\[id,rungColor\(id,r\)\]\)/,'viewer must freeze rung-aware colors by region identity');
 assert.match(viewer,/function regionColor\(id\)\{return regionColors\.get\(id\)\|\|rungColor\(id,manifest\?\.region_dictionary\?\.\[id\]\);\}/,'region color lookup must use the fixed rung-aware table');
-assert.match(viewer,/function weightRun\(role\)/,'Stage 6 must resolve the selected stored weighting run');
-assert.match(viewer,/function ranked\(role,topOnly=true\)/,'Stage 6 must support full ranking and top-three ranking from the same stored run');
-assert.match(viewer,/view6==='all'\)return rankOrdered\(s\.collections\?\.all\|\|\[\],'performance'\)/,'All Stage-6 candidates must follow the selected performance ranking');
+assert.match(viewer,/function stage6Mode\(role=mode6\)/,'Stage 6 must resolve the selected Mode and Tolerance population');
+assert.match(viewer,/s\?\.tolerances\?\.\[tolerance\]/,'Stage 6 must bind candidate population to the selected tolerance');
+assert.match(viewer,/function weightRun\(role=mode6\)/,'Stage 6 must resolve the selected stored v004 weighting run');
+assert.match(viewer,/function ranked\(role=mode6,topOnly=true\)/,'Stage 6 must support full ranking and top-three ranking from the same stored run');
+assert.match(viewer,/id="raMode"/,'Stage 6 menu must expose Performance and Stability modes');
+assert.match(viewer,/id="raTolerance"/,'Stage 6 menu must expose the tolerance selector');
+assert.match(viewer,/\[\['strict','Low'\],\['center','Mid'\],\['loose','High'\]\]/,'Tolerance must map Low\/Mid\/High to strict\/center\/loose stopping grids');
+assert.match(viewer,/\[\['all','All'\],\['top','Top 3'\]\]/,'Stage 6 menu must expose All and Top 3 views');
 assert.match(viewer,/center\?\.weight_id\|\|'Center'/,'weight selector must expose the actual center weighting id');
 assert.match(viewer,/\.ra-pop'\)\.addEventListener\('click',e=>e\.stopPropagation\(\)\)/,'Region Analyzer menu controls must not trigger click-away closure');
 assert.match(viewer,/initRegionColors\(manifest\);refresh\(\);render\(\);/,'manifest color table must be initialized before rendering regions');
