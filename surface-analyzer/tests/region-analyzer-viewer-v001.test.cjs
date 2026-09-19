@@ -9,8 +9,8 @@ const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'u
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
 assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
-assert.match(staging,/region-analyzer-viewer-v001\.js\?v=020/,'staging must load the Region Analyzer viewer');
-assert.match(staging,/RA v020/,'staging must expose the Region Analyzer build version');
+assert.match(staging,/region-analyzer-viewer-v001\.js\?v=021/,'staging must load the Region Analyzer viewer');
+assert.match(staging,/RA v021/,'staging must expose the Region Analyzer build version');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');
 for(const forbidden of ['computeStructuralRobustness','computeFacetReplication','ensureTopology','runScan(']){
   assert.ok(!viewer.includes(forbidden),`viewer must not invoke research recomputation: ${forbidden}`);
@@ -74,3 +74,5 @@ assert.match(viewer,/Math\.round\(Number\(v\)\*100\)/,'Stage 6 normalized scores
 assert.match(viewer,/>P Level</,'Stage 6 table must expose Performance Level separately from Performance score');
 assert.doesNotMatch(viewer,/>Rank</,'Stage 6 table must not display redundant rank');
 assert.match(viewer,/>Score</,'Stage 6 table must label the weighted 6C value simply as Score');
+
+assert.match(viewer,/\.ra-s6-head \.ra-num,\.ra-s6-item \.ra-num\{text-align:right\}/,'Stage 6 headers and values must share the same numeric alignment');
