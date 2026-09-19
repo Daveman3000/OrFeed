@@ -18,6 +18,6 @@ assert.match(bridge,/regionAnalyzerIdentity/,'package bridge must expose Region 
 assert.match(bridge,/packageSha256/,'package bridge must expose exact package SHA-256');
 assert.match(bridge,/descriptorSha256/,'package bridge must expose exact descriptor SHA-256');
 assert.match(viewer,/physicalIndexByVisual/,'viewer must use the exact canonical physical-index map');
-assert.doesNotMatch(viewer,/function mapping\\(|mapping\\(cur,src\\)/,'viewer must not best-effort remap masks from semantic parameters');
+assert.doesNotMatch(viewer,/function mapping\(|mapping\(cur,src\)/,'viewer must not best-effort remap masks from semantic parameters');
 
 console.log('PASS  Region Analyzer viewer is a static verifier/renderer with lightweight package identity binding');
