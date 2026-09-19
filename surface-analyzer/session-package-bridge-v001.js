@@ -61,10 +61,15 @@
     if(!core?.buildSemanticSurface)fail('Canonical Surface Package core is unavailable.');
     const z=await unzipSelected(file,new Set([CSV_NAME,DESCRIPTOR_NAME]));
     const descriptorBytes=z.get(DESCRIPTOR_NAME);
+    const csvBytes=z.get(CSV_NAME);
     const descriptor=JSON.parse(utf8.decode(descriptorBytes));
-    const text=utf8.decode(z.get(CSV_NAME));
+    const text=utf8.decode(csvBytes);
     const surface=core.buildSemanticSurface(text,descriptor,file);
-    surface.regionAnalyzerIdentity={packageSha256:z.packageSha256,descriptorSha256:await sha256Hex(descriptorBytes)};
+    surface.regionAnalyzerIdentity={
+      packageSha256:z.packageSha256,
+      descriptorSha256:await sha256Hex(descriptorBytes),
+      semanticCsvSha256:await sha256Hex(csvBytes)
+    };
     return surface;
   }
 
