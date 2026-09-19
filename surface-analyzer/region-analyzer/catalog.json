@@ -13,6 +13,16 @@
           "manifest_path": "versions/53fba86a6c4be0c8c079652554e9f9e63e2bdd6d3179bc485991276c46580aeb.manifest.json",
           "mask_bundle_path": "bundles/43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28.masks.bin",
           "mask_bundle_sha256": "43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28"
+        },
+        {
+          "version_id": "volbands_20260918_bandtp_shoulder_winpct_v1-region-analyzer-v002",
+          "content_sha256": "bebdab5084f53488c0f38445bbdc6a95f1fac8a7f4ce23edea810fb40f5c6249",
+          "label": "Volume Bands shoulder-expanded Region Analyzer calibration v002",
+          "created_at": "2026-09-19T15:17:59Z",
+          "status": "active",
+          "manifest_path": "versions/bebdab5084f53488c0f38445bbdc6a95f1fac8a7f4ce23edea810fb40f5c6249.manifest.json",
+          "mask_bundle_path": "bundles/43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28.masks.bin",
+          "mask_bundle_sha256": "43e340093e24d28d3b803ecf5094ce0ecae08f17d47b7e026d8a29f21dbdbc28"
         }
       ]
     }
