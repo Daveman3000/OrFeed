@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "policy_type": "domain_cleaning_step3",
+  "policy_id": "conservative_domain_cleaning",
+  "policy_version": "2",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": true,
+  "identity": {
+    "hash_method": "sha256_exact_file_bytes",
+    "encoding": "UTF-8",
+    "bom": false
+  },
+  "boundary": {
+    "purpose": "remove_only_obvious_macro_junk",
+    "cleaned_domain_is_analysis_universe": true,
+    "performance_qualification_is_separate": true,
+    "robustness_scores_may_justify_cleaning": false,
+    "uncertainty_outcome": "KEEP_UNSUPPORTED"
+  },
+  "quantiles": {
+    "method": "linear_interpolation_sorted_finite_values",
+    "index": "(n - 1) * q",
+    "empty_population": "unsupported",
+    "single_value_iqr": 0
+  },
+  "economic_anchors": {
+    "near_p1": {
+      "r_per_trade": { "operator": ">=", "value": 0.40 },
+      "profit_factor": { "operator": ">=", "value": 1.40 },
+      "romad": { "operator": ">=", "value": 1.50 }
+    },
+    "p1_reporting_only": {
+      "r_per_trade": { "operator": ">=", "value": 0.50 },
+      "profit_factor": { "operator": ">=", "value": 1.50 },
+      "romad": { "operator": ">=", "value": 2.00 }
+    }
+  },
+  "support": {
+    "minimum_trades_per_configuration": 15,
+    "minimum_usable_cells": 20,
+    "minimum_usable_fraction": 0.50,
+    "required_finite_fields": ["r_per_trade", "profit_factor", "romad", "max_drawdown_r", "trades"],
+    "max_drawdown_r_must_be_positive": true,
+    "unsupported_cells_count_as_weak": false,
+    "sum_trades_across_configurations": false
+  },
+  "broad_joint_weakness": {
+    "median_maximum": {
+      "r_per_trade": 0,
+      "profit_factor": 1,
+      "romad": 0
+    },
+    "q75_below_near_p1_metrics_required": 2,
+    "jointly_below_near_p1_minimum_fraction": 0.75,
+    "joint_near_p1_maximum_fraction": 0.10,
+    "cell_joint_evaluation": true
+  },
+  "pocket_protection": {
+    "graph": "descriptor_semantic_ordered_graph",
+    "minimum_connected_cells": 8,
+    "minimum_ordered_dimensions_spanned": 2,
+    "minimum_distinct_values_per_spanned_dimension": 2,
+    "require_p75_cells": false,
+    "candidate_boundary_rule": "veto_if_candidate_portion_qualifies_or_removal_leaves_no_qualifying_remainder_of_intersected_qualifying_component"
+  },
+  "facet_peer_eligibility": {
+    "scope": "affected_hard_regime",
+    "peer_semantics": "canonical_activation_aware_matched_peers",
+    "intentionally_pruned_facet_is_exempt": true,
+    "required_retained_facet_values": 2,
+    "minimum_remaining_matched_relationships": 1,
+    "minimum_common_support_fraction_of_pre_prune": 0.50,
+    "preexisting_unavailable_comparison": "not_applicable",
+    "evaluate_cumulative_proposed_deletions": true
+  },
+  "ordered_topology_eligibility": {
+    "filter_original_graph_without_bridging": true,
+    "minimum_values_after_if_originally_nonsingleton": 2,
+    "minimum_one_step_edges_after": 1,
+    "retained_cell_may_lose_all_ordered_neighbors": false,
+    "evaluate_cumulative_proposed_deletions": true
+  },
+  "candidate_governance": {
+    "candidate_set_must_be_predeclared": true,
+    "generate_new_candidates_during_evaluation": false,
+    "evaluation_order_is_predeclared": true,
+    "allowed_shapes": [
+      "scoped_categorical_value",
+      "ordered_1d_boundary_tail",
+      "ordered_2d_boundary_tail_intersection"
+    ],
+    "categorical": {
+      "shape": "whole_categorical_value_within_fixed_legal_context",
+      "hard_regimes_may_be_pruned_as_categories": false
+    },
+    "ordered_1d": {
+      "shape": "contiguous_descriptor_adjacent_boundary_tail",
+      "boundaries": ["MIN", "MAX"],
+      "interior_intervals_allowed": false
+    },
+    "ordered_2d": {
+      "shape": "exact_membership_intersection_of_two_predeclared_ordered_1d_boundary_tail_candidates",
+      "parents_must_precede_child": true,
+      "parents_must_share_fixed_legal_context": true,
+      "parents_must_use_distinct_ordered_parameters": true,
+      "pass_maximum": 1
+    },
+    "prohibited": [
+      "arbitrary_interior_rectangle",
+      "arbitrary_hole",
+      "higher_order_candidate",
+      "adaptive_search",
+      "post_result_candidate_invention",
+      "cell_level_ranking"
+    ]
+  },
+  "outcomes": [
+    "PROPOSED_PRUNE",
+    "KEEP_NOT_WEAK",
+    "KEEP_POCKET",
+    "KEEP_PEER",
+    "KEEP_TOPOLOGY",
+    "KEEP_UNSUPPORTED"
+  ],
+  "controller_output": {
+    "cleaned_domain_artifact": "canonical_exact_retained_analysis_key_membership_with_identity_and_provenance",
+    "stage4_input_provider": "filtered_surface_and_semantic_graph_bound_to_cleaned_domain_identity"
+  },
+  "calibration": {
+    "threshold_source_policy": "domain-cleaning-step3-v001",
+    "threshold_refitting_allowed": false,
+    "historical_candidate_compatibility": {
+      "volume_bands": "compatible_no_2d_candidates",
+      "volspike": "compatible_no_recorded_2d_candidates"
+    },
+    "volspike_package_sha256": "58834e2326accb4a1a5af72c1da3f04624f22d0b5bc4c9fbdfdec282c81728d5",
+    "volume_bands_package_sha256": "c0b730c5712b3bfcad1175e55658ce0054b3011d6c6f43a5181aaf0d3d7ac4f4",
+    "known_case_matrix": {
+      "volspike_candidates": 141,
+      "proposed_prune": 91,
+      "keep_pocket": 11,
+      "keep_not_weak": 5,
+      "keep_unsupported": 34,
+      "proposed_removed_cells": 14805,
+      "volume_bands_flagged_family_contexts": 0
+    },
+    "fresh_confirmatory_validation_required": true
+  }
+}
