@@ -2,11 +2,13 @@
 'use strict';
 if(typeof window==='undefined')return;
 const VERSION='region-analyzer-viewer-v001',CATALOG='region-analyzer/catalog.json',HIDE='surface-analyzer:region-analyzer:hidden-v1';
-const COLORS=['#39d98a','#6aa9ff','#f2b84b','#e879f9','#ff7a90','#63d6e8','#b6e35c','#c4a7ff'];
-function colorIndex(id){let h=2166136261,s=String(id||'');for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)%COLORS.length;}
+const RUNG_HUES=[220,190,145,36,334];
+function colorHash(id){let h=2166136261,s=String(id||'');for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function hslHex(h,s,l){h=((h%360)+360)%360;s/=100;l/=100;const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;let r=0,g=0,b=0;if(h<60){r=c;g=x;}else if(h<120){r=x;g=c;}else if(h<180){g=c;b=x;}else if(h<240){g=x;b=c;}else if(h<300){r=x;b=c;}else{r=c;b=x;}return '#'+[r,g,b].map(v=>Math.round((v+m)*255).toString(16).padStart(2,'0')).join('');}
+function rungColor(id,r){const p=Math.max(1,Math.min(20,rung(r?.rung)||1)),band=Math.min(4,Math.floor((p-1)/4)),hash=colorHash(id),h=RUNG_HUES[band]+((hash%7)-3)*2,s=68+(((hash>>>8)%3)-1)*4,l=36+((p-1)%4)*5+(((hash>>>12)%3)-1)*2;return hslHex(h,s,l);}
 let regionColors=new Map();
-function initRegionColors(m){regionColors=new Map(Object.keys(m?.region_dictionary||{}).map(id=>[id,COLORS[colorIndex(id)]]));}
-function regionColor(id){return regionColors.get(id)||COLORS[colorIndex(id)];}
+function initRegionColors(m){regionColors=new Map(Object.entries(m?.region_dictionary||{}).map(([id,r])=>[id,rungColor(id,r)]));}
+function regionColor(id){return regionColors.get(id)||rungColor(id,manifest?.region_dictionary?.[id]);}
 let catalog=null,items=[],item=null,manifest=null,bundle=null,stage='6',pFrom=1,pTo=20,view6='all',weight='center',active=true,dim=true,visible=[],enabled=new Set(),raster=null,centroids=[],rasterSurface=null,baseActivate=null,baseReset=null,token=0;
 const q=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),rung=s=>Number(String(s||'').replace(/^P/i,''))||0;
 function hidden(){try{return new Set(JSON.parse(localStorage.getItem(HIDE)||'[]'));}catch{return new Set();}}
