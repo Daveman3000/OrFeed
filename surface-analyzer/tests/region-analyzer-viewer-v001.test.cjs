@@ -7,6 +7,7 @@ const root=path.join(__dirname,'..');
 const staging=fs.readFileSync(path.join(root,'staging-v1.html'),'utf8');
 const viewer=fs.readFileSync(path.join(root,'region-analyzer-viewer-v001.js'),'utf8');
 const bridge=fs.readFileSync(path.join(root,'session-package-bridge-v001.js'),'utf8');
+assert.doesNotThrow(()=>new Function(viewer),'viewer must parse as JavaScript');
 
 assert.match(staging,/region-analyzer-viewer-v001\.js\?v=001/,'staging must load the Region Analyzer viewer');
 assert.match(viewer,/region-analyzer\/catalog\.json/,'viewer must use the static Region Analyzer catalog');

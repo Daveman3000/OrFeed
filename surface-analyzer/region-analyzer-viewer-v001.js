@@ -1,126 +1,52 @@
 (function(root){
-  'use strict';
-  if(typeof window==='undefined')return;
-
-  const VERSION='region-analyzer-viewer-v001';
-  const CATALOG_URL='region-analyzer/catalog.json';
-  const HIDDEN_KEY='surface-analyzer:region-analyzer:hidden-v1';
-  const COLORS=['#39d98a','#6aa9ff','#f2b84b','#e879f9','#ff7a90','#63d6e8','#b6e35c','#c4a7ff'];
-
-  let installed=false,catalog=null,activeManifest=null,activeManifestUrl='',activeVersion=null,bundleBytes=null;
-  let compatible=[],stage='6',stage4From=1,stage4To=20,stage6View='all',weightChoice='center',dimOutside=true;
-  let visibleIds=[],enabledIds=new Set(),overlayCanvas=null,overlayCentroids=[],overlaySurface=null,mappingCache=null;
-  let drawBase=null,activateBase=null,resetBase=null,rebuildToken=0;
-
-  const $=s=>document.querySelector(s);
-  const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const rungNum=r=>{const n=Number(String(r||'').replace(/^P/i,''));return Number.isFinite(n)?n:0;};
-  const shortBand=v=>v==='STRONG'?'S':v==='MODERATE'?'M':v==='SENSITIVE'||v==='WEAK'?'W':v==='ADEQUATE'?'A':v||'â€”';
-
-  function hiddenSet(){try{return new Set(JSON.parse(localStorage.getItem(HIDDEN_KEY)||'[]'));}catch{return new Set();}}
-  function saveHidden(set){localStorage.setItem(HIDDEN_KEY,JSON.stringify([...set].sort()));}
-  function session(){return root.SurfaceAnalyzerBrowserSessionV001?.getSession?.()||null;}
-  function sourceSurface(){return session()?.getSourceSurface?.()||((typeof activeSurface!=='undefined')?activeSurface:null);}
-  function currentSurface(){return (typeof activeSurface!=='undefined')?activeSurface:null;}
-  function packageSha(surface){return surface?.regionAnalyzerIdentity?.packageSha256||'';}
-  function descriptorSha(surface){return surface?.regionAnalyzerIdentity?.descriptorSha256||'';}
-
-  async function sha256Hex(data){
-    const bytes=typeof data==='string'?new TextEncoder().encode(data):data;
-    if(!root.crypto?.subtle)throw new Error('WebCrypto SHA-256 is unavailable.');
-    const digest=new Uint8Array(await root.crypto.subtle.digest('SHA-256',bytes));
-    return [...digest].map(v=>v.toString(16).padStart(2,'0')).join('');
-  }
-  async function fetchText(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${url}: HTTP ${r.status}`);return r.text();}
-  async function fetchJsonVerified(url,expectedSha=''){
-    const text=await fetchText(url);
-    if(expectedSha){const got=await sha256Hex(text);if(got!==expectedSha)throw new Error(`Manifest hash mismatch: expected ${expectedSha}, got ${got}`);}
-    return JSON.parse(text);
-  }
-  async function loadCatalog(){if(catalog)return catalog;catalog=await fetch(CATALOG_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`Catalog HTTP ${r.status}`);return r.json();});return catalog;}
-  function manifestUrl(entry){return new URL(`region-analyzer/${entry.manifest_path}`,location.href).href;}
-  function bundleUrl(manifest,url){return new URL(manifest.mask_bundle.path,url).href;}
-
-  function injectStyle(){
-    if($('#regionAnalyzerStyle'))return;
-    const s=document.createElement('style');s.id='regionAnalyzerStyle';s.textContent=`
-      .ra-wrap{position:relative}.ra-btn.active{box-shadow:inset 0 0 0 1px #7398bd;color:#fff}.ra-pop{display:none;position:absolute;right:0;top:38px;z-index:95;width:410px;max-width:min(94vw,410px);max-height:74vh;overflow:auto;background:#111821;border:1px solid #34404d;border-radius:10px;box-shadow:0 18px 46px #000b;padding:11px}.ra-wrap.open .ra-pop{display:block}.ra-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}.ra-title{font-size:12px;font-weight:800}.ra-small{font-size:9px;color:#72808e}.ra-row{display:flex;align-items:center;gap:7px;margin:7px 0}.ra-row label{font-size:10px;color:#8f9baa}.ra-row select,.ra-row input[type=number]{background:#0d141c;color:#edf2f7;border:1px solid #33404d;border-radius:6px;padding:5px 6px;font:inherit;font-size:10px}.ra-row select{min-width:130px}.ra-stage,.ra-view{display:flex;gap:4px;flex-wrap:wrap}.ra-stage button,.ra-view button,.ra-action{border:0;border-radius:6px;background:#26313d;color:#aab6c2;font:inherit;font-size:10px;font-weight:750;padding:6px 8px;cursor:pointer}.ra-stage button.on,.ra-view button.on{background:#486783;color:#fff}.ra-action.subtle{background:transparent;color:#7f8d9a;padding:4px 6px}.ra-action.subtle:hover{color:#dfe7ef;background:#202a35}.ra-sep{border-top:1px solid #26313d;margin:9px 0}.ra-regions{display:grid;gap:4px;max-height:210px;overflow:auto}.ra-region{display:grid;grid-template-columns:18px 1fr auto;gap:6px;align-items:center;padding:5px 6px;border-radius:6px;background:#0d141c;font-size:9px;color:#b7c2cd}.ra-region b{color:#eef3f7}.ra-dot{width:8px;height:8px;border-radius:50%;display:inline-block}.ra-empty{font-size:10px;color:#71808f;padding:7px 2px}.ra-error{font-size:9px;color:#e7a0a6;line-height:1.35}.ra-ok{font-size:9px;color:#83919f;line-height:1.35}.ra-controls-hidden{display:none!important}`;
-    document.head.appendChild(s);
-  }
-
-  function ensureControl(){
-    const controls=$('.controls');if(!controls)return null;
-    let wrap=$('#regionAnalyzerControl');if(wrap)return wrap;
-    wrap=document.createElement('div');wrap.id='regionAnalyzerControl';wrap.className='ctrl ra-wrap';wrap.style.display='none';
-    wrap.innerHTML='<button class="ra-btn" type="button">Region Analyzer â–¾</button><div class="ra-pop"></div>';
-    controls.insertBefore(wrap,controls.querySelector('.legend'));
-    wrap.querySelector('.ra-btn').addEventListener('click',e=>{e.stopPropagation();wrap.classList.toggle('open');});
-    document.addEventListener('click',e=>{if(!wrap.contains(e.target))wrap.classList.remove('open');});
-    return wrap;
-  }
-
-  function verifyManifest(manifest,surface){
-    if(!manifest?.surface||!surface)throw new Error('Region Analyzer surface identity is unavailable.');
-    const pkg=packageSha(surface);if(!pkg)throw new Error('Loaded package has no verified SHA-256 identity. Reload it with the current v1 loader.');
-    if(manifest.surface.package_sha256!==pkg)throw new Error('Region Analyzer package SHA does not match the loaded surface.');
-    const ds=descriptorSha(surface);if(ds&&manifest.surface.descriptor_sha256!==ds)throw new Error('Region Analyzer descriptor SHA does not match the loaded surface.');
-    if((surface.rows*surface.cols)!==manifest.surface.physical_cells)throw new Error('Region Analyzer physical cell count does not match the loaded package.');
-    if(manifest.surface.domain_kind==='rectangular_physical_package'&&manifest.surface.cleaned_domain_mask?.kind!=='ALL_PHYSICAL_CELLS')throw new Error('Unexpected cleaned-domain contract.');
-  }
-
-  async function findCompatible(surface){
-    const cat=await loadCatalog(),hidden=hiddenSet(),pkg=packageSha(surface);if(!pkg)return [];
-    const out=[];
-    for(const [surfaceId,group] of Object.entries(cat.surfaces||{})){
-      for(const entry of group.versions||[]){
-        if(hidden.has(entry.version_id))continue;
-        const url=manifestUrl(entry);
-        try{
-          const manifest=await fetchJsonVerified(url,entry.content_sha256||'');
-          if(manifest.surface?.package_sha256===pkg)out.push({surfaceId,entry,manifest,url});
-        }catch(err){console.warn('Region Analyzer manifest skipped:',entry.version_id,err);}
-      }
-    }
-    return out.sort((a,b)=>String(a.entry.version_id).localeCompare(String(b.entry.version_id)));
-  }
-
-  function versionLabel(item,index){
-    const m=String(item.entry.version_id).match(/v(\d{3,})$/i);return m?`V {Number(m[1])}`:V ${index+1}`;
-  }
-
-  async function selectVersion(versionId){
-    const item=compatible.find(v=>v.entry.version_id===versionId)||compatible.at(-1);if(!item)return;
-    const src=sourceSurface();verifyManifest(item.manifest,src);
-    const url=bundleUrl(item.manifest,item.url),r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`Mask bundle HTTP ${r.status}`);
-    const bytes=new Uint8Array(await r.arrayBuffer()),got=await sha256Hex(bytes);if(got!==item.manifest.mask_bundle.sha256)throw new Error(`Mask bundle hash mismatch: expected ${item.manifest.mask_bundle.sha256}, got ${got}`);
-    if(bytes.length!==item.manifest.mask_bundle.bytes)throw new Error('Mask bundle byte length mismatch.');
-    activeManifest=item.manifest;activeManifestUrl=item.url;activeVersion=item;bundleBytes=bytes;mappingCache=null;overlayCanvas=null;overlayCentroids=[];refreshSelection();renderMenu();
-  }
-
-  function stage4Ids(){
-    const m=activeManifest;if(!m)return [];
-    return (m.stages.stage4?.all_unique_lineage_envelopes||[]).filter(id=>{const p=rungNum(m.region_dictionary[id]?.rung);return p>=stage4From&&p<=stage4To;});
-  }
-  function stage5Ids(){
-    const m=activeManifest;if(!m)return [];const a=m.stages.stage5?.annotations_by_region_id||{};return Object.keys(a).filter(id=>{const p=rungNum(m.region_dictionary[id]?.rung);return p>=stage4From&&p<=stage4To;});
-  }
-  function calibrationIds(role){
-    const cal=activeManifest?.stages?.stage6?.calibration?.[role];if(!cal)return [];
-    if(weightChoice==='stable')return cal.stable_intersection||[];
-    if(weightChoice==='union')return cal.union||[];
-    const runs=cal.runs||[],run=weightChoice==='center'?runs.find(x=>/CENTER/i.test(x.weight_id))||runs[0]:runs.find(x=>x.weight_id===weightChoice)||runs[0];
-    return (run?.ranking||[]).filter(x=>x.rank<=3).sort((a,b)=>a.rank-b.rank
-K›X\
-Ožœ™YÚ[Û—ÚY
-NÂˆBˆ[˜Ý[ÛˆÝYÙM’YÊ
-^ÂˆÛÛœÝÏXXÝ]™SX[šY™\ÝËœÝYÙ\ÏËœÝYÙMŽÚYŠ\Ê\™]\›ˆ×NÂˆYŠÝYÙM•šY]ÏOOIÝÜÜ\™›Ü›X[˜ÙIÊ\™]\›ˆØ[Xœ˜][Û’YÊ	Ü\™›Ü›X[˜ÙIÊNÂˆYŠÝYÙM•šY]ÏOOIÝÜÜÝXš[]IÊ\™]\›ˆØ[Xœ˜][Û’YÊ	ÜÝXš[]IÊNÂˆ™]\›ˆË˜ÛÛXÝ[ÛœÏË–ÜÝYÙM•šY]×_×NÂˆBˆ[˜Ý[ÛˆÙ[XÝYYÊ
-^Ü™]\›ˆÝYÙOOOIÍ	ÏÜÝYÙMYÊ
-NœÝYÙOOOIÍIÏÜÝYÙMRYÊ
-NœÝYÙM’YÊ
-NßB‚ˆ[˜Ý[Ûˆ˜[šÑ›ÜŠY›ÛJ^ÂˆÛÛœÝØ[XXÝ]™SX[šY™\ÝËœÝYÙ\ÏËœÝYÙMË˜Ø[Xœ˜][ÛË–Ü›ÛWNÚYŠXØ[
-\™]\›ˆ[ÂˆÛÛœÝ[œÏXØ[œ[œß×K[]ÙZYÚÚÚXÙOOOIØÙ[\‰ÏÜ[œË™š[™
-O‹ÐÑS•T‹ÚK\Ý
-ÙZYÚÚY
-J_[œÖÌNœ[œË™š[™
-OžÙZYÚÚYOO]ÙZYÚÚÚXÙJ_[œÖÌNÂˆ™]\›ˆ[Ëœ˜[šÚ[™ÏË™š[™
-Ož
+'use strict';
+if(typeof window==='undefined')return;
+const VERSION='region-analyzer-viewer-v001',CATALOG='region-analyzer/catalog.json',HIDE='surface-analyzer:region-analyzer:hidden-v1';
+const COLORS=['#39d98a','#6aa9ff','#f2b84b','#e879f9','#ff7a90','#63d6e8','#b6e35c','#c4a7ff'];
+let catalog=null,items=[],item=null,manifest=null,bundle=null,stage='6',pFrom=1,pTo=20,view6='all',weight='center',dim=true,visible=[],enabled=new Set(),raster=null,centroids=[],rasterSurface=null,mapCache=null,baseActivate=null,baseReset=null,token=0;
+const q=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),rung=s=>Number(String(s||'').replace(/^P/i,''))||0;
+function hidden(){try{return new Set(JSON.parse(localStorage.getItem(HIDE)||'[]'));}catch{return new Set();}}
+function saveHidden(s){localStorage.setItem(HIDE,JSON.stringify([...s].sort()));}
+function sess(){return root.SurfaceAnalyzerBrowserSessionV001?.getSession?.()||null;}
+function source(){return sess()?.getSourceSurface?.()||((typeof activeSurface!=='undefined')?activeSurface:null);}
+function current(){return (typeof activeSurface!=='undefined')?activeSurface:null;}
+function pkg(s){return s?.regionAnalyzerIdentity?.packageSha256||'';}
+function desc(s){return s?.regionAnalyzerIdentity?.descriptorSha256||'';}
+async function sha(data){const b=typeof data==='string'?new TextEncoder().encode(data):data;if(!root.crypto?.subtle)throw new Error('WebCrypto SHA-256 unavailable');const d=new Uint8Array(await root.crypto.subtle.digest('SHA-256',b));return [...d].map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function text(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status+' '+url);return r.text();}
+async function manifestFor(entry){const url=new URL('region-analyzer/'+entry.manifest_path,location.href).href,t=await text(url);if(entry.content_sha256&&await sha(t)!==entry.content_sha256)throw new Error('manifest hash mismatch');return {url,m:JSON.parse(t)};}
+function verify(m,s){if(!s||!m?.surface)throw new Error('surface identity unavailable');if(!pkg(s))throw new Error('reload this package with the current v1 loader');if(m.surface.package_sha256!==pkg(s))throw new Error('package SHA mismatch');if(desc(s)&&m.surface.descriptor_sha256!==desc(s))throw new Error('descriptor SHA mismatch');if(s.rows*s.cols!==m.surface.physical_cells)throw new Error('physical cell count mismatch');if(m.surface.domain_kind==='rectangular_physical_package'&&m.surface.cleaned_domain_mask?.kind!=='ALL_PHYSICAL_CELLS')throw new Error('domain contract mismatch');}
+async function loadCatalog(){if(catalog)return catalog;const r=await fetch(CATALOG,{cache:'no-store'});if(!r.ok)throw new Error('catalog HTTP '+r.status);catalog=await r.json();return catalog;}
+async function compatible(s,includeHidden=false){const c=await loadCatalog(),h=hidden(),out=[];if(!pkg(s))return out;for(const [surfaceId,g] of Object.entries(c.surfaces||{}))for(const e of g.versions||[]){if(!includeHidden&&h.has(e.version_id))continue;try{const x=await manifestFor(e);if(x.m.surface?.package_sha256===pkg(s))out.push({surfaceId,e,url:x.url,m:x.m});}catch(err){console.warn('Region Analyzer manifest skipped',e.version_id,err);}}return out.sort((a,b)=>String(a.e.version_id).localeCompare(String(b.e.version_id)));}
+function vlabel(x,i){const m=String(x.e.version_id).match(/v(\d{3,})$/i);return m?'V'+Number(m[1]):'V'+(i+1);}
+async function choose(id){const x=items.find(z=>z.e.version_id===id)||items.at(-1);if(!x)return;verify(x.m,source());const u=new URL(x.m.mask_bundle.path,x.url).href,r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error('mask bundle HTTP '+r.status);const b=new Uint8Array(await r.arrayBuffer());if(await sha(b)!==x.m.mask_bundle.sha256)throw new Error('mask bundle hash mismatch');if(b.length!==x.m.mask_bundle.bytes)throw new Error('mask bundle length mismatch');item=x;manifest=x.m;bundle=b;mapCache=null;refresh();render();}
+function stage4(){return (manifest?.stages?.stage4?.all_unique_lineage_envelopes||[]).filter(id=>{const p=rung(manifest.region_dictionary[id]?.rung);return p>=pFrom&&p<=pTo;});}
+function stage5(){const a=manifest?.stages?.stage5?.annotations_by_region_id||{};return Object.keys(a).filter(id=>{const p=rung(manifest.region_dictionary[id]?.rung);return p>=pFrom&&p<=pTo;});}
+function ranked(role){const c=manifest?.stages?.stage6?.calibration?.[role];if(!c)return [];if(weight==='stable')return c.stable_intersection||[];if(weight==='union')return c.union||[];const runs=c.runs||[],run=weight==='center'?(runs.find(x=>/CENTER/i.test(x.weight_id))||runs[0]):(runs.find(x=>x.weight_id===weight)||runs[0]);return (run?.ranking||[]).filter(x=>x.rank<=3).sort((a,b)=>a.rank-b.rank).map(x=>x.region_id);}
+function ids(){if(stage==='4')return stage4();if(stage==='5')return stage5();const s=manifest?.stages?.stage6;if(!s)return [];if(view6==='top_performance')return ranked('performance');if(view6==='top_stability')return ranked('stability');return s.collections?.[view6]||[];}
+function rankOf(id,role){const c=manifest?.stages?.stage6?.calibration?.[role];if(!c)return null;if(weight==='stable'||weight==='union')return null;const runs=c.runs||[],run=weight==='center'?(runs.find(x=>/CENTER/i.test(x.weight_id))||runs[0]):(runs.find(x=>x.weight_id===weight)||runs[0]);return run?.ranking?.find(x=>x.region_id===id)?.rank??null;}
+function label(id){const r=manifest.region_dictionary[id],p=r?.rung||'P?';if(stage==='4')return p;if(stage==='5'){const a=manifest.stages.stage5.annotations_by_region_id[id]||{};return p+' S'+(a.sr?.band?.[0]||'â€”')+'/R'+(a.rr?.band?.[0]||'â€”')+'/F'+(a.fr?.band?.[0]||'â€”');}const role=view6.includes('stability')?'stability':'performance',rk=rankOf(id,role);return (rk?'#'+rk+' ':'')+p;}
+function inject(){if(q('#raStyle'))return;const s=document.createElement('style');s.id='raStyle';s.textContent='.ra{position:relative}.ra.on>.ra-btn{box-shadow:inset 0 0 0 1px #7398bd;color:#fff}.ra-pop{display:none;position:absolute;right:0;top:38px;z-index:95;width:410px;max-width:min(94vw,410px);max-height:74vh;overflow:auto;background:#111821;border:1px solid #34404d;border-radius:10px;box-shadow:0 18px 46px #000b;padding:11px}.ra.open .ra-pop{display:block}.ra-head,.ra-row{display:flex;align-items:center;gap:7px}.ra-head{justify-content:space-between;margin-bottom:8px}.ra-title{font-size:12px;font-weight:800}.ra-small{font-size:9px;color:#72808e}.ra-row{margin:7px 0;flex-wrap:wrap}.ra-row label{font-size:10px;color:#8f9baa}.ra-row select,.ra-row input[type=number]{background:#0d141c;color:#edf2f7;border:1px solid #33404d;border-radius:6px;padding:5px 6px;font:inherit;font-size:10px;max-width:145px}.ra-tabs{display:flex;gap:4px;flex-wrap:wrap}.ra-tabs button,.ra-act{border:0;border-radius:6px;background:#26313d;color:#aab6c2;font:inherit;font-size:10px;font-weight:750;padding:6px 8px;cursor:pointer}.ra-tabs button.on{background:#486783;color:#fff}.ra-act.ghost{background:transparent;color:#7f8d9a;padding:4px 6px}.ra-sep{border-top:1px solid #26313d;margin:9px 0}.ra-list{display:grid;gap:4px;max-height:220px;overflow:auto}.ra-item{display:grid;grid-template-columns:18px 1fr auto;gap:6px;align-items:center;padding:5px 6px;border-radius:6px;background:#0d141c;font-size:9px;color:#b7c2cd}.ra-item b{color:#eef3f7}.ra-dot{width:8px;height:8px;border-radius:50%}.ra-msg{font-size:9px;color:#83919f;line-height:1.35}.ra-err{color:#e7a0a6}#raOverlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}';document.head.appendChild(s);}
+function ui(){const c=q('.controls');if(!c)return null;let w=q('#raControl');if(w)return w;w=document.createElement('div');w.id='raControl';w.className='ctrl ra';w.style.display='none';w.innerHTML='<button class="ra-btn" type="button">Region Analyzer â–¾</button><div class="ra-pop"></div>';c.insertBefore(w,c.querySelector('.legend'));w.querySelector('.ra-btn').onclick=e=>{e.stopPropagation();w.classList.toggle('open');};document.addEventListener('click',e=>{if(!w.contains(e.target))w.classList.remove('open');});return w;}
+function overlay(){let o=q('#raOverlay');if(o)return o;const wrap=q('.canvaswrap'),heat=q('#heat');if(!wrap||!heat)return null;o=document.createElement('canvas');o.id='raOverlay';wrap.insertBefore(o,q('#loading'));new ResizeObserver(paint).observe(heat);return o;}
+function render(error=''){const w=ui();if(!w)return;if(!source()||!pkg(source())){w.style.display='none';return;}w.style.display='';w.classList.toggle('on',!!manifest&&visible.length>0);const p=w.querySelector('.ra-pop'),allHidden=hidden();let html='<div class="ra-head"><div><div class="ra-title">Region Analyzer</div><div class="ra-small">'+esc(manifest?.version_id||'No compatible version')+'</div></div><button class="ra-act ghost" id="raHide">Hide version</button></div>';
+html+='<div class="ra-row"><label>Version</label><select id="raVer">'+items.map((x,i)=>'<option value="'+esc(x.e.version_id)+'" '+(item===x?'selected':'')+'>'+esc(vlabel(x,i))+'</option>').join('')+'</select>'+(allHidden.size?'<button class="ra-act ghost" id="raShowHidden">Show hidden</button>':'')+'</div>';
+html+='<div class="ra-tabs" id="raStage">'+['4','5','6'].map(x=>'<button data-v="'+x+'" class="'+(stage===x?'on':'')+'">Stage '+x+'</button>').join('')+'</div>';
+if(stage==='4'||stage==='5')html+='<div class="ra-row"><label>P range</label><input id="raFrom" type="number" min="1" max="20" value="'+pFrom+'"><span>â†’</span><input id="raTo" type="number" min="1" max="20" value="'+pTo+'"></div>';
+if(stage==='6'){const vs=[['all','All'],['performance','Performance'],['stability','Stability'],['top_performance','Top Perf'],['top_stability','Top Stability']];html+='<div class="ra-tabs ra-row" id="raView">'+vs.map(x=>'<button data-v="'+x[0]+'" class="'+(view6===x[0]?'on':'')+'">'+x[1]+'</button>').join('')+'</div>';if(view6.startsWith('top_')){const role=view6==='top_stability'?'stability':'performance',runs=manifest?.stages?.stage6?.calibration?.[role]?.runs||[];html+='<div class="ra-row"><label>Weights</label><select id="raWeight"><option value="center">Center</option>'+runs.filter(x=>!/CENTER/i.test(x.weight_id)).map(x=>'<option value="'+esc(x.weight_id)+'">'+esc(x.weight_id)+'</option>').join('')+'<option value="stable">Stable intersection</option><option value="union">Union</option></select></div>';}}
+html+='<div class="ra-row"><label><input id="raDim" type="checkbox" '+(dim?'checked':'')+'> Dim outside</label><button class="ra-act ghost" id="raAll">All on</button><button class="ra-act ghost" id="raNone">All off</button></div><div class="ra-sep"></div><div class="ra-list">';
+if(!visible.length)html+='<div class="ra-msg">No regions in this view.</div>';else for(let i=0;i<visible.length;i++){const id=visible[i],r=manifest.region_dictionary[id];html+='<label class="ra-item"><input type="checkbox" data-id="'+esc(id)+'" '+(enabled.has(id)?'checked':'')+'><span><span class="ra-dot" style="background:'+COLORS[i%COLORS.length]+'"></span> <b>'+esc(label(id))+'</b> Â· '+Number(r?.cell_count||0).toLocaleString()+' cells</span><span>'+esc((r?.context_id||'').replace(/\|/g,' Â· '))+'</span></label>';}html+='</div><div class="ra-sep"></div><div class="'+(error?'ra-msg ra-err':'ra-msg')+'">'+esc(error||((manifest?.stages?.stage6?.ranking_status==='calibration')?'Calibration view Â· no frozen shortlist implied.':'Stored masks only Â· no research recomputation.'))+'</div>';p.innerHTML=html;
+const on=(sel,ev,fn)=>p.querySelector(sel)?.addEventListener(ev,fn);on('#raVer','change',e=>choose(e.target.value).catch(fail));on('#raHide','click',()=>{if(!item)return;const h=hidden();h.add(item.e.version_id);saveHidden(h);reload(true).catch(fail);});on('#raShowHidden','click',()=>{saveHidden(new Set());reload(true).catch(fail);});
+p.querySelectorAll('#raStage button').forEach(b=>b.onclick=()=>{stage=b.dataset.v;refresh();render();});p.querySelectorAll('#raView button').forEach(b=>b.onclick=()=>{view6=b.dataset.v;weight='center';refresh();render();});on('#raFrom','change',e=>{pFrom=Math.max(1,Math.min(20,Number(e.target.value)||1));refresh();render();});on('#raTo','change',e=>{pTo=Math.max(pFrom,Math.min(20,Number(e.target.value)||20));refresh();render();});on('#raWeight','change',e=>{weight=e.target.value;refresh();render();});if(p.querySelector('#raWeight'))p.querySelector('#raWeight').value=weight;on('#raDim','change',e=>{dim=e.target.checked;build();});on('#raAll','click',()=>{enabled=new Set(visible);build();render();});on('#raNone','click',()=>{enabled.clear();build();render();});p.querySelectorAll('input[data-id]').forEach(x=>x.onchange=()=>{x.checked?enabled.add(x.dataset.id):enabled.delete(x.dataset.id);build();});
+}
+function refresh(){visible=ids();enabled=new Set(visible);build();}
+function code(s,ids,pos){let z='';for(const id of ids)z+=(s.semanticParameterIndices?.[id]?.[pos]??-1)+',';return z;}
+function mapping(cur,src){if(cur===src&&cur.rows===src.rows&&cur.cols===src.cols)return null;if(mapCache?.cur===cur&&mapCache?.src===src)return mapCache.map;const d=src.semanticDescriptor,xIds=d.layout?.x_parameter_order||[],yIds=d.layout?.y_parameter_order||[],xm=new Map(),ym=new Map();for(let c=0;c<src.cols;c++)xm.set(code(src,xIds,c),c);for(let r=0;r<src.rows;r++)ym.set(code(src,yIds,r*src.cols),r);const n=cur.rows*cur.cols,m=new Int32Array(n);for(let i=0;i<n;i++){const c=xm.get(code(cur,xIds,i)),r=ym.get(code(cur,yIds,i));if(c===undefined||r===undefined)throw new Error('display cell is outside canonical package');m[i]=r*src.cols+c;}mapCache={cur,src,map:m};return m;}
+function has(r,p){const m=r.mask,b=bundle[m.offset_bytes+(p>>3)];return ((b>>(p&7))&1)!==0;}
+function build(){const my=++token,cur=current(),src=source();raster=null;centroids=[];rasterSurface=cur;if(!manifest||!bundle||!cur||!src||!enabled.size){paint();return;}try{verify(manifest,src);const regs=visible.filter(id=>enabled.has(id)).map((id,i)=>({id,r:manifest.region_dictionary[id],ci:i})).filter(x=>x.r).sort((a,b)=>(b.r.cell_count||0)-(a.r.cell_count||0));if(!regs.length){paint();return;}const n=cur.rows*cur.cols,map=mapping(cur,src),lab=new Int16Array(n);lab.fill(-1);for(let i=0;i<n;i++){const p=map?map[i]:i;for(let j=0;j<regs.length;j++)if(has(regs[j].r,p))lab[i]=j;}if(my!==token)return;const off=document.createElement('canvas');off.width=cur.cols;off.height=cur.rows;const oc=off.getContext('2d'),im=oc.createImageData(cur.cols,cur.rows),sum=regs.map(()=>({x:0,y:0,n:0}));for(let i=0;i<n;i++){const j=lab[i],px=i*4;if(j<0){if(dim){im.data[px+3]=105;}continue;}const col=COLORS[regs[j].ci%COLORS.length].match(/[A-Fa-f0-9]{2}/g).map(x=>parseInt(x,16)),row=Math.floor(i/cur.cols),c=i-row*cur.cols,left=c?lab[i-1]:-2,right=c<cur.cols-1?lab[i+1]:-2,up=row?lab[i-cur.cols]:-2,down=row<cur.rows-1?lab[i+cur.cols]:-2,bound=left!==j||right!==j||up!==j||down!==j;im.data[px]=col[0];im.data[px+1]=col[1];im.data[px+2]=col[2];im.data[px+3]=bound?235:78;sum[j].x+=c+.5;sum[j].y+=row+.5;sum[j].n++;}oc.putImageData(im,0,0);raster=off;centroids=sum.map((s,j)=>s.n?{x:s.x/s.n/cur.cols,y:s.y/s.n/cur.rows,t:label(regs[j].id),c:COLORS[regs[j].ci%COLORS.length]}:null).filter(Boolean);paint();}catch(e){fail(e);}}
+function paint(){const o=overlay(),h=q('#heat');if(!o||!h)return;const w=Math.max(1,h.width),hh=Math.max(1,h.height);if(o.width!==w)o.width=w;if(o.height!==hh)o.height=hh;const c=o.getContext('2d');c.clearRect(0,0,w,hh);if(!raster||rasterSurface!==current())return;c.imageSmoothingEnabled=false;c.drawImage(raster,0,0,w,hh);const d=devicePixelRatio||1;c.font=(11*d)+'px Inter,system-ui,sans-serif';c.textAlign='center';c.textBaseline='middle';for(const x of centroids){const X=x.x*w,Y=x.y*hh,tw=c.measureText(x.t).width+10*d;c.fillStyle='rgba(9,13,18,.82)';c.fillRect(X-tw/2,Y-9*d,tw,18*d);c.strokeStyle=x.c;c.strokeRect(X-tw/2,Y-9*d,tw,18*d);c.fillStyle='#eef3f7';c.fillText(x.t,X,Y);}}
+function fail(e){console.error('Region Analyzer',e);raster=null;centroids=[];paint();render(e?.message||String(e));}
+async function reload(showHidden=false){const s=source(),w=ui();manifest=null;bundle=null;item=null;visible=[];enabled.clear();raster=null;centroids=[];if(!s||!pkg(s)){if(w)w.style.display='none';paint();return;}items=await compatible(s,showHidden);if(!items.length){if(w){w.style.display='';render('No compatible Region Analyzer version.');}return;}await choose(items.at(-1).e.version_id);}
+function install(){if(baseActivate)return;if(typeof activateSurface!=='function'||typeof hardReset!=='function'||!root.SurfaceAnalyzerBrowserSessionV001||!root.SurfaceFilterV029){setTimeout(install,30);return;}inject();ui();overlay();baseActivate=activateSurface;baseReset=hardReset;activateSurface=async function(s,o){const before=pkg(source()),out=await baseActivate(s,o),after=pkg(source());mapCache=null;if(after!==before||!manifest)await reload(false);else build();return out;};hardReset=async function(){const out=await baseReset();manifest=null;bundle=null;items=[];raster=null;centroids=[];const w=ui();if(w)w.style.display='none';paint();return out;};root.RegionAnalyzerViewerV001={version:VERSION,reload:()=>reload(false),getManifest:()=>manifest};setTimeout(()=>reload(false).catch(fail),0);}
+install();
+})(typeof window!=='undefined'?window:globalThis);
