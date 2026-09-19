@@ -157,12 +157,13 @@
     const x=[...xMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),y=[...yMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),cols=x.length,rows=y.length;
     if(rows*cols!==n)fail(`Semantic surface is not a complete rectangle: ${rows} × ${cols} != ${n}`);
     const xr=new Int32Array(x.length),yr=new Int32Array(y.length);x.forEach((v,i)=>xr[v.temp]=i);y.forEach((v,i)=>yr[v.temp]=i);
-    const metrics=Object.fromEntries(metricIds.map(k=>[k,new Float64Array(n)])),supportFields=Object.fromEntries(supportIds.map(k=>[k,new Int32Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),seen=new Uint8Array(n);
+    const metrics=Object.fromEntries(metricIds.map(k=>[k,new Float64Array(n)])),supportFields=Object.fromEntries(supportIds.map(k=>[k,new Int32Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),physicalIndexByVisual=new Int32Array(n),seen=new Uint8Array(n);
     for(let j=0;j<n;j++){
       const pos=yr[yIdsByRow[j]]*cols+xr[xIdsByRow[j]];if(seen[pos])fail(`Duplicate visual cell ${pos}`);seen[pos]=1;
       for(const k of metricIds)metrics[k][pos]=metricTmp[k][j];
       for(const k of supportIds)supportFields[k][pos]=supportTmp[k][j];
       for(const id of paramIds)parameterIndices[id][pos]=paramTmp[id][j];
+      physicalIndexByVisual[pos]=j;
     }
     if(seen.some(v=>v!==1))fail('Semantic package does not cover every resolved visual cell');
     for(const k of requiredMetrics||[])if(!metrics[k])fail(`Analyzer-required metric ${k} is not declared by this package`);
@@ -170,7 +171,7 @@
     return {
       schemaVersion:2,packageVersion:VERSION,packageKind:'semantic-surface-v1',fileName:file.name||'surface.surface.zip',fileSize:file.size||0,loadedAt:new Date().toISOString(),rows,cols,
       jobId:d.provenance?.job_id??null,runId:d.provenance?.run_id??null,generationId:d.provenance?.data_generation_id??null,buildId:d.provenance?.backtester_build??null,
-      metrics,supportFields,semanticDescriptor:d,semanticParameterIndices:parameterIndices,semanticAxis:{x:x.map(v=>v.sem),y:y.map(v=>v.sem)}
+      metrics,supportFields,semanticDescriptor:d,semanticParameterIndices:parameterIndices,semanticAxis:{x:x.map(v=>v.sem),y:y.map(v=>v.sem)},physicalIndexByVisual
     };
   }
 
