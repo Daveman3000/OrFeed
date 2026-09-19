@@ -1,0 +1,53 @@
+{
+  "schema_version": 4,
+  "policy_type": "step6_scoring_only_ranking_calibration",
+  "policy_id": "step6_performance_stability_ranking",
+  "policy_version": "4-calibration",
+  "policy_origin": "post_result_exploratory",
+  "authoritative": false,
+  "frozen": false,
+  "source_binding": {
+    "v003_policy_sha256": "0cc887b3476eb83f2203c967f3e6a59a36ff7feb18630675ed75cfc8cea44ec9",
+    "v003_result_sha256": "752ecfacbef6a0a0d90b639b1811345ebc56190b657d2d296c6e979065192936"
+  },
+  "scope": {
+    "revision": "6C ranking and sensitivity only",
+    "v002_and_v003_immutable": true,
+    "candidate_generation_unchanged": true,
+    "stopping_grids_unchanged": true,
+    "eligibility_memberships_axes_and_diagnostics_unchanged": true,
+    "stage4_or_stage5_recomputation": false,
+    "new_masks": false,
+    "viewer_or_publisher_change": false,
+    "breadth_remains_diagnostic": true,
+    "breadth_ranking_weight": 0
+  },
+  "ranking_formula": "performance_weight * PerformanceScore + stability_weight * StabilityScore",
+  "weight_sensitivity": {
+    "performance_led": [
+      { "id": "P75_S25", "performance": 0.75, "stability": 0.25 },
+      { "id": "P70_S30_CENTER", "performance": 0.70, "stability": 0.30 },
+      { "id": "P65_S35", "performance": 0.65, "stability": 0.35 }
+    ],
+    "stability_led": [
+      { "id": "P40_S60", "performance": 0.40, "stability": 0.60 },
+      { "id": "P35_S65_CENTER", "performance": 0.35, "stability": 0.65 },
+      { "id": "P30_S70", "performance": 0.30, "stability": 0.70 }
+    ]
+  },
+  "ranking": {
+    "shortlist_target": 3,
+    "numeric_tie_tolerance": 1e-12,
+    "rank_method": "descending score with competition ranks; exact ties within tolerance share rank; membership SHA-256 is presentation-order tie-break only",
+    "full_precision": true,
+    "shortlist_boundary_ties_reported": true
+  },
+  "output": {
+    "candidate_membership_identity_required": true,
+    "compare_against_v003_per_surface_grid_and_role": true,
+    "top_three_sensitivity": true,
+    "rank_range_sensitivity": true,
+    "v004_policy_frozen": false,
+    "step7_handoff_frozen": false
+  }
+}
