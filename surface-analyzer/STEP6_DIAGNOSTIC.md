@@ -66,6 +66,30 @@ The evidence is sufficient to calibrate those rules next, but this artifact make
 
 The global policy in `policies/exploratory/step6-envelope-selection-v001.json` uses only the materialized 228-envelope artifact. It applies the same transition and handoff rules to both surfaces and does not regenerate SR, RR, FR, topology, or sample evidence.
 
+### Frozen evidence-loading and verification contract
+
+The persisted 228-envelope trajectory artifact is the normal Step-6 evidence source. Routine selection and routine regression must load that immutable, hash-addressed artifact; they must not reconstruct unchanged envelopes or recalculate SR, FR, or RR.
+
+Normal regression is a fast integrity and determinism check. It must fail closed unless all of the following hold:
+
+- the exact artifact SHA-256 matches the policy binding;
+- the artifact schema and version are supported;
+- all 228 unique envelope memberships and all 78 terminal structures are covered;
+- the bound dependency identities match, including source package/surface, descriptor, cleaned domain, topology engine, metric definitions and normalization, and SR/FR/RR policy identities;
+- the Step-6 selection result is reproduced deterministically from the persisted artifact.
+
+The full 228-envelope reconstruction and SR/FR/RR recalculation is an explicit deep-verification operation. It is required only when a bound identity dependency changes or when a human explicitly requests deep verification. The existing `step6-trajectory-diagnostic-v001.test.cjs` reconstruction test is the deep-verification test and is not part of normal regression. A deep run must reproduce the persisted trajectory artifact exactly before that artifact can be replaced or rebound.
+
+This split changes execution cost only. It does not weaken evidence identity, reproducibility, selection rules, or fail-closed behavior:
+
+```text
+normal operation
+persisted frozen evidence -> verify identities and coverage -> deterministic selection
+
+dependency change or explicit deep verification
+reconstruct 228 envelopes -> recalculate evidence -> exact artifact comparison
+```
+
 Performance-led tightening stops before the first transition that enters fewer than 24 cells, retains less than 20% of its parent, loses more than one multi-value ordered dimension, reduces graph two-core fraction by more than 0.15, reduces minimum-metric SR median by more than 0.10, reduces minimum RR interior or boundary evidence by more than 0.15, or materially worsens FR availability/economics. A veto cannot be crossed.
 
 Selected Step-6 handoff envelopes must contain 24–2,000 cells. The lower bound preserves the existing 24-cell distributed-representation question. The upper bound retains the meaningful 1,502-cell Volume Bands envelope but excludes oversized predecessors that would leave localization to Step 7. Within that range, 24–47 cells are minimum breadth, 48–199 are tractable, and 200–2,000 are healthy. These tiers are consolidation evidence, not a size score.
