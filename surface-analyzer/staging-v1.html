@@ -17,7 +17,7 @@ html,body{margin:0;background:#090d12;color:#e8edf3;font:14px Inter,system-ui,-a
       <div class="sub">Upload a semantic surface package · one cell = one tested configuration</div>
     </div>
     <div class="controls">
-      <div class="ctrl"><input id="csvFile" type="file" accept=".csv,text/csv" hidden><button id="uploadCsv" type="button">Upload CSV</button><span class="surface-name" id="surfaceName">No surface loaded</span><button class="danger" id="hardReset" type="button">Hard Reset</button></div>
+      <div class="ctrl"><input id="csvFile" type="file" accept=".surface.zip,.zip,.csv,text/csv,application/zip" hidden><button id="uploadCsv" type="button">Upload Surface</button><span class="surface-name" id="surfaceName">No surface loaded</span><button class="danger" id="hardReset" type="button">Hard Reset</button></div>
       <div class="mode-toggle" id="metricMode" aria-label="HUD layer family"><button class="on" data-mode="performance">Performance</button><button data-mode="robustness">Robustness</button><button data-mode="facet" disabled>Facet Replication</button></div>
       <div class="ctrl"><label for="metric">HUD Metric</label><select id="metric"></select></div>
       <div class="ctrl"><label for="view">View</label><select id="view"><option value="raw">Raw</option><option value="pct">Percentile</option></select></div>
