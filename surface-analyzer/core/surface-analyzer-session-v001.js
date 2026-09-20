@@ -236,6 +236,10 @@
     }
 
     async function resolveScanSeries(criterion){
+      if(criterion.source==='performance'&&criterion.metric===scanEngine?.P_SCORE_METRIC){
+        if(!scanEngine?.performanceScoreSeries)throw new Error('Scan engine cannot compute P Score.');
+        return scanEngine.performanceScoreSeries(filteredSurface);
+      }
       if(criterion.source==='performance')return getPerformanceSeries(criterion.metric,{basis:criterion.basis==='percentile'?'percentile':'raw'});
       if(criterion.source==='structural_robustness')return computeStructuralRobustness(criterion.metric).structural_robustness;
       if(criterion.source==='facet_replication')return computeFacetReplication(criterion.metric).facet_replication;

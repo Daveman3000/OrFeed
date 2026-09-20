@@ -6,6 +6,9 @@
   const STORE='surface-analyzer-scan-layer:v1:';
   const EPS=1e-12;
   const DEFAULT_TAU=.10;
+  const P_SCORE_METRIC='p_score';
+  const P_SCORE_COMPONENTS=['r_per_trade','profit_factor','romad'];
+  const P_SCORE_MAX=20;
   const finite=Number.isFinite;
 
   function midrankPercentile(values,invert){
@@ -36,6 +39,28 @@
   function passes(v,op,t){
     if(!finite(v)||!finite(t))return false;
     return op==='<='?v<=t:v>=t;
+  }
+
+  function performanceScoreSeries(surface){
+    const N=(surface?.rows||0)*(surface?.cols||0),r=surface?.metrics?.r_per_trade,pf=surface?.metrics?.profit_factor,romad=surface?.metrics?.romad,trades=surface?.supportFields?.trades;
+    if(!r||!pf||!romad||!trades||r.length!==N||pf.length!==N||romad.length!==N||trades.length!==N)throw new Error('P Score requires R / trade, Profit Factor, RoMAD, and Trades.');
+    const out=new Float32Array(N);out.fill(NaN);
+    for(let i=0;i<N;i++){
+      if(!finite(r[i])||!finite(pf[i])||!finite(romad[i])||!finite(trades[i])||trades[i]<20)continue;
+      if(r[i]<.5||pf[i]<1.5||romad[i]<2){out[i]=0;continue;}
+      const kr=1+Math.floor((r[i]-.5+EPS)/.25),kp=1+Math.floor((pf[i]-1.5+EPS)/.25),km=1+Math.floor((romad[i]-2+EPS));
+      out[i]=Math.max(0,Math.min(P_SCORE_MAX,kr,kp,km));
+    }
+    return out;
+  }
+
+  function expandedPerformanceMetrics(criteria){
+    const out=[];
+    for(const c of criteria||[])if(c.enabled!==false&&c.source==='performance'){
+      const ids=c.metric===P_SCORE_METRIC?P_SCORE_COMPONENTS:[c.metric];
+      for(const id of ids)if(id&&!out.includes(id))out.push(id);
+    }
+    return out;
   }
 
   function connectedRegions(mask,g,minCells){
@@ -217,12 +242,12 @@
       mask:regions.mask,regionId:regions.regionId,regions:summaries,passingCells:passing,totalCells:N,
       criteria:resolved.map(x=>x.criterion),
       performanceMask:performanceCriteriaCount?performanceMask:null,
-      performanceMetrics:[...new Set(criteria.filter(c=>c.source==='performance').map(c=>c.metric))],
+      performanceMetrics:expandedPerformanceMetrics(criteria),
       performanceCriteriaCount
     };
   }
 
-  const Engine={VERSION,SCHEMA_VERSION,midrankPercentile,connectedRegions,analyzeRegionalRobustness,analyzeFrozenAnchor,evaluateScan};
+  const Engine={VERSION,SCHEMA_VERSION,P_SCORE_METRIC,P_SCORE_COMPONENTS,performanceScoreSeries,midrankPercentile,connectedRegions,analyzeRegionalRobustness,analyzeFrozenAnchor,evaluateScan};
   root.SurfaceScanEngineV033=Engine;
   root.SurfaceScanEngineV034=Engine;
   root.SurfaceScanEngineV035=Engine;
@@ -267,13 +292,16 @@
   function performanceMetrics(){
     const declared=activeSurface?.semanticDescriptor?.results?.metrics||[];
     const keys=declared.length?declared:Object.keys(activeSurface?.metrics||{});
-    return keys.map(x=>typeof x==='string'?x:x?.id).filter(k=>k&&activeSurface?.metrics?.[k]);
+    const out=keys.map(x=>typeof x==='string'?x:x?.id).filter(k=>k&&activeSurface?.metrics?.[k]);
+    if(P_SCORE_COMPONENTS.every(k=>activeSurface?.metrics?.[k])&&activeSurface?.supportFields?.trades&&!out.includes(P_SCORE_METRIC))out.push(P_SCORE_METRIC);
+    return out;
   }
   function driverMetrics(){
     const all=root.SurfaceSemanticAnalysisV030?.DRIVER_METRICS||[];
     return all.filter(k=>activeSurface?.metrics?.[k]);
   }
   function label(k){
+    if(k===P_SCORE_METRIC)return 'P Score';
     return (typeof meta!=='undefined'&&meta?.[k]?.label)||String(k).replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   }
   function invertMetric(k){return !!(typeof meta!=='undefined'&&meta?.[k]?.invert);}
@@ -285,6 +313,9 @@
     if(c.source!=='performance'){
       c.basis='score';
       if(c.operator!=='<='&&c.operator!=='>=')c.operator='>=';
+    }else if(c.metric===P_SCORE_METRIC){
+      c.basis='raw';c.operator='>=';
+      if(c.value!=null&&finite(Number(c.value)))c.value=Math.max(1,Math.min(P_SCORE_MAX,Math.round(Number(c.value))));
     }else if(c.basis!=='percentile')c.basis='raw';
     return c;
   }
@@ -311,6 +342,7 @@
   }
   async function resolveSeries(c){
     if(c.source==='performance'){
+      if(c.metric===P_SCORE_METRIC)return performanceScoreSeries(activeSurface);
       const raw=activeSurface?.metrics?.[c.metric];
       if(!raw)throw new Error(`Surface does not contain ${c.metric}`);
       return c.basis==='percentile'?midrankPercentile(raw,invertMetric(c.metric)):raw;
@@ -422,7 +454,8 @@
     const sources=[['performance','Performance'],['structural_robustness','Structural Robustness'],['facet_replication','Facet Replication']];
     const src=document.createElement('select');for(const [v,t] of sources)src.appendChild(option(v,t,c.source===v));
     const met=document.createElement('select'),basis=document.createElement('select'),op=document.createElement('select'),val=document.createElement('input'),del=document.createElement('button');
-    val.type='number';val.step='any';val.placeholder='threshold';val.value=c.value==null?'':String(c.value);del.type='button';del.textContent='×';
+    const isPScore=()=>c.source==='performance'&&c.metric===P_SCORE_METRIC;
+    val.type='number';val.placeholder='threshold';del.type='button';del.textContent='×';
     const fillMetrics=()=>{
       met.innerHTML='';const ms=c.source==='performance'?performanceMetrics():driverMetrics();
       for(const k of ms)met.appendChild(option(k,label(k),c.metric===k));
@@ -430,20 +463,30 @@
     };
     const fillBasis=()=>{
       basis.innerHTML='';
-      if(c.source==='performance'){basis.disabled=false;basis.appendChild(option('raw','Raw',c.basis==='raw'));basis.appendChild(option('percentile','Percentile',c.basis==='percentile'));}
+      if(isPScore()){c.basis='raw';basis.disabled=true;basis.appendChild(option('raw','Raw',true));}
+      else if(c.source==='performance'){basis.disabled=false;basis.appendChild(option('raw','Raw',c.basis==='raw'));basis.appendChild(option('percentile','Percentile',c.basis==='percentile'));}
       else{c.basis='score';basis.disabled=true;basis.appendChild(option('score','Score',true));}
     };
-    const fillOp=()=>{op.innerHTML='';op.appendChild(option('>=','≥',c.operator==='>='));op.appendChild(option('<=','≤',c.operator==='<='));};
-    fillMetrics();fillBasis();fillOp();
+    const fillOp=()=>{
+      op.innerHTML='';
+      if(isPScore()){c.operator='>=';op.disabled=true;op.appendChild(option('>=','≥',true));}
+      else{op.disabled=false;op.appendChild(option('>=','≥',c.operator==='>='));op.appendChild(option('<=','≤',c.operator==='<='));}
+    };
+    const fillThreshold=()=>{
+      if(isPScore()){val.min='1';val.max=String(P_SCORE_MAX);val.step='1';}
+      else{val.removeAttribute('min');val.removeAttribute('max');val.step='any';}
+      val.value=c.value==null?'':String(c.value);
+    };
+    fillMetrics();normalizeCriterion(c);fillBasis();fillOp();fillThreshold();
     src.addEventListener('change',e=>{e.stopPropagation();c.source=src.value;if(c.source==='performance'){c.metric=performanceMetrics()[0]||'';c.basis='raw';c.operator=invertMetric(c.metric)?'<=':'>=';}else{c.metric=driverMetrics()[0]||'';c.basis='score';c.operator='>=';}renderMenu(false);});
-    met.addEventListener('change',()=>{c.metric=met.value;if(c.source==='performance'&&c.basis==='raw')c.operator=invertMetric(c.metric)?'<=':'>=';renderMenu(false);});
+    met.addEventListener('change',()=>{c.metric=met.value;if(c.source==='performance'&&c.basis==='raw')c.operator=invertMetric(c.metric)?'<=':'>=';normalizeCriterion(c);renderMenu(false);});
     basis.addEventListener('change',()=>{c.basis=basis.value;c.operator=c.basis==='percentile'?'>=':(invertMetric(c.metric)?'<=':'>=');renderMenu(false);});
     op.addEventListener('change',()=>c.operator=op.value);
     val.addEventListener('input',()=>c.value=val.value===''?null:Number(val.value));
+    val.addEventListener('change',()=>{normalizeCriterion(c);fillThreshold();});
     del.addEventListener('click',e=>{e.stopPropagation();draft.criteria.splice(index,1);renderMenu(false);});
     row.append(src,met,basis,op,val,del);
   }
-
   function regionalSummaryElement(){
     if(!result?.regionalRobustness?.regions?.length)return null;
     const rr=result.regionalRobustness,r=rr.regions[0],preferred=currentDriverMetric(),metric=r.metrics?.[preferred]?preferred:rr.performance_metrics?.[0],m=r.metrics?.[metric];
@@ -503,6 +546,7 @@
       try{
         if(!draft.criteria.length)throw new Error('Add at least one criterion.');
         for(const c of draft.criteria){
+          normalizeCriterion(c);
           if(!c.metric)throw new Error('Each criterion needs a metric.');
           if(c.value==null||!finite(Number(c.value)))throw new Error('Each criterion needs a numeric threshold.');
           c.value=Number(c.value);

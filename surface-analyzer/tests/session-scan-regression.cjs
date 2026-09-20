@@ -21,13 +21,19 @@ function fixture() {
     cols: 3,
     metrics: {
       r_per_trade: Float64Array.from([0.0, 0.5, 1.0, 0.2, 0.7, 1.2]),
+      profit_factor: Float64Array.from([1.5, 1.5, 2.0, 1.75, 1.75, 2.25]),
+      romad: Float64Array.from([2, 2, 4, 3, 3, 5]),
       max_drawdown_r: Float64Array.from([5, 4, 3, 6, 5, 4])
+    },
+    supportFields: {
+      trades: Int32Array.from([25, 25, 25, 25, 19, 25])
     },
     semanticDescriptor: {
       descriptor_schema_version: 1,
       descriptor_version: 'session-scan-v1',
       study_id: 'session-scan',
       provenance: { source_sha256: 'session-scan-sha' },
+      results: { support_fields: [{ id:'trades', type:'integer', role:'sample_size' }] },
       parameters: [
         { id: 'x', topology_role: 'ordered', source: 'outer', values: [0,1,2], active_when: 'always' },
         { id: 'f', topology_role: 'facet', source: 'inner', values: [0,1], active_when: 'always' }
@@ -56,6 +62,7 @@ function fixture() {
     criteria_mode: 'all',
     criteria: [
       { id:'p_raw', enabled:true, source:'performance', metric:'r_per_trade', basis:'raw', operator:'>=', value:0.5 },
+      { id:'p_score', enabled:true, source:'performance', metric:'p_score', basis:'raw', operator:'>=', value:2 },
       { id:'p_pct_inv', enabled:true, source:'performance', metric:'max_drawdown_r', basis:'percentile', operator:'>=', value:40 },
       { id:'sr', enabled:true, source:'structural_robustness', metric:'r_per_trade', basis:'score', operator:'>=', value:0 },
       { id:'fr', enabled:true, source:'facet_replication', metric:'r_per_trade', basis:'score', operator:'>=', value:0 }
@@ -64,11 +71,13 @@ function fixture() {
     display: { dim_nonpassing:true, outline_regions:true, show_matches_only:false }
   };
 
+  assert.deepEqual(Array.from(scanner.performanceScoreSeries(surface)),[0,1,3,0,NaN,3],'P Score must use the frozen P1-P20 3/3 ladder and 20-trade floor');
   const g = semantic.buildTopology(surface);
   const sr = semantic.computeSR(surface.metrics.r_per_trade,g).structural_robustness;
   const fr = semantic.computeFR(surface.metrics.r_per_trade,g).facet_replication;
   const direct = await scanner.evaluateScan(surface,config,g,async c=>{
     if(c.source==='performance'){
+      if(c.metric===scanner.P_SCORE_METRIC)return scanner.performanceScoreSeries(surface);
       const raw=surface.metrics[c.metric];
       return c.basis==='percentile'?scanner.midrankPercentile(raw,!!metricMetadata[c.metric]?.invert):raw;
     }
