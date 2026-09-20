@@ -181,10 +181,41 @@
   function cmpRank(a,b){for(let i=0;i<a.length;i++)if(a[i]!==b[i])return a[i]-b[i];return 0;}
   function signature(sem,ids){return ids.map(id=>`${id}=${sem[id]??''}`).join('|');}
 
+  function createAnalysisKeyRegistry(expected){
+    if(!Number.isInteger(expected)||expected<=0){
+      const keys=new Set();
+      return {add(key){if(keys.has(key))return false;keys.add(key);return true;}};
+    }
+    let cap=16,need=Math.max(16,expected*2);
+    while(cap<need){
+      cap*=2;
+      if(cap>0x40000000)fail(`analysis_key registry is too large for ${expected} rows`);
+    }
+    const hi=new Uint32Array(cap),lo=new Uint32Array(cap),mask=cap-1;
+    return {add(key){
+      let h1=0x811c9dc5,h2=0x9e3779b9;
+      for(let i=0;i<key.length;i++){
+        const c=key.charCodeAt(i);
+        h1=Math.imul(h1^c,0x01000193)>>>0;
+        h2=Math.imul(h2^(c+0x9e37),0x85ebca6b)>>>0;
+        h2=(h2^(h2>>>13))>>>0;
+      }
+      if(h1===0)h1=1;
+      let slot=h1&mask,step=(h2|1)&mask;if(step===0)step=1;
+      for(let probe=0;probe<cap;probe++){
+        const seen=hi[slot];
+        if(seen===0){hi[slot]=h1;lo[slot]=h2;return true;}
+        if(seen===h1&&lo[slot]===h2)return false;
+        slot=(slot+step)&mask;
+      }
+      fail('analysis_key registry is full');
+    }};
+  }
+
   function buildSemanticSurfaceFromRows(emitRows,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
     const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,passthroughIds=displayPassthroughIds(d).filter(k=>!metricIds.includes(k)),loadedMetricIds=[...metricIds,...passthroughIds],supportDefs=d.results.support_fields||[],supportIds=supportDefs.map(f=>f.id),constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
     let header=null,col=null,n=0;
-    const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=expected?new Int32Array(expected):[],yIdsByRow=expected?new Int32Array(expected):[];
+    const keys=createAnalysisKeyRegistry(expected),xMap=new Map(),yMap=new Map(),xIdsByRow=expected?new Int32Array(expected):[],yIdsByRow=expected?new Int32Array(expected):[];
     const metricTmp=Object.fromEntries(loadedMetricIds.map(k=>[k,expected?new Float64Array(expected):[]]));
     const supportTmp=Object.fromEntries(supportIds.map(k=>[k,expected?new Int32Array(expected):[]]));
     const paramTmp=Object.fromEntries(paramIds.map(k=>{const a=expected?new Int16Array(expected):[];if(expected)a.fill(-1);return[k,a];}));
@@ -207,7 +238,7 @@
         if(on&&!maps[p.id].has(raw))fail(`Row ${rowNo}: ${p.id}=${raw} is outside the declared domain`);
       }
       for(const c of constants){const raw=cells[col[c.id]]??'';if(raw===''||!same(raw,c.value))fail(`Row ${rowNo}: constant ${c.id}=${raw} does not match descriptor value ${c.value}`);}
-      const ak=cells[col.analysis_key]??'';if(!ak)fail(`Row ${rowNo}: blank analysis_key`);if(keys.has(ak))fail(`Row ${rowNo}: duplicate analysis_key ${ak}`);keys.add(ak);
+      const ak=cells[col.analysis_key]??'';if(!ak)fail(`Row ${rowNo}: blank analysis_key`);if(!keys.add(ak))fail(`Row ${rowNo}: duplicate analysis_key ${ak}`);
       const xs=signature(sem,xIds),ys=signature(sem,yIds);
       let xe=xMap.get(xs);if(!xe){xe={temp:xMap.size,sig:xs,sem:Object.fromEntries(xIds.map(id=>[id,sem[id]])),rank:rankFor(sem,xSpec,maps,paramDefs)};xMap.set(xs,xe);}
       let ye=yMap.get(ys);if(!ye){ye={temp:yMap.size,sig:ys,sem:Object.fromEntries(yIds.map(id=>[id,sem[id]])),rank:rankFor(sem,ySpec,maps,paramDefs)};yMap.set(ys,ye);}
