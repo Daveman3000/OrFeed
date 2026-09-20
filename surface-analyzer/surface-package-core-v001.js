@@ -7,6 +7,7 @@
 
   const VERSION='surface-package-core-v001';
   const DEFAULT_REQUIRED_METRICS=['r_per_trade','expectancy_per_contract','profit_factor','romad','max_drawdown_r','total_r'];
+  const DISPLAY_PASSTHROUGH_METRICS=['win_pct'];
   const fail=m=>{throw new Error(m);};
   const token=v=>v==null?'':String(v);
 
@@ -76,6 +77,19 @@
     return d;
   }
 
+  function displayPassthroughIds(d){
+    const raw=[
+      ...(Array.isArray(d?.results?.passthrough_results)?d.results.passthrough_results:[]),
+      ...(Array.isArray(d?.passthrough_results)?d.passthrough_results:[])
+    ];
+    const out=[];
+    for(const field of raw){
+      const id=typeof field==='string'?field:(field&&typeof field==='object'&&!Array.isArray(field)?field.id:null);
+      if(DISPLAY_PASSTHROUGH_METRICS.includes(id)&&!out.includes(id))out.push(id);
+    }
+    return out;
+  }
+
   const valueMaps=d=>Object.fromEntries(d.parameters.map(p=>[p.id,new Map(p.values.map((v,i)=>[token(v),i]))]));
 
   function axisSpec(d,axis){
@@ -112,17 +126,17 @@
   function signature(sem,ids){return ids.map(id=>`${id}=${sem[id]??''}`).join('|');}
 
   function buildSemanticSurface(text,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
-    const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,supportDefs=d.results.support_fields||[],supportIds=supportDefs.map(f=>f.id),constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
+    const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,passthroughIds=displayPassthroughIds(d).filter(k=>!metricIds.includes(k)),loadedMetricIds=[...metricIds,...passthroughIds],supportDefs=d.results.support_fields||[],supportIds=supportDefs.map(f=>f.id),constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
     let header=null,col=null,n=0;
     const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=[],yIdsByRow=[];
-    const metricTmp=Object.fromEntries(metricIds.map(k=>[k,expected?new Float64Array(expected):[]]));
+    const metricTmp=Object.fromEntries(loadedMetricIds.map(k=>[k,expected?new Float64Array(expected):[]]));
     const supportTmp=Object.fromEntries(supportIds.map(k=>[k,expected?new Int32Array(expected):[]]));
     const paramTmp=Object.fromEntries(paramIds.map(k=>{const a=expected?new Int16Array(expected):[];if(expected)a.fill(-1);return[k,a];}));
 
     eachCsvRow(text,(cells,rowNo)=>{
       if(!header){
         header=cells.map(x=>x.trim());col=Object.fromEntries(header.map((name,i)=>[name,i]));
-        const req=['analysis_key',...paramIds,...metricIds,...supportIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
+        const req=['analysis_key',...paramIds,...loadedMetricIds,...supportIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
         if(missing.length)fail(`Semantic CSV missing required columns: ${missing.join(', ')}`);return;
       }
       if(cells.every(v=>v===''))return;
@@ -141,7 +155,7 @@
       let xe=xMap.get(xs);if(!xe){xe={temp:xMap.size,sig:xs,sem:Object.fromEntries(xIds.map(id=>[id,sem[id]])),rank:rankFor(sem,xSpec,maps,paramDefs)};xMap.set(xs,xe);}
       let ye=yMap.get(ys);if(!ye){ye={temp:yMap.size,sig:ys,sem:Object.fromEntries(yIds.map(id=>[id,sem[id]])),rank:rankFor(sem,ySpec,maps,paramDefs)};yMap.set(ys,ye);}
       xIdsByRow[n]=xe.temp;yIdsByRow[n]=ye.temp;
-      for(const k of metricIds){const v=Number(cells[col[k]]);if(!Number.isFinite(v))fail(`Row ${rowNo}: invalid ${k}`);if(expected)metricTmp[k][n]=v;else metricTmp[k].push(v);}
+      for(const k of loadedMetricIds){const v=Number(cells[col[k]]);if(!Number.isFinite(v))fail(`Row ${rowNo}: invalid ${k}`);if(expected)metricTmp[k][n]=v;else metricTmp[k].push(v);}
       for(const field of supportDefs){
         const k=field.id,v=Number(cells[col[k]]);
         if(!Number.isFinite(v)||!Number.isInteger(v))fail(`Row ${rowNo}: support field ${k} must be an integer`);
@@ -157,10 +171,10 @@
     const x=[...xMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),y=[...yMap.values()].sort((a,b)=>cmpRank(a.rank,b.rank)),cols=x.length,rows=y.length;
     if(rows*cols!==n)fail(`Semantic surface is not a complete rectangle: ${rows} × ${cols} != ${n}`);
     const xr=new Int32Array(x.length),yr=new Int32Array(y.length);x.forEach((v,i)=>xr[v.temp]=i);y.forEach((v,i)=>yr[v.temp]=i);
-    const metrics=Object.fromEntries(metricIds.map(k=>[k,new Float64Array(n)])),supportFields=Object.fromEntries(supportIds.map(k=>[k,new Int32Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),physicalIndexByVisual=new Int32Array(n),seen=new Uint8Array(n);
+    const metrics=Object.fromEntries(loadedMetricIds.map(k=>[k,new Float64Array(n)])),supportFields=Object.fromEntries(supportIds.map(k=>[k,new Int32Array(n)])),parameterIndices=Object.fromEntries(paramIds.map(k=>{const a=new Int16Array(n);a.fill(-1);return[k,a];})),physicalIndexByVisual=new Int32Array(n),seen=new Uint8Array(n);
     for(let j=0;j<n;j++){
       const pos=yr[yIdsByRow[j]]*cols+xr[xIdsByRow[j]];if(seen[pos])fail(`Duplicate visual cell ${pos}`);seen[pos]=1;
-      for(const k of metricIds)metrics[k][pos]=metricTmp[k][j];
+      for(const k of loadedMetricIds)metrics[k][pos]=metricTmp[k][j];
       for(const k of supportIds)supportFields[k][pos]=supportTmp[k][j];
       for(const id of paramIds)parameterIndices[id][pos]=paramTmp[id][j];
       physicalIndexByVisual[pos]=j;
