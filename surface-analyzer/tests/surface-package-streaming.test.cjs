@@ -17,11 +17,11 @@ const descriptor={
 };
 
 const csv=[
-  'analysis_key,p,q,r_per_trade,trades',
-  '"k,3 ""quoted""",2,1,21.5,14',
-  'k1,1,0,10.25,11',
-  '"k,2",2,0,20.75,13',
-  'k0,1,1,11.5,12'
+  'analysis_key,p,q,r_per_trade,trades,ignored_blob',
+  '"k,3 ""quoted""",2,1,21.5,14,"ignored,\nblob ""x"""',
+  'k1,1,0,10.25,11,unused-1',
+  '"k,2",2,0,20.75,13,"unused,2"',
+  'k0,1,1,11.5,12,unused-0'
 ].join('\r\n')+'\r\n';
 
 function* chunkText(text,size){
