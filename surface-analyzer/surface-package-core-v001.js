@@ -29,6 +29,45 @@
     if(field.length||row.length)er();
   }
 
+  function createCsvRowParser(fn){
+    let row=[],field='',quoted=false,pendingQuote=false,rowNo=1,finished=false;
+    const ef=()=>{row.push(field);field='';};
+    const er=()=>{ef();fn(row,rowNo++);row=[];};
+    const pushChar=c=>{
+      for(;;){
+        if(quoted){
+          if(pendingQuote){
+            if(c==='"'){field+='"';pendingQuote=false;return;}
+            quoted=false;pendingQuote=false;
+            continue;
+          }
+          if(c==='"'){pendingQuote=true;return;}
+          field+=c;return;
+        }
+        if(c==='"'){quoted=true;return;}
+        if(c===','){ef();return;}
+        if(c==='\n'){er();return;}
+        if(c!=='\r')field+=c;
+        return;
+      }
+    };
+    return {
+      push(text){
+        if(finished)fail('Semantic CSV parser is already finished');
+        for(let i=0;i<text.length;i++)pushChar(text[i]);
+      },
+      finish(){
+        if(finished)fail('Semantic CSV parser is already finished');
+        if(quoted){
+          if(pendingQuote){quoted=false;pendingQuote=false;}
+          else fail('Semantic CSV ends inside a quoted field');
+        }
+        if(field.length||row.length)er();
+        finished=true;
+      }
+    };
+  }
+
   function parseScalar(s,t){
     if(s==='')return null;
     if(['number','integer','boolean','enum'].includes(t)){
@@ -125,7 +164,7 @@
   function cmpRank(a,b){for(let i=0;i<a.length;i++)if(a[i]!==b[i])return a[i]-b[i];return 0;}
   function signature(sem,ids){return ids.map(id=>`${id}=${sem[id]??''}`).join('|');}
 
-  function buildSemanticSurface(text,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
+  function buildSemanticSurfaceFromRows(emitRows,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
     const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,passthroughIds=displayPassthroughIds(d).filter(k=>!metricIds.includes(k)),loadedMetricIds=[...metricIds,...passthroughIds],supportDefs=d.results.support_fields||[],supportIds=supportDefs.map(f=>f.id),constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
     let header=null,col=null,n=0;
     const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=[],yIdsByRow=[];
@@ -133,7 +172,7 @@
     const supportTmp=Object.fromEntries(supportIds.map(k=>[k,expected?new Int32Array(expected):[]]));
     const paramTmp=Object.fromEntries(paramIds.map(k=>{const a=expected?new Int16Array(expected):[];if(expected)a.fill(-1);return[k,a];}));
 
-    eachCsvRow(text,(cells,rowNo)=>{
+    emitRows((cells,rowNo)=>{
       if(!header){
         header=cells.map(x=>x.trim());col=Object.fromEntries(header.map((name,i)=>[name,i]));
         const req=['analysis_key',...paramIds,...loadedMetricIds,...supportIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
@@ -189,5 +228,17 @@
     };
   }
 
-  return {VERSION,DEFAULT_REQUIRED_METRICS,active,validateDescriptor,buildSemanticSurface,eachCsvRow};
+  function buildSemanticSurface(text,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
+    return buildSemanticSurfaceFromRows(fn=>eachCsvRow(text,fn),descriptor,file,{requiredMetrics});
+  }
+
+  function buildSemanticSurfaceFromTextChunks(chunks,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
+    return buildSemanticSurfaceFromRows(fn=>{
+      const parser=createCsvRowParser(fn);
+      for(const chunk of chunks)parser.push(chunk);
+      parser.finish();
+    },descriptor,file,{requiredMetrics});
+  }
+
+  return {VERSION,DEFAULT_REQUIRED_METRICS,active,validateDescriptor,buildSemanticSurface,buildSemanticSurfaceFromTextChunks,eachCsvRow,createCsvRowParser};
 });
