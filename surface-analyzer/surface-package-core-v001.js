@@ -30,31 +30,48 @@
   }
 
   function createCsvRowParser(fn){
-    let row=[],field='',quoted=false,pendingQuote=false,rowNo=1,finished=false;
-    const ef=()=>{row.push(field);field='';};
-    const er=()=>{ef();fn(row,rowNo++);row=[];};
-    const pushChar=c=>{
-      for(;;){
-        if(quoted){
-          if(pendingQuote){
-            if(c==='"'){field+='"';pendingQuote=false;return;}
-            quoted=false;pendingQuote=false;
-            continue;
-          }
-          if(c==='"'){pendingQuote=true;return;}
-          field+=c;return;
-        }
-        if(c==='"'){quoted=true;return;}
-        if(c===','){ef();return;}
-        if(c==='\n'){er();return;}
-        if(c!=='\r')field+=c;
-        return;
-      }
-    };
+    let row=[],parts=[],fieldIndex=0,quoted=false,pendingQuote=false,rowNo=1,finished=false,selected=null;
+    const keep=()=>!selected||selected.has(fieldIndex);
+    const append=(text,a,b)=>{if(keep()&&b>a)parts.push(text.slice(a,b));};
+    const ef=()=>{row[fieldIndex]=keep()?(parts.length?parts.join(''):''):'';parts=[];fieldIndex++;};
+    const er=()=>{ef();const hint=fn(row,rowNo++);if(!selected&&Array.isArray(hint?.selectedColumns))selected=new Set(hint.selectedColumns);row=[];fieldIndex=0;};
     return {
       push(text){
         if(finished)fail('Semantic CSV parser is already finished');
-        for(let i=0;i<text.length;i++)pushChar(text[i]);
+        if(!text.length)return;
+        let i=0,start=0;
+        if(quoted&&pendingQuote){
+          pendingQuote=false;
+          if(text[0]==='"'){
+            if(keep())parts.push('"');
+            i=1;start=1;
+          }else quoted=false;
+        }
+        for(;i<text.length;i++){
+          const c=text[i];
+          if(quoted){
+            if(c!=='"')continue;
+            append(text,start,i);
+            if(i+1<text.length){
+              if(text[i+1]==='"'){
+                if(keep())parts.push('"');
+                i++;start=i+1;
+              }else{
+                quoted=false;start=i+1;
+              }
+            }else{
+              pendingQuote=true;start=i+1;
+            }
+            continue;
+          }
+          if(c!==','&&c!=='\n'&&c!=='\r'&&c!=='"')continue;
+          append(text,start,i);
+          if(c==='"')quoted=true;
+          else if(c===',')ef();
+          else if(c==='\n')er();
+          start=i+1;
+        }
+        if(!pendingQuote)append(text,start,text.length);
       },
       finish(){
         if(finished)fail('Semantic CSV parser is already finished');
@@ -62,7 +79,7 @@
           if(pendingQuote){quoted=false;pendingQuote=false;}
           else fail('Semantic CSV ends inside a quoted field');
         }
-        if(field.length||row.length)er();
+        if(parts.length||row.length)er();
         finished=true;
       }
     };
@@ -167,7 +184,7 @@
   function buildSemanticSurfaceFromRows(emitRows,descriptor,file={name:'surface.surface.zip',size:0},{requiredMetrics=DEFAULT_REQUIRED_METRICS}={}){
     const d=validateDescriptor(descriptor),params=d.parameters,paramIds=params.map(p=>p.id),paramDefs=Object.fromEntries(params.map(p=>[p.id,p])),maps=valueMaps(d),xIds=d.layout.x_parameter_order||[],yIds=d.layout.y_parameter_order||[],xSpec=axisSpec(d,'x'),ySpec=axisSpec(d,'y'),metricIds=d.results.metrics,passthroughIds=displayPassthroughIds(d).filter(k=>!metricIds.includes(k)),loadedMetricIds=[...metricIds,...passthroughIds],supportDefs=d.results.support_fields||[],supportIds=supportDefs.map(f=>f.id),constants=d.experiment_constants||[],expected=Number(d.provenance?.source_row_count)||0;
     let header=null,col=null,n=0;
-    const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=[],yIdsByRow=[];
+    const keys=new Set(),xMap=new Map(),yMap=new Map(),xIdsByRow=expected?new Int32Array(expected):[],yIdsByRow=expected?new Int32Array(expected):[];
     const metricTmp=Object.fromEntries(loadedMetricIds.map(k=>[k,expected?new Float64Array(expected):[]]));
     const supportTmp=Object.fromEntries(supportIds.map(k=>[k,expected?new Int32Array(expected):[]]));
     const paramTmp=Object.fromEntries(paramIds.map(k=>{const a=expected?new Int16Array(expected):[];if(expected)a.fill(-1);return[k,a];}));
@@ -176,7 +193,8 @@
       if(!header){
         header=cells.map(x=>x.trim());col=Object.fromEntries(header.map((name,i)=>[name,i]));
         const req=['analysis_key',...paramIds,...loadedMetricIds,...supportIds,...constants.map(c=>c.id)],missing=req.filter(k=>col[k]===undefined);
-        if(missing.length)fail(`Semantic CSV missing required columns: ${missing.join(', ')}`);return;
+        if(missing.length)fail(`Semantic CSV missing required columns: ${missing.join(', ')}`);
+        return {selectedColumns:req.map(k=>col[k])};
       }
       if(cells.every(v=>v===''))return;
       if(expected&&n>=expected)fail(`Descriptor provenance expects ${expected} rows, found more`);
