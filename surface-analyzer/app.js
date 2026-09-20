@@ -1,4 +1,4 @@
-const ROWS=224,COLS=250;
+const LEGACY_ROWS=224,LEGACY_COLS=250;let ROWS=LEGACY_ROWS,COLS=LEGACY_COLS;
 const METRICS=['r_per_trade','expectancy_per_contract','profit_factor','romad','max_drawdown_r','total_r'];
 const DB_NAME='surface-analyzer-local',DB_VERSION=1,DB_STORE='state',ACTIVE_KEY='active-surface';
 const canvas=document.getElementById('heat'),ctx=canvas.getContext('2d');
@@ -120,20 +120,20 @@ function buildUploadedSurface(text,file){
   const required=['outer_ordinal','inner_ordinal','result_ordinal',...METRICS];
   const missing=required.filter(k=>col[k]===undefined);if(missing.length)throw new Error(`Missing required columns: ${missing.join(', ')}`);
   const dataRows=rows.slice(1).filter(r=>r.some(v=>v!==''));
-  if(dataRows.length!==ROWS*COLS)throw new Error(`Expected ${ROWS*COLS} result rows, got ${dataRows.length}`);
-  const inverse=new Int32Array(COLS);inverse.fill(-1);
-  meta.__order__.forEach((orig,visual)=>{if(orig<0||orig>=COLS)throw new Error('Viewer X order is invalid');inverse[orig]=visual;});
+  if(dataRows.length!==LEGACY_ROWS*LEGACY_COLS)throw new Error(`Expected ${LEGACY_ROWS*LEGACY_COLS} result rows, got ${dataRows.length}`);
+  const inverse=new Int32Array(LEGACY_COLS);inverse.fill(-1);
+  meta.__order__.forEach((orig,visual)=>{if(orig<0||orig>=LEGACY_COLS)throw new Error('Viewer X order is invalid');inverse[orig]=visual;});
   if(inverse.some(v=>v<0))throw new Error('Viewer X order is incomplete');
-  const metrics=Object.fromEntries(METRICS.map(k=>[k,new Float64Array(ROWS*COLS)])),seen=new Uint8Array(ROWS*COLS);
+  const metrics=Object.fromEntries(METRICS.map(k=>[k,new Float64Array(LEGACY_ROWS*LEGACY_COLS)])),seen=new Uint8Array(LEGACY_ROWS*LEGACY_COLS);
   let jobId=null,runId=null,generationId=null,buildId=null;
   for(let n=0;n<dataRows.length;n++){
     const r=dataRows[n];
     const outer=Number(r[col.outer_ordinal]),inner=Number(r[col.inner_ordinal]),ord=Number(r[col.result_ordinal]);
-    if(!Number.isInteger(outer)||outer<0||outer>=ROWS)throw new Error(`Row ${n+2}: invalid outer_ordinal ${r[col.outer_ordinal]}`);
-    if(!Number.isInteger(inner)||inner<0||inner>=COLS)throw new Error(`Row ${n+2}: invalid inner_ordinal ${r[col.inner_ordinal]}`);
-    if(!Number.isInteger(ord)||ord!==outer*COLS+inner)throw new Error(`Row ${n+2}: result_ordinal mismatch`);
+    if(!Number.isInteger(outer)||outer<0||outer>=LEGACY_ROWS)throw new Error(`Row ${n+2}: invalid outer_ordinal ${r[col.outer_ordinal]}`);
+    if(!Number.isInteger(inner)||inner<0||inner>=LEGACY_COLS)throw new Error(`Row ${n+2}: invalid inner_ordinal ${r[col.inner_ordinal]}`);
+    if(!Number.isInteger(ord)||ord!==outer*LEGACY_COLS+inner)throw new Error(`Row ${n+2}: result_ordinal mismatch`);
     if(seen[ord])throw new Error(`Duplicate result_ordinal ${ord}`);seen[ord]=1;
-    const visual=outer*COLS+inverse[inner];
+    const visual=outer*LEGACY_COLS+inverse[inner];
     for(const key of METRICS){
       const v=Number(r[col[key]]);if(!Number.isFinite(v))throw new Error(`Row ${n+2}: invalid ${key}`);
       metrics[key][visual]=v;
@@ -146,15 +146,19 @@ function buildUploadedSurface(text,file){
     }
   }
   if(seen.some(v=>v!==1))throw new Error('CSV does not cover every expected result ordinal');
-  return {schemaVersion:1,fileName:file.name||'uploaded.csv',fileSize:file.size||text.length,loadedAt:new Date().toISOString(),rows:ROWS,cols:COLS,jobId,runId,generationId,buildId,metrics};
+  return {schemaVersion:1,fileName:file.name||'uploaded.csv',fileSize:file.size||text.length,loadedAt:new Date().toISOString(),rows:LEGACY_ROWS,cols:LEGACY_COLS,jobId,runId,generationId,buildId,metrics};
 }
 function normalizeStoredSurface(s){
-  if(!s||s.rows!==ROWS||s.cols!==COLS||!s.metrics)return null;
+  if(!s||!Number.isInteger(s.rows)||s.rows<=0||!Number.isInteger(s.cols)||s.cols<=0||!s.metrics)return null;
+  const cells=s.rows*s.cols;if(!Number.isSafeInteger(cells)||cells<=0)return null;
   for(const key of METRICS){
-    const arr=s.metrics[key];if(!arr||arr.length!==ROWS*COLS)return null;
+    const arr=s.metrics[key];if(!arr||arr.length!==cells)return null;
     if(!(arr instanceof Float64Array))s.metrics[key]=new Float64Array(arr);
   }
   return s;
+}
+function useSurfaceDimensions(s){
+  ROWS=s?.rows||LEGACY_ROWS;COLS=s?.cols||LEGACY_COLS;
 }
 function setSurfaceLabel(){
   if(!surfaceNameEl)return;
@@ -167,6 +171,7 @@ function updateRobustnessAvailability(){
 }
 async function activateSurface(surface,{persist=true}={}){
   activeSurface=normalizeStoredSurface(surface);if(!activeSurface)throw new Error('Stored surface is invalid');
+  useSurfaceDimensions(activeSurface);
   if(persist)await idbSetActive(activeSurface);
   cache.clear();statsCache.clear();setSurfaceLabel();updateRobustnessAvailability();
   if(currentMode==='robustness'){currentMode='performance';for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode==='performance');readCopy.innerHTML=performanceRead;}
@@ -177,7 +182,7 @@ async function activateSurface(surface,{persist=true}={}){
 }
 async function hardReset(){
   loading.style.display='flex';loading.textContent='Clearing local surface…';
-  await idbClearActive();activeSurface=null;cache.clear();statsCache.clear();setSurfaceLabel();updateRobustnessAvailability();
+  await idbClearActive();activeSurface=null;useSurfaceDimensions(null);cache.clear();statsCache.clear();setSurfaceLabel();updateRobustnessAvailability();
   currentMode='performance';for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode==='performance');
   setViewForMode('performance');populateMetricOptions('performance');if(!METRICS.includes(lastPerformanceKey))lastPerformanceKey='r_per_trade';currentKey=lastPerformanceKey;metricSel.value=currentKey;readCopy.innerHTML=performanceRead;
   await setMetric(currentKey);
@@ -231,9 +236,11 @@ function draw(){
   const off=document.createElement('canvas');off.width=COLS;off.height=ROWS;const o=off.getContext('2d'),im=o.createImageData(COLS,ROWS);
   for(let i=0;i<values.length;i++){const c=rgb(displayQ(i)),p=i*4;im.data[p]=c[0];im.data[p+1]=c[1];im.data[p+2]=c[2];im.data[p+3]=255;}
   o.putImageData(im,0,0);ctx.clearRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=false;ctx.drawImage(off,0,0,canvas.width,canvas.height);
-  const sx=canvas.width/COLS,sy=canvas.height/ROWS,d=devicePixelRatio||1;ctx.save();
-  for(let r=8;r<ROWS;r+=8){if(r===112)continue;hline(r,sy,d,r%16===0?'minor':'sub');}hline(112,sy,d,'hard');
-  for(const x of stopBoundaries)vline(x,sx,d,'stop');for(const x of [30,60,65,70,160])vline(x,sx,d,[60,70].includes(x)?'hard':'minor');ctx.restore();
+  if(!activeSurface){
+    const sx=canvas.width/COLS,sy=canvas.height/ROWS,d=devicePixelRatio||1;ctx.save();
+    for(let r=8;r<ROWS;r+=8){if(r===112)continue;hline(r,sy,d,r%16===0?'minor':'sub');}hline(112,sy,d,'hard');
+    for(const x of stopBoundaries)vline(x,sx,d,'stop');for(const x of [30,60,65,70,160])vline(x,sx,d,[60,70].includes(x)?'hard':'minor');ctx.restore();
+  }
 }
 function outerInfo(row){const isAtr=row>=112,local=row%112,t=Math.floor(local/16),within=local%16,londonClose=within>=8?1:0,withinClose=within%8,pm=Math.floor(withinClose/2),entry=withinClose%2;return{mode:isAtr?'ATR':'Points',threshold:isAtr?`${atrThresholds[t]}% ATR`:`${pointsThresholds[t]} pt`,londonClose,pm,pmLabel:pmCloseLabels[pm],entry};}
 function innerInfo(orig){const stop=[10,20,30,40,50][Math.floor(orig/50)],within=orig%50,trades=orig%2===0?1:2,scenario=Math.floor(within/2);let mode,allocation=null,rule=null,multiple=null;if(scenario<=5){mode='Fixed';allocation=25;rule=scenario===0?0:1;multiple=scenario===0?1:[1,1.25,1.5,1.75,2][scenario-1];}else if(scenario===6){mode='Trail';}else{mode='Hybrid';const j=scenario-7,allocIdx=Math.floor(j/6),v=j%6;allocation=[25,37.5,50][allocIdx];rule=v===0?0:1;multiple=v===0?1:[1,1.25,1.5,1.75,2][v-1];}return{stop,trades,mode,allocation,rule,multiple};}
@@ -254,13 +261,25 @@ async function setMode(mode){
   currentMode=mode;for(const b of metricMode.querySelectorAll('button'))b.classList.toggle('on',b.dataset.mode===mode);setViewForMode(mode);populateMetricOptions(mode);readCopy.innerHTML=mode==='robustness'?robustnessRead:performanceRead;
   const next=mode==='robustness'?lastRobustnessKey:lastPerformanceKey;metricSel.value=next;await setMetric(next);
 }
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function semanticAxisText(axis,index){
+  const sem=activeSurface?.semanticAxis?.[axis]?.[index];
+  if(!sem||typeof sem!=='object')return '—';
+  const parts=Object.entries(sem).filter(([,v])=>v!==''&&v!=null).map(([k,v])=>`${k}=${v}`);
+  return parts.length?parts.join(' · '):'—';
+}
 canvas.addEventListener('mousemove',e=>{
   if(!values)return;
-  const r=canvas.getBoundingClientRect(),col=Math.max(0,Math.min(COLS-1,Math.floor((e.clientX-r.left)/r.width*COLS))),row=Math.max(0,Math.min(ROWS-1,Math.floor((e.clientY-r.top)/r.height*ROWS))),idx=row*COLS+col,q=values[idx],m=meta[currentKey],o=outerInfo(row),orig=meta.__order__[col],inn=innerInfo(orig);
-  const v=isRobust()?robustApprox(q):(activeSurface?q:legacyRawApprox(q));
-  const pct=(!isRobust()&&activeSurface)?Math.round(currentStats.ranks[idx]*100):(!isRobust()&&currentStats.legacy)?Math.round(currentStats.cdf[q]*100):null;
+  const r=canvas.getBoundingClientRect(),col=Math.max(0,Math.min(COLS-1,Math.floor((e.clientX-r.left)/r.width*COLS))),row=Math.max(0,Math.min(ROWS-1,Math.floor((e.clientY-r.top)/r.height*ROWS))),idx=row*COLS+col,q=values[idx],m=meta[currentKey];
+  if(activeSurface){
+    const pct=Math.round(currentStats.ranks[idx]*100),valueText=`${fmt(q,m.decimals)}${viewSel.value==='pct'?` · P${pct}`:''}`;
+    hover.innerHTML=`<span>Y: <b>${row+1} / ${ROWS}</b></span><span>X: <b>${col+1} / ${COLS}</b></span><span>Metric: <b>${escapeHtml(m.label)}</b></span><span>Y parameters: <b>${escapeHtml(semanticAxisText('y',row))}</b></span><span>X parameters: <b>${escapeHtml(semanticAxisText('x',col))}</b></span><span>Value: <b>${escapeHtml(valueText)}</b></span>`;
+    return;
+  }
+  const o=outerInfo(row),orig=meta.__order__[col],inn=innerInfo(orig),v=isRobust()?robustApprox(q):legacyRawApprox(q);
+  const pct=(!isRobust()&&currentStats.legacy)?Math.round(currentStats.cdf[q]*100):null;
   const target=inn.mode==='Trail'?'30m OTF trail':`Rule ${inn.rule} · ${inn.multiple.toFixed(2)}× London`,valueLabel=isRobust()?'Score':'Value',valueText=`${fmt(v,m.decimals)}${(!isRobust()&&viewSel.value==='pct')?` · P${pct}`:''}`;
-  hover.innerHTML=`<span>Outer: <b>${row+1} / 224</b></span><span>Inner: <b>${orig+1} / 250</b></span><span>Metric: <b>${m.label}</b></span><span>Range: <b>${o.mode} · ${o.threshold}</b></span><span>London close > Asia: <b>${o.londonClose?'Yes':'No'}</b></span><span>PM close: <b>${o.pmLabel}</b></span><span>Entry location: <b>${o.entry}</b></span><span>Management: <b>${inn.mode} · ${inn.trades} trade${inn.trades===1?'':'s'}</b></span><span>Stop: <b>${inn.stop}% London</b></span><span>Allocation: <b>${inn.allocation==null?'—':inn.allocation+'%'}</b></span><span>Target: <b>${target}</b></span><span>${valueLabel}: <b>${valueText}</b></span>`;
+  hover.innerHTML=`<span>Outer: <b>${row+1} / ${ROWS}</b></span><span>Inner: <b>${orig+1} / ${COLS}</b></span><span>Metric: <b>${m.label}</b></span><span>Range: <b>${o.mode} · ${o.threshold}</b></span><span>London close > Asia: <b>${o.londonClose?'Yes':'No'}</b></span><span>PM close: <b>${o.pmLabel}</b></span><span>Entry location: <b>${o.entry}</b></span><span>Management: <b>${inn.mode} · ${inn.trades} trade${inn.trades===1?'':'s'}</b></span><span>Stop: <b>${inn.stop}% London</b></span><span>Allocation: <b>${inn.allocation==null?'—':inn.allocation+'%'}</b></span><span>Target: <b>${target}</b></span><span>${valueLabel}: <b>${valueText}</b></span>`;
 });
 metricSel.addEventListener('change',()=>{if(currentMode==='performance')lastPerformanceKey=metricSel.value;else lastRobustnessKey=metricSel.value;setMetric(metricSel.value);});
 viewSel.addEventListener('change',()=>{if(currentMode==='performance')lastPerformanceView=viewSel.value;draw();});
@@ -280,6 +299,7 @@ addEventListener('resize',size);
   try{
     meta=await fetch('metrics.json?v=008',{cache:'no-store'}).then(r=>r.json());
     try{activeSurface=normalizeStoredSurface(await idbGetActive());}catch(e){console.warn('Local surface restore unavailable:',e);}
+    useSurfaceDimensions(activeSurface);
     setSurfaceLabel();updateRobustnessAvailability();populateMetricOptions('performance');metricSel.value=currentKey;setViewForMode('performance');readCopy.innerHTML=performanceRead;size();await setMetric(currentKey);
   }catch(e){loading.textContent='Could not initialize interface: '+e.message;}
 })();
