@@ -42,11 +42,15 @@
   }
 
   function performanceScoreSeries(surface){
-    const N=(surface?.rows||0)*(surface?.cols||0),r=surface?.metrics?.r_per_trade,pf=surface?.metrics?.profit_factor,romad=surface?.metrics?.romad,trades=surface?.supportFields?.trades;
-    if(!r||!pf||!romad||!trades||r.length!==N||pf.length!==N||romad.length!==N||trades.length!==N)throw new Error('P Score requires R / trade, Profit Factor, RoMAD, and Trades.');
+    const N=(surface?.rows||0)*(surface?.cols||0),r=surface?.metrics?.r_per_trade,pf=surface?.metrics?.profit_factor,romad=surface?.metrics?.romad,trades=surface?.supportFields?.trades,totalR=surface?.metrics?.total_r;
+    const hasTrades=!!trades&&trades.length===N,canInferTrades=!!totalR&&totalR.length===N;
+    if(!r||!pf||!romad||r.length!==N||pf.length!==N||romad.length!==N||(!hasTrades&&!canInferTrades))throw new Error('P Score requires R / trade, Profit Factor, RoMAD, and either Trades or Total R.');
     const out=new Float32Array(N);out.fill(NaN);
     for(let i=0;i<N;i++){
-      if(!finite(r[i])||!finite(pf[i])||!finite(romad[i])||!finite(trades[i])||trades[i]<20)continue;
+      if(!finite(r[i])||!finite(pf[i])||!finite(romad[i]))continue;
+      let tradeCount=hasTrades?Number(trades[i]):NaN;
+      if(!finite(tradeCount)&&canInferTrades&&Math.abs(r[i])>EPS&&finite(totalR[i]))tradeCount=Math.round(Math.abs(totalR[i]/r[i]));
+      if(!finite(tradeCount)||tradeCount<20)continue;
       if(r[i]<.5||pf[i]<1.5||romad[i]<2){out[i]=0;continue;}
       const kr=1+Math.floor((r[i]-.5+EPS)/.25),kp=1+Math.floor((pf[i]-1.5+EPS)/.25),km=1+Math.floor((romad[i]-2+EPS));
       out[i]=Math.max(0,Math.min(P_SCORE_MAX,kr,kp,km));
@@ -293,7 +297,8 @@
     const declared=activeSurface?.semanticDescriptor?.results?.metrics||[];
     const keys=declared.length?declared:Object.keys(activeSurface?.metrics||{});
     const out=keys.map(x=>typeof x==='string'?x:x?.id).filter(k=>k&&activeSurface?.metrics?.[k]);
-    if(P_SCORE_COMPONENTS.every(k=>activeSurface?.metrics?.[k])&&activeSurface?.supportFields?.trades&&!out.includes(P_SCORE_METRIC))out.push(P_SCORE_METRIC);
+    const hasPInputs=P_SCORE_COMPONENTS.every(k=>activeSurface?.metrics?.[k])&&(activeSurface?.supportFields?.trades||activeSurface?.metrics?.total_r);
+    if(hasPInputs&&!out.includes(P_SCORE_METRIC))out.push(P_SCORE_METRIC);
     return out;
   }
   function driverMetrics(){

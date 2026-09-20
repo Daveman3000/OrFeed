@@ -23,6 +23,7 @@ function fixture() {
       r_per_trade: Float64Array.from([0.0, 0.5, 1.0, 0.2, 0.7, 1.2]),
       profit_factor: Float64Array.from([1.5, 1.5, 2.0, 1.75, 1.75, 2.25]),
       romad: Float64Array.from([2, 2, 4, 3, 3, 5]),
+      total_r: Float64Array.from([0, 12.5, 25, 5, 13.3, 30]),
       max_drawdown_r: Float64Array.from([5, 4, 3, 6, 5, 4])
     },
     supportFields: {
@@ -72,6 +73,8 @@ function fixture() {
   };
 
   assert.deepEqual(Array.from(scanner.performanceScoreSeries(surface)),[0,1,3,0,NaN,3],'P Score must use the frozen P1-P20 3/3 ladder and 20-trade floor');
+  const inferredSurface={...surface,supportFields:{}};
+  assert.deepEqual(Array.from(scanner.performanceScoreSeries(inferredSurface)),[NaN,1,3,0,NaN,3],'P Score must infer trade count from Total R / R per trade when the browser surface does not retain Trades');
   const g = semantic.buildTopology(surface);
   const sr = semantic.computeSR(surface.metrics.r_per_trade,g).structural_robustness;
   const fr = semantic.computeFR(surface.metrics.r_per_trade,g).facet_replication;
