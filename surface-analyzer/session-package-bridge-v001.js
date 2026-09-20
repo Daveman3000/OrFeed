@@ -10,6 +10,7 @@
   const CSV_NAME='surface.semantic.csv';
   const DESCRIPTOR_NAME='surface_descriptor.json';
   const utf8=new TextDecoder('utf-8');
+  const CSV_DECODE_CHUNK_BYTES=8*1024*1024;
   const fail=m=>{throw new Error(m);};
   const readU16=(v,o)=>v.getUint16(o,true);
   const readU32=(v,o)=>v.getUint32(o,true);
@@ -56,15 +57,24 @@
     return out;
   }
 
+  function* decodeUtf8Chunks(bytes,chunkBytes=CSV_DECODE_CHUNK_BYTES){
+    if(!Number.isInteger(chunkBytes)||chunkBytes<1)fail('CSV decode chunk size must be a positive integer');
+    const decoder=new TextDecoder('utf-8');
+    for(let offset=0;offset<bytes.length;offset+=chunkBytes){
+      yield decoder.decode(bytes.subarray(offset,Math.min(bytes.length,offset+chunkBytes)),{stream:true});
+    }
+    const tail=decoder.decode();
+    if(tail)yield tail;
+  }
+
   async function loadPackage(file){
     const core=root.SurfacePackageCoreV001;
-    if(!core?.buildSemanticSurface)fail('Canonical Surface Package core is unavailable.');
+    if(!core?.buildSemanticSurfaceFromTextChunks)fail('Canonical Surface Package streaming core is unavailable.');
     const z=await unzipSelected(file,new Set([CSV_NAME,DESCRIPTOR_NAME]));
     const descriptorBytes=z.get(DESCRIPTOR_NAME);
     const csvBytes=z.get(CSV_NAME);
     const descriptor=JSON.parse(utf8.decode(descriptorBytes));
-    const text=utf8.decode(csvBytes);
-    const surface=core.buildSemanticSurface(text,descriptor,file);
+    const surface=core.buildSemanticSurfaceFromTextChunks(decodeUtf8Chunks(csvBytes),descriptor,file);
     surface.regionAnalyzerIdentity={
       packageSha256:z.packageSha256,
       descriptorSha256:await sha256Hex(descriptorBytes),
@@ -100,5 +110,5 @@
     },true);
   }
 
-  return {VERSION,unzipSelected,loadPackage,install};
+  return {VERSION,CSV_DECODE_CHUNK_BYTES,decodeUtf8Chunks,unzipSelected,loadPackage,install};
 });
