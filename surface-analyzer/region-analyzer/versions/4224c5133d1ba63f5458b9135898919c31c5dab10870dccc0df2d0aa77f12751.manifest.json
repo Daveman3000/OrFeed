@@ -25,7 +25,7 @@
     }
   },
   "mask_bundle": {
-    "path": "https://raw.githubusercontent.com/Daveman3000/sierra-acsil/99f33f38b677ce638cf87d9603a2ef4fa43e05a6/surface-analyzer/region-analyzer/bundles/f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214.masks.bin",
+    "path": "../bundles/f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214.masks.bin",
     "sha256": "f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214",
     "bytes": 2178064,
     "physical_cells_per_mask": 311150,
@@ -14215,6 +14215,6 @@
   },
   "content_identity": {
     "hash_method": "sha256_exact_pre_identity_manifest_payload_bytes",
-    "payload_sha256": "1a620906fe367bc4589f74135745912d09f8a8c492455e93ea02564dd4587119"
+    "payload_sha256": "47fa7ec29b279cdb4989c54760a7b23c9dceb2ddf467b94368ef8f72f499f150"
   }
 }

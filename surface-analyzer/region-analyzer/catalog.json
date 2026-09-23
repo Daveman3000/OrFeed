@@ -54,12 +54,12 @@
       "versions": [
         {
           "version_id": "deb3f99499046e98fba03ed9b3976e62a9dde9a8aa40b7e6fd0d41d49083a928-region-analyzer-v001",
-          "content_sha256": "320d51da8753ae550f0847d10fd8bcd54cfcd082c14a22d8b472a2e849c05b61",
+          "content_sha256": "4224c5133d1ba63f5458b9135898919c31c5dab10870dccc0df2d0aa77f12751",
           "label": "Volume Bands v004 corrected physical Region Analyzer publication",
           "created_at": "2026-09-23T00:27:42.101Z",
           "status": "active",
-          "manifest_path": "versions/320d51da8753ae550f0847d10fd8bcd54cfcd082c14a22d8b472a2e849c05b61.manifest.json",
-          "mask_bundle_path": "https://raw.githubusercontent.com/Daveman3000/sierra-acsil/99f33f38b677ce638cf87d9603a2ef4fa43e05a6/surface-analyzer/region-analyzer/bundles/f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214.masks.bin",
+          "manifest_path": "versions/4224c5133d1ba63f5458b9135898919c31c5dab10870dccc0df2d0aa77f12751.manifest.json",
+          "mask_bundle_path": "bundles/f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214.masks.bin",
           "mask_bundle_sha256": "f02be2241e41b4e05bf1cbc869ee7a4f8d73e1aee4e79541eebeb76f031eb214"
         }
       ]
